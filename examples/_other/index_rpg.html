@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elpy.js</title>
+</head>
+<body>
+    <style>
+        #field {
+            border: 1px solid;
+        }
+    </style>
+    <canvas id="field"></canvas>
+
+    <script src="js/main.js"></script>
+    <script>
+        const width = 400;
+        const height = 300;
+        const engine = new Engine('#field', width, height);
+        const step = 1;
+        const camera = {
+            x: 0,
+            y: 0
+        }
+
+        const player = engine.create('player', (width / 2) - (20 / 2), (height / 2) - (20 / 2), 20, 20, { image: 'tank_green.png' });
+        const character = engine.create('character', 100, 100, 20, 20, { color: 'orange' });
+
+        engine.add(player);
+        engine.add(character);
+
+        engine.key(key => {
+            switch(key) {
+                case 'ArrowUp':
+                    camera.y = camera.y + step;
+
+                    break;
+                case 'ArrowDown':
+                    camera.y = camera.y - step;
+
+                    break;
+                case 'ArrowRight':
+                    camera.x = camera.x - step;
+
+                    break;
+                case 'ArrowLeft':
+                    camera.x = camera.x + step;
+
+                    break;
+            }
+            
+            if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(key)) {
+                character.move(character.x + camera.x, character.y + camera.y);
+
+                camera.x = 0;
+                camera.y = 0;
+            }
+        });
+    </script>
+</body>
+</html>

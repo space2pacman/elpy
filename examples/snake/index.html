@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elpy.js</title>
+</head>
+<body>
+    <style>      
+        #field {
+            margin: auto;
+            border: 1px solid;
+        }
+    </style>
+    <canvas id="field"></canvas>
+
+    <script src="../../dist/elpy.min.js""></script>
+    <script>
+        const options = {
+            tailPart: {
+                images: [
+                    {
+                        paths: ['images/red.png'],
+                        state: 'red'
+                    },
+                    {
+                        paths: ['images/green.png'],
+                        state: 'green'
+                    }
+                ]
+            },
+            character: {
+                image: 'images/green.png'
+            }
+        }
+        let angle = 0;
+        let direction = '';
+        const step = 20;
+        const unit = 20;
+        const tail = [];
+        const elpy = new Elpy('#field', 400, 400);
+        const character = elpy.create('character', ((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit, unit, unit, options.character);
+
+        elpy.add(character);
+
+        character.on('collision', object => {
+            if (tail.length === 0) {
+                tail.unshift(character);
+            }
+
+            if (!tail.find(stickObject => stickObject.name === object.name)) {
+                tail.unshift(object);
+            } else {
+                restartGame();
+
+                return;
+            }
+
+            let tip = tail[tail.length - 1];
+
+            object.state = 'green';
+            object.move(tip.track.x, tip.track.y);
+            addTailPart();
+
+            switch(direction) {
+                case 'up':
+                    character.move(character.x, character.y - step);
+                    break;
+                case 'down':
+                    character.move(character.x, character.y + step);
+
+                    break;
+                case 'right':
+                    character.move(character.x + step, character.y);
+
+                    break;
+                case 'left':
+                    character.move(character.x - step, character.y);
+
+                    break
+            }
+        });
+
+        character.on('move', data => {
+            if (tail.length > 0) {                
+                for(let i = tail.length - 2; i >= 0; i--) {
+                    if (tail[i + 1]) {
+                        tail[i].move(tail[i + 1].track.x, tail[i + 1].track.y);
+                    }
+                }
+            }
+
+            if (character.y <= 0 - unit
+            || character.y + character.height >= elpy.height + unit
+            || character.x <= 0 - unit
+            || character.x + character.width >= elpy.width + unit) {
+                restartGame();
+            }
+        });
+
+        elpy.keydown(key => {
+            switch(key) {
+                case 'ArrowUp':
+                    if (direction !== 'down') {
+                        angle = 270;
+                        direction = 'up';
+                    }
+
+                    break;
+                case 'ArrowDown':
+                    if (direction !== 'up') {
+                        angle = 90;
+                        direction = 'down';
+                    }
+
+                    break;
+                case 'ArrowRight':
+                    if (direction !== 'left') {
+                        angle = 0;
+                        direction = 'right';
+                    }
+
+                    break;
+                case 'ArrowLeft': 
+                    if (direction !== 'right') {
+                        angle = 180;
+                        direction = 'left';
+                    }
+
+                    break;
+            }
+
+            if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(key)) {
+                character.fly(angle, 50, 0, step);
+            }
+        });
+
+        elpy.load();
+        
+        addTailPart();
+
+        function addTailPart() {
+            const x = getRandomNumber(0, elpy.width / unit) * unit;
+            const y = getRandomNumber(0, elpy.height / unit) * unit;
+            const tailPart = elpy.create(`tailPart-${Date.now()}`, x, y, unit, unit, options.tailPart);
+
+            elpy.add(tailPart);
+            character.collision(tailPart);
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function restartGame() {
+            character.fly(0, 0);
+            direction = '';
+            
+            setTimeout(() => {
+                character.move(((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit);
+            });
+
+            tail.forEach(item => {
+                if (item.name !== 'character') {
+                    item.destroy();
+                }
+            })
+
+            tail.splice(0, tail.length);
+        }
+    </script>
+</body>
+</html>

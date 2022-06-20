@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elpy.js</title>
+</head>
+<body>
+    <canvas id="field"></canvas>
+
+    <script src="../../dist/elpy.min.js"></script>
+    <script>
+        const map = [
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,2,2,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,0,2,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,0,2,0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,0,2,2,2,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0]
+        ];
+        const unit = 20;
+        const elpy = new Elpy('#field');
+        const gun = elpy.create('gun', 80, 140, 20, 20, { image: 'images/tank_red.png' });
+        let start = getPoint(map, 1);
+        let finish = getPoint(map, 3);
+        let waypoints = getWaypoints(map, unit);
+        let index = 1;  
+        const enemy = elpy.create('enemy', start.j * unit, start.i * unit, 20, 20, { image: 'images/tank_green.png' });
+
+        let newX = null;
+        let newY = null;
+
+        elpy.add(gun);
+        elpy.add(enemy);
+
+        elpy.mousemove((x, y) => {
+            if (x % 20 === 0) {
+                if (gun.x > x) {
+                    newX = x - 10;
+                } else {
+                    newX = x + 10;
+                }
+            }
+
+            if (y % 20 === 0) {
+                newY = y - 10;
+            }
+
+            if (newX !== null && newY !== null) {
+                gun.move(newX, newY)
+            }
+        });
+
+        elpy.click(() => {
+            console.log(newX, newY)
+        })
+
+        const timer = setInterval(() => {
+            const waypoint = waypoints[index];
+
+            if (!waypoint) {
+                clearInterval(timer);
+            }
+
+            if (waypoint && (enemy.x !== waypoint.x || enemy.y !== waypoint.y)) {
+                let x;
+                let y;
+
+                if (enemy.x < waypoint.x) {
+                    x = enemy.x + 1;
+                    enemy.rotate(270)
+                }
+
+                if (enemy.x > waypoint.x) {
+                    x = enemy.x - 1;
+                    enemy.rotate(90)
+                }
+
+                if (enemy.x === waypoint.x) {
+                    x = enemy.x;
+                }
+
+                if (enemy.y < waypoint.y) {
+                    y = enemy.y + 1;
+                    enemy.rotate(0)
+                }
+
+                if (enemy.y > waypoint.y) {
+                    y = enemy.y - 1;
+                    enemy.rotate(180)
+                }
+
+                if (enemy.y === waypoint.y) {
+                    y = enemy.y;
+                }
+
+                enemy.move(x, y);
+            } else {
+                index++;
+            }
+
+            const degress01 = Math.atan2(gun.y - enemy.y, gun.x - enemy.x) * 180 / Math.PI;
+
+            gun.rotate(degress01 + 90);
+        }, 50);
+
+        elpy.load();
+
+        function getPoint(map, type) {
+            for(let i = 0; i < map.length; i++) {
+                for(let j = 0; j < map[i].length; j++) {
+                    if (map[i][j] === type) {
+                        return { j, i };
+                    }
+                }
+            }
+        }
+
+        function getWaypoints(map, unit) {
+            const waypoints = [];
+            const cachedMap = JSON.parse(JSON.stringify(map));
+            
+            function step(i, j) {
+                cachedMap[i][j] = 0;
+
+                if (cachedMap[i][j - 1] === 2) {
+                    waypoints.push({ x: j * unit, y: i * unit });
+
+                    return step(i, j - 1);
+                }
+
+                if (cachedMap[i - 1] && cachedMap[i - 1][j] === 2) {
+                    waypoints.push({ x: j * unit, y: i * unit });
+
+                    return step(i - 1, j);
+                }
+
+                if (cachedMap[i][j + 1] === 2) {
+                    waypoints.push({ x: j * unit, y: i * unit });
+
+                    return step(i, j + 1);
+                }
+
+                if (cachedMap[i + 1] && cachedMap[i + 1][j] === 2) {
+                    waypoints.push({ x: j * unit, y: i * unit });
+
+                    return step(i + 1, j);
+                }
+            }
+            
+            step(start.i, start.j);
+
+            return waypoints;    
+        }
+    </script>
+</body>
+</html>

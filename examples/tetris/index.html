@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elpy.js</title>
+</head>
+<body>
+    <style>
+        #field {
+            border: 1px solid;
+            box-sizing: border-box;
+            margin: auto;
+        }
+    </style>
+    <canvas id="field"></canvas>
+
+    <script src="../../dist/elpy.min.js""></script>
+    <script>
+        const unit = 20;
+        const width = unit * 10;
+        const height = unit * 20;
+        const elpy = new Elpy('#field', width, height);
+        const map = [];
+        const images = [
+            'images/aqua.png',
+            'images/blue.png',
+            'images/green.png',
+            'images/orange.png',
+            'images/red.png',
+            'images/yellow.png'
+        ];
+        const sides = {
+            index: 0,
+            value: 'up'
+        };
+        const shape = {
+            count: 0,
+            value: '',
+            isRotated: false,
+            isMoving: false
+        };
+        const time = {
+            rotate: null
+        };
+        let blocks = [];
+        let x = 0;
+        const shapes = {
+            i: {
+                sides: ['up', 'right'],
+                positions: {
+                    start: [ { x: 80, y: 0 }, { x: 80, y: 20 }, { x: 80, y: 40 }, { x: 80, y: 60 } ],
+                    sides: {
+                        right: [ { x: unit * 2, y: unit * 2 }, { x: unit, y: unit }, { x: 0, y: 0 }, { x: -unit, y: -unit } ],
+                        up: [ { x: -unit * 2, y: -unit * 2 }, { x: -unit, y: -unit }, { x: 0, y: 0 }, { x: unit, y: unit } ]
+                    }
+                }
+            },
+            j: {
+                sides: ['up', 'right', 'down', 'left'],
+                positions: {
+                    start: [ { x: 100, y: 0 }, { x: 100, y: 20 }, { x: 100, y: 40 }, { x: 80, y: 40 } ],
+                    sides: {
+                        right: [ { x: unit, y: unit }, { x: 0, y: 0 }, { x: -unit, y: -unit }, { x: 0, y: -unit * 2 } ],
+                        down: [ { x: -unit, y: unit }, { x: 0, y: 0 }, { x: unit, y: -unit }, { x: unit * 2, y: 0 } ],
+                        left: [ { x: -unit, y: -unit }, { x: 0, y: 0 }, { x: unit, y: unit }, { x: 0, y: unit * 2 } ],
+                        up: [ { x: unit, y: -unit }, { x: 0, y: 0 }, { x: -unit, y: unit }, { x: -unit * 2, y: 0 } ],
+                    }
+                }
+            },
+            l: {
+                sides: ['up', 'right', 'down', 'left'],
+                positions: {
+                    start: [ { x: 80, y: 0 }, { x: 80, y: 20 }, { x: 80, y: 40 }, { x: 100, y: 40 } ],
+                    sides: {
+                        right: [ { x: unit, y: unit }, { x: 0, y: 0 }, { x: -unit, y: -unit }, { x: -unit * 2, y: 0 } ],
+                        down: [ { x: -unit, y: unit }, { x: 0, y: 0 }, { x: unit, y: -unit }, { x: 0, y: -unit * 2 } ],
+                        left: [ { x: -unit, y: -unit }, { x: 0, y: 0 }, { x: unit, y: unit }, { x: unit * 2, y: 0 } ],
+                        up: [ { x: unit, y: -unit }, { x: 0, y: 0 }, { x: -unit, y: unit }, { x: 0, y: unit * 2 } ],
+                    }
+                }
+            },
+            o: {
+                positions: {
+                    start: [ { x: 80, y: 0 }, { x: 80, y: 20 }, { x: 100, y: 0 }, { x: 100, y: 20 } ]
+                }
+            },
+            s: {
+                sides: ['up', 'right'],
+                positions: {
+                    start: [ { x: 80, y: 0 }, { x: 80, y: 20 }, { x: 100, y: 20 }, { x: 100, y: 40 } ],
+                    sides: {
+                        right: [ { x: unit, y: unit }, { x: 0, y: 0 }, { x: -unit, y: unit }, { x: -unit * 2, y: 0 } ],
+                        up: [ { x: -unit, y: -unit }, { x: 0, y: 0 }, { x: unit, y: -unit }, { x: unit * 2, y: 0 } ],
+                    }
+                }
+            },
+            t: {
+                sides: ['up', 'right', 'down', 'left'],
+                positions: {
+                    start: [ { x: 80, y: 0 }, { x: 80, y: 20 }, { x: 80, y: 40 }, { x: 100, y: 20 } ],
+                    sides: {
+                        right: [ { x: unit * 2, y: 0 }, { x: unit, y: -unit }, { x: 0, y: -unit * 2}, { x: 0, y: 0 } ],
+                        down: [ { x: 0, y: unit * 2 }, { x: unit, y: unit }, { x: unit * 2, y: 0 }, { x: 0, y: 0 } ],
+                        left: [ { x: -unit * 2, y: 0 }, { x: -unit, y: unit }, { x: 0, y: unit * 2 }, { x: 0, y: 0 } ],
+                        up: [ { x: 0, y: -unit * 2 }, { x: -unit, y: -unit }, { x: -unit * 2, y: 0 }, { x: 0, y: 0 } ],
+                    }
+                }
+            },
+            z: {
+                sides: ['up', 'right'],
+                positions: {
+                    start: [ { x: 100, y: 0 }, { x: 100, y: 20 }, { x: 80, y: 20 }, { x: 80, y: 40 } ],
+                    sides: {
+                        right: [ {x: unit, y: unit}, {x: 0, y: 0}, {x: unit, y: -unit}, {x: 0, y: -unit * 2} ],
+                        up: [ {x: -unit, y: -unit}, {x: 0, y: 0}, {x: -unit, y: unit}, {x: 0, y: unit * 2} ]
+                    }
+                }
+            }
+        }
+        const MIN_TIME_BETWEEN_ROTATE = 500;
+
+        elpy.keydown(key => {
+            switch(key) {
+                case 'ArrowRight':
+                    x = unit;
+                    
+                    if (checkBlockEnvironment('right')) {
+                        x = 0;
+                    }
+
+                    break;
+                case 'ArrowLeft': 
+                    x = -unit;
+                    
+                    if (checkBlockEnvironment('left')) {
+                        x = 0;
+                    }
+
+                    break;
+                case 'ArrowUp':
+                    if (checkRotateTimeDiff()) {
+                        time.rotate = Date.now();
+                    } else {
+                        return;
+                    }
+
+                    shape.isRotated = true;
+
+                    switchSide();
+                    checkBlocksBeforeRotate();
+
+                    break;
+            }
+        });
+
+        init();
+
+        function fillMap() {
+            const column = height / unit;
+            const row = width / unit;
+
+            for(let i = 0; i < column; i++) {
+                for(let j = 0; j < row; j++) {
+                    if (!map[i]) {
+                        map[i] = [];
+                    }
+
+                    map[i][j] = 0;
+                }
+            }
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function getBlockParts() {
+            const number = getRandomNumber(0, images.length - 1);
+            const positions = shapes[shape.value].positions.start;
+            const blocks = [];
+
+            positions.forEach((position, index) => {
+                const image = images[number];
+                const block = elpy.create(`${index} ${shape.count}`, position.x, position.y, unit, unit, { image });
+
+                elpy.add(block);
+                blocks.push(block);
+            });
+
+            return blocks;
+        }
+
+        function isBusyBlock() {
+            let isBusy = false;
+
+            blocks.forEach(block => {
+                const i = Math.floor(block.y / block.height);
+                const j = block.x / block.width;
+
+                if (map[i + 1][j] !== 0) {
+                    isBusy = true;
+                }
+            });
+
+            return isBusy;
+        }
+
+        function markBlocks() {
+            blocks.forEach(block => {
+                const i = Math.floor(block.y / block.height);
+                const j = block.x / block.width;
+
+                map[i][j] = block;
+            });
+        }
+
+        function resetStates() {
+            shape.isRotated = false;
+            sides.index = 0;
+            sides.value = 'up';
+        }
+
+        function nextShapeCount() {
+            shape.count++;
+        }
+
+        function rotateShape(block, index) {
+            if (!shapes[shape.value].positions.sides) {
+                return;
+            }
+
+            const position = shapes[shape.value].positions.sides[sides.value][index];
+                        
+            if ((block.y / block.height) % 1 === 0) {
+                block.move(block.x + position.x, block.y + position.y);
+
+                if (blocks.length - 1 === index) {
+                    shape.isRotated = false;
+                }
+            } else {
+                block.move(block.x + x, block.y + 1);
+            }
+        }
+
+        function blockPositionIsBusy(block) {
+            const i = Math.floor(block.y / block.height);
+            const j = block.x / block.width;
+
+            if (block.y + block.height >= elpy.height
+            || map[i + 1][j] !== 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function move() {                
+            blocks.forEach((block, index) => {
+                if (shape.isRotated) {
+                    rotateShape(block, index);
+                } else {
+                    block.move(block.x + x, block.y + 1);
+                }
+
+                if (blockPositionIsBusy(block)) {
+                    shape.isMoving = false;
+                }
+            });
+
+            if (shape.isMoving) {
+                x = 0;
+                requestAnimationFrame(move);
+            } else {
+                markBlocks();
+                resetStates();
+                nextShapeCount();
+                checkRowOnFullness();
+                spawn();
+            }
+        }
+        
+        function spawn() {
+            shape.value = getRandomShape();
+            shape.isMoving = true;
+            blocks = getBlockParts();
+
+            if (isBusyBlock()) {
+                return;
+            }
+
+            move();
+        }
+
+        function checkBlockEnvironment(side) {
+            let state = false;
+
+            blocks.forEach((block, index) => {
+                const i = Math.floor(block.y / block.height);
+                const j = block.x / block.width;
+                
+                if (side === 'right') {
+                    if (block.x + block.width >= elpy.width
+                        || map[i][j + 1]
+                        || (map[i + 1] && map[i + 1][j + 1])) {
+                        state = true;
+                    }
+                }
+
+                if (side === 'left') {
+                    if (block.x <= 0
+                        || map[i][j - 1]
+                        || (map[i + 1] && map[i + 1][j - 1])) {
+                        state = true;
+                    }
+                }
+                
+            });
+
+            return state;
+        }
+
+        function checkRotateTimeDiff() {
+            return time.rotate === null || Date.now() - time.rotate > MIN_TIME_BETWEEN_ROTATE;
+        }
+
+        function switchSide() {
+            if (shapes[shape.value].sides && sides.index === shapes[shape.value].sides.length - 1) {
+                sides.index = 0;
+            } else {
+                sides.index++;
+            }
+
+            sides.value = shapes[shape.value].sides ? shapes[shape.value].sides[sides.index] : sides.value;
+        }
+
+        function checkBlocksBeforeRotate() {
+            if (!shapes[shape.value].positions.sides) {
+                shape.isRotated = false;
+
+                return;
+            }
+
+            const positions = shapes[shape.value].positions.sides[sides.value];
+
+            blocks.forEach((block, index) => {
+                const i = Math.floor((block.y + positions[index].y) / block.height);
+                const j = (block.x + positions[index].x) / block.width;
+
+                if (map[i][j] !== 0
+                || (block.x + block.width + positions[index].x) > elpy.width) {
+                    shape.isRotated = false;
+                    sides.index = 0;
+                }
+            });
+        }
+
+        function destroyBlocks(row) {
+            const cells = map[row];
+
+            cells.forEach(cell => {
+                cell.destroy();
+            });
+
+            map[row].forEach((cell, index) => {
+                map[row][index] = 0;
+            });
+        }
+
+        function moveBlocks(rows) {
+            const lastEmptyRowIndex = rows[rows.length - 1];
+            let offset = rows.length;
+
+            for(let i = lastEmptyRowIndex; i >= 0; i--) {
+                if (!map[i - offset]) {
+                    offset--;
+                    i++;
+
+                    continue;
+                }
+
+                map[i] = map[i - offset];
+                map[i - offset].forEach(cell => {
+                    if (cell !== 0) {
+                        cell.y = cell.y + (cell.height * offset);
+                    } 
+                });
+            }
+        }
+
+        function checkRowOnFullness() {
+            const rows = getFilledRows();
+
+            if (rows.length > 0) {
+                rows.forEach(row => {
+                    destroyBlocks(row);
+                });
+
+                moveBlocks(rows);
+            }
+        }
+
+        function getFilledRows() {
+            const rows = [];
+
+            for(let i = 0; i < map.length; i++) {
+                if (map[i].every(cell => cell !== 0)) {
+                    rows.push(i);
+                }
+            }
+
+            return rows;
+        }
+
+        function getRandomShape() {
+            const keys = Object.keys(shapes);
+
+            return keys[getRandomNumber(0, keys.length)];
+        }
+
+        function init() {
+            fillMap();
+            spawn();
+            elpy.load();
+        }
+    </script>
+</body>
+</html>

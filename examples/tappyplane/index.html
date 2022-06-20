@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elpy.js</title>
+</head>
+<body>
+    <style>
+        body {
+            background: #fff;
+        }
+        
+        #field {
+            margin: auto;
+            border: 1px solid #dcdcdc;
+        }
+    </style>
+    <canvas id="field"></canvas>
+
+    <script src="../../dist/elpy.min.js"></script>
+    <script>
+        const options = {
+            character: {
+                image: 'images/plane.png',
+                offset: {
+                    x: true
+                },
+                main: true
+            },
+            ground: {
+                image: {
+                    src: 'images/ground.png',
+                    repeat: true
+                }
+            },
+            background: {
+                image: {
+                    src: 'images/background.png',
+                    repeat: true
+                }
+            },
+            sky: {
+                color: '#cfeaf5'
+            },
+            bottom: {
+                color: '#97714a'
+            }
+        }
+
+        const width = 400;
+        const height = 600;
+        const elpy = new Elpy('#field', width, height);
+        const obstacles = [];
+        const background = elpy.create('background', -1000, 0, width * 100, 480, options.background);
+        const sky = elpy.create('sky', -1000, 480, width * 100, height - 480, options.sky);
+        const ground = elpy.create('ground', -1000, 498, width * 100, 71, options.ground);
+        const bottom = elpy.create('bottom', -1000, 560, width * 100, 100, options.bottom);
+        const character = elpy.create('character', 210, 285, 44, 36, options.character);
+        let degrees = 0;
+        
+        const pipe = elpy.create('pipe', 300, 285, 40, 60, { color: 'black' });
+
+        //obstacles.push(pipe);
+
+        elpy.add(background);
+        elpy.add(sky);
+        elpy.add(ground);
+        elpy.add(character);
+        character.collision(obstacles);
+
+        elpy.tick(() => {
+            character.move(character.x + 1, character.y);
+        });
+        
+        character.on('move', () => {
+            if (character.y > character.track.y) {
+                if (degrees < 10) {
+                    degrees++;
+                }
+            }
+
+            if (character.y < character.track.y) {
+                if (degrees > -10) {
+                    degrees--;
+                }
+            }
+
+            character.rotate(360 + degrees);
+        });
+
+        elpy.key(key => {
+            switch(key) {
+                case 'Space':
+                    stopJump(character);
+                    elpy.nextTick(() => {
+                        character.jump(30);
+                    });
+
+                    break;
+            }
+        });
+
+        elpy.load();
+
+        function stopJump(object) {
+            object.jump(0);
+        }
+    </script>
+</body>
+</html>

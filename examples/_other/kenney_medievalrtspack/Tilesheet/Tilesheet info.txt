@@ -1,0 +1,4 @@
+	
+
+	Tile size : 64 x 64 px
+	Margin	  : 32 px
