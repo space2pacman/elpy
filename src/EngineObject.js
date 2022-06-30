@@ -324,7 +324,7 @@ class EngineObject {
     }
 
     get isPushing() {
-        return this._options.pushing
+        return this._options.pushing;
     }
 
     get isFlying() {
@@ -479,7 +479,6 @@ class EngineObject {
         if (x + this._width > object.x
             && x < object.x + object.width
             && (this._y + this._height <= object.y || this._y >= object.y + object.height)) {
-
             const top = object.y - (y + this._height);
             const bottom = y - (object.y + object.height);
 

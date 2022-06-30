@@ -10,9 +10,6 @@ class Engine {
         this._field = null;
         this._ctx = null;
         this._keys = [];
-        //
-        this._rays = [];
-        //
         this._storage = {
             images: []
         };
@@ -279,37 +276,6 @@ class Engine {
             if (!image && !images && this._imagesIsLoaded && this._isLoaded) {
                 this._renderShape(object);
             }
-
-            //
-            this._rays.forEach(ray => {
-                this._ctx.beginPath();
-                this._ctx.moveTo(ray.min.x, ray.min.y);
-                
-
-                if (object.options.type === 'crateMetal'
-                    && ray.max.x > object.x
-                    && ray.max.x < object.x + object.width
-                    && ray.max.y > object.y
-                    && ray.max.y < object.y + object.height
-                ) {
-
-                    while(ray.max.x > object.x
-                        && ray.max.x < object.x + object.width
-                        && ray.max.y > object.y
-                        && ray.max.y < object.y + object.height) {
-                        ray.max.x--;
-                        ray.max.y--;
-                    }
-                    
-                    
-
-                    this._ctx.lineTo(ray.max.x, ray.max.y);
-                }
-                
-                this._ctx.closePath();
-                this._ctx.stroke();
-            });
-            //
         }
 
         if (!this._isLoaded) {
@@ -559,20 +525,7 @@ class Engine {
 
         this._render();
     }
-    //
-    rayCast(x, y) {
-        this._rays.push({
-            min: {
-                x,
-                y
-            },
-            max: {
-                x: x + 100,
-                y: y + 100
-            }
-        });
-    }
-    //
+
     _drawRepeatImage(object, offset) {
         const pattern = this._ctx.createPattern(object.options.image.cached, 'repeat');
 
@@ -607,7 +560,7 @@ class Engine {
     }
 
     _isEmpty(object) {
-        return Object.values(object).length === 0
+        return Object.values(object).length === 0;
     }
 
     _setFavIcon() {
