@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elpy.js</title>
+</head>
+<body>
+    <style>
+        body {
+            background: #fff;
+        }
+        
+        #field {
+            margin: auto;
+            border: 1px solid #dcdcdc;
+        }
+    </style>
+    <canvas id="field"></canvas>
+
+    <script src="../../dist/elpy.min.js"></script>
+    <script>
+        const options = {
+            character: {
+                image: 'images/player.png',
+                offset: {
+                    y: true
+                },
+                main: true
+            },
+            ground: {
+                image: 'images/ground.png',
+                custom: {
+                    delta: 1
+                }
+            },
+            road: {
+                main: {
+                    left: {
+                        image: {
+                            src: 'images/road_left.png',
+                            repeat: true
+                        }
+                    },
+                    center: {
+                        image: {
+                            src: 'images/road_center.png',
+                            repeat: true
+                        }
+                    },
+                    right: {
+                        image: {
+                            src: 'images/road_right.png',
+                            repeat: true
+                        }
+                    }
+                },
+                finish: {
+                    left: {
+                        image: {
+                            src: 'images/road_finish_left.png',
+                            repeat: true
+                        }
+                    },
+                    center: {
+                        image: {
+                            src: 'images/road_finish_center.png',
+                            repeat: true
+                        }
+                    },
+                    right: {
+                        image: {
+                            src: 'images/road_finish_right.png',
+                            repeat: true
+                        }
+                    }
+                }
+            }
+        }
+        const width = 384;
+        const height = 600;
+        const elpy = new Elpy('#field', width, height);
+        const unit = 32;
+        const step = 5;
+        const obstacles = [];
+        const roadHeight = 10000;
+        const road = {
+            end: {
+                left: elpy.create('road_left_end', 0, -640, 128, 640, options.road.main.left),
+                center: elpy.create('road_center_end', 128, -640, 128, 640, options.road.main.center),
+                right: elpy.create('road_right_end', 256, -640, 128, 640, options.road.main.right)
+            },
+            finish: {
+                left: elpy.create('road_finish_left', 0, 0, 128, 128, options.road.finish.left),
+                center: elpy.create('road_finish_center', 128, 0, 128, 128, options.road.finish.center),
+                right: elpy.create('road_finish_right', 256, 0, 128, 128, options.road.finish.right)
+            },
+            main: {
+                left: elpy.create('road_left', 0, 128, 128, roadHeight, options.road.main.left),
+                center: elpy.create('road_center', 128, 128, 128, roadHeight, options.road.main.center),
+                right: elpy.create('road_right', 256, 128, 128, roadHeight, options.road.main.right)
+            }
+        };
+        const character = elpy.create('character', 156, 285, 71, 131, options.character);
+        const bot = elpy.create('bot', 156, 100, 71, 131, { image: 'images/car_black_1.png' })
+
+        elpy.add(road.end.left);
+        elpy.add(road.end.center);
+        elpy.add(road.end.right);
+        elpy.add(road.finish.left);
+        elpy.add(road.finish.center);
+        elpy.add(road.finish.right);
+        elpy.add(road.main.left);
+        elpy.add(road.main.center);
+        elpy.add(road.main.right);
+        elpy.add(character);
+        elpy.add(bot);
+
+        obstacles.push(bot);
+
+        character.collision(obstacles);
+        character.move(character.x, roadHeight);
+        //character.fly(-90, 1, 0, 2);
+
+        bot.move(bot.x, 9000);
+        
+        elpy.tick(() => {
+            bot.run(-1, 8);
+        })
+        
+        // character.on('collision', (object, side) => {
+        //     if (side === 'bottom') {
+        //         slowdown(object, 3);
+        //         slowdown(character, 2);
+        //     }
+        // });
+
+        // function slowdown(object, step) {
+        //     let flyStep = step * 10;
+        //     const timerId = setInterval(() => {
+        //         flyStep -= 1;
+        //         if (flyStep < 0) {
+        //             clearInterval(timerId);
+        //             flyStep = 0;
+        //             object.fly(-90, 0);
+        //         } else {
+        //             object.fly(-90, 1, 0, (flyStep / 10));
+        //         }                
+        //     }, 10);
+        // }
+
+        elpy.tick(() => {
+            character.run(-1, 16)
+        }, 10)
+
+        function turn(direction) {
+            let degrees = 0;
+            let step = 1;
+            let res = true;
+            let d = 25;
+
+            const id = setInterval(() => {
+                if (res) {
+                    if (degrees < d) {
+                        degrees += step;
+                    }
+
+                    if (degrees === d) {
+                        res = false;
+                        degrees = 0;
+                    }
+
+                    if (direction === 'right') {
+                        character.rotate(character.degrees + (degrees / 10), 0, -((character.height / 2) - 30));
+                    }
+
+                    if (direction === 'left') {
+                        character.rotate(character.degrees - (degrees / 10), 0, -((character.height / 2) - 30));
+                    }
+                } else {
+                    if (degrees > -d) {
+                        degrees -= step;
+                    }
+
+                    if (degrees === -d) {
+                        degrees = 0;
+                        clearInterval(id);
+                    }
+
+                    if (direction === 'left') {
+                        character.rotate(character.degrees - (degrees / 10), 0, -((character.height / 2) - 30));
+                    }
+
+                    if (direction === 'right') {
+                        character.rotate(character.degrees + (degrees / 10), 0, -((character.height / 2) - 30));
+                    }
+                }                
+            }, 10);
+        }
+
+        elpy.keydown(key => {
+            switch(key) {
+                case 'ArrowRight':
+                    turn('right');
+
+                    break;
+                case 'ArrowLeft':
+                    turn('left');
+
+                    break;
+            }
+        });
+        
+        elpy.load();
+    </script>
+</body>
+</html>

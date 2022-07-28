@@ -68,7 +68,17 @@
         };
         const options = {
             character: {
-                image: 'images/tank_green.png',
+                images: [
+                    {
+                        paths: ['images/character.png'],
+                        state: 'default'
+                    },
+                    {
+                        paths: ['images/explosion1.png', 'images/explosion2.png', 'images/explosion3.png', 'images/explosion4.png', 'images/explosion5.png'],
+                        state: 'explosion',
+                        time: 100
+                    }
+                ],
                 obstacles: true,
                 custom: {
                     step: 4
@@ -77,7 +87,7 @@
             bot: {
                 images: [
                     {
-                        paths: ['images/tank_red.png'],
+                        paths: ['images/bot.png'],
                         state: 'default'
                     },
                     {
@@ -91,33 +101,35 @@
                     angle: 0,
                     step: 2
                 }
+            },
+            bullet: {
+                image: 'images/bullet.png'
             }
         }
         const indexes = {
             barricades: {
-                '1': 'crateMetal',
-                '2': 'barricadeMetal'
+                '1': 'crateMetal'
             },
             land: {
-                '0': 'tileSand1'
+                '0': 'tileSand'
             }
         }
         const elpy = new Elpy('#field', 784, 784);
         const obstacles = [];
-        const BULLET_DISTANCE = 1000;
-        const BULLET_SPEED = 10;
         const BULLET_STEP = 10;
-        let buleltIndex = 0;
+        let bulletIndex = 0;
         let directons = ['h', 'v'];
         let direction = 'h';
-        let lastTimeUpdate = Date.now();
+        let lastTimeUpdateBotMove = Date.now();
+        let lastTimeUpdateBotHit = Date.now();
+        let lastTimeUpdateCharacterHit = Date.now();
         let interval = 1000;
         
         placeObjects('land', indexes.land, 64, 64);
         placeObjects('barricades', indexes.barricades, 28, 28, true);
         
-        const character = elpy.create('character', 200, 300, 42, 46, options.character);
-        const bot = elpy.create('bot', 300, 300, 42, 46, options.bot);
+        const character = elpy.create('character', 371, 565, 42, 46, options.character);
+        const bot = elpy.create('bot', 371, 201, 42, 46, options.bot);
         
         obstacles.push(character);
         obstacles.push(bot);
@@ -150,40 +162,25 @@
             }
         });
 
-        setInterval(() => {
-            const currentDate = Date.now();
+        elpy.tick(() => {
+            botMove();
+        });
 
-            if (currentDate > lastTimeUpdate + interval) {
-                lastTimeUpdate = currentDate;
+        elpy.tick(() => {
+            if (bot.isExist && character.isExist) {
+                const currentDate = Date.now();
 
-                direction = directons[getRandomRange(0, directons.length)]
+                if (currentDate > lastTimeUpdateBotHit + interval) {
+                    lastTimeUpdateBotHit = currentDate;
+                } else {
+                    return;
+                }
+                
+                hit(bot, 'character');
             }
+        });
 
-            if (direction === 'h') {
-                if (bot.x > character.x + character.width) {
-                    bot.options.custom.angle = 90;
-                }
-
-                if (bot.x + bot.width < character.x) {
-                    bot.options.custom.angle = 270;
-                }
-            }
-
-            if (direction === 'v') {
-                if (bot.y > character.y + character.height) {
-                    bot.options.custom.angle = 180;
-                }
-
-                if (bot.y + bot.height < character.y) {
-                    bot.options.custom.angle = 0;
-                }
-            }
-
-            bot.rotate(bot.options.custom.angle);
-            bot.run(1, bot.options.custom.step);
-        }, 30);
-
-        elpy.keydown(key => {
+        elpy.key(key => {
             switch(key) {
                 case 'ArrowUp':
                     character.run(1, character.options.custom.step)
@@ -205,29 +202,21 @@
                     character.rotate(90);
 
                     break;
+            }
+        });
+
+        elpy.keydown(key => {
+            switch(key) {
                 case 'Enter':
-                    const bulletX = character.x + ((character.width / 2) / 2) + 7;
-                    const bulletY = character.y + ((character.height / 2) / 2) + 4;
-                    const bullet = elpy.create(`bullet-${buleltIndex}`, bulletX, bulletY, 8, 14, { image: 'images/bulletGreen1_outline.png' });
-                    
-                    buleltIndex++;
+                    const currentDate = Date.now();
 
-                    elpy.add(bullet);
-                    bullet.collision(obstacles.filter(obstacles => obstacles !== character));
-                    bullet.rotate(character.degrees + 180);
-                    bullet.fly(character.degrees + 90, BULLET_SPEED, BULLET_DISTANCE, BULLET_STEP);
-                    bullet.on('collision', object => {
-                        if (object.options.obstacles) {
-                            bot.state = 'explosion';
-                            bot.animate = true;
+                    if (currentDate > lastTimeUpdateCharacterHit + (interval / 2)) {
+                        lastTimeUpdateCharacterHit = currentDate;
+                    } else {
+                        return;
+                    }
 
-                            setTimeout(() => {
-                                object.destroy();
-                            }, bot.options.images.cached.explosion.list.length * bot.options.images.cached.explosion.time);
-
-                            bullet.destroy();
-                        }
-                    })
+                    hit(character, 'bot');
 
                     break;
             }
@@ -255,6 +244,78 @@
 
         function getRandomRange(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function botMove() {
+            if (bot.state !== 'default') {
+                return;
+            }
+
+            const currentDate = Date.now();
+
+            if (currentDate > lastTimeUpdateBotMove + interval) {
+                lastTimeUpdateBotMove = currentDate;
+
+                direction = directons[getRandomRange(0, directons.length)]
+            }
+
+            if (direction === 'h') {
+                if (bot.x > character.x + character.width) {
+                    bot.options.custom.angle = 90;
+                }
+
+                if (bot.x + bot.width < character.x) {
+                    bot.options.custom.angle = 270;
+                }
+            }
+
+            if (direction === 'v') {
+                if (bot.y > character.y + character.height) {
+                    bot.options.custom.angle = 180;
+                }
+
+                if (bot.y + bot.height < character.y) {
+                    bot.options.custom.angle = 0;
+                }
+            }
+
+            bot.rotate(bot.options.custom.angle);
+            bot.run(1, bot.options.custom.step);
+        }
+
+        function hit(attacking, targetName) {
+            const bulletWidth = 8;
+            const bulletHeight = 14;
+            const bulletX = attacking.x + ((attacking.width / 2) / 2) + bulletHeight / 2;
+            const bulletY = attacking.y + ((attacking.height / 2) / 2) + bulletWidth / 2;
+            const bullet = elpy.create(`bullet-${bulletIndex}`, bulletX, bulletY, bulletWidth, bulletHeight, options.bullet);
+            
+            bulletIndex++;
+
+            elpy.add(bullet);
+            bullet.collision(obstacles.filter(obstacles => obstacles !== attacking));
+            bullet.rotate(attacking.degrees + 180);
+            
+            elpy.tick(() => {
+                if (bullet.isExist) {
+                    bullet.run(-1, BULLET_STEP);
+                }
+            });
+
+            bullet.on('collision', object => {
+                if (object.options.obstacles) {
+                    if (object.name === targetName) {
+                        object.state = 'explosion';
+                        object.animate = true;
+                        
+                        setTimeout(() => {
+                            object.destroy();
+                        }, object.options.images.cached.explosion.list.length * object.options.images.cached.explosion.time);
+                    }
+
+                    bullet.destroy();
+                }
+            });
         }
     </script>
 </body>

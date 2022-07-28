@@ -47,6 +47,7 @@ class EngineObject {
             fly: null
         };
         this._options = {
+            // fix obstacles => obstacle
             obstacles: typeof options.obstacles === 'boolean' ? options.obstacles : true,
             activity: typeof options.activity === 'boolean' ? options.activity : false,
             main: typeof options.main === 'boolean' ? options.main : false,
@@ -300,7 +301,7 @@ class EngineObject {
 
         this._events[event].push(callback);
     }
-
+    //fix remove ?
     addOffsetObject(object, x, y) {
         this._offset.object = object;
         this._offset.engine.x = x;
