@@ -32,7 +32,7 @@ class Engine {
             this._objects[name].on('destroy', this._onDestroyObject.bind(this, name));
         }
 
-        if (options?.main) {
+        if (typeof options.main === 'boolean' ? options.main : false) {
             this._addOffsetObject(this._objects[name]);
         }
 
