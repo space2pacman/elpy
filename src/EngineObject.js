@@ -106,6 +106,7 @@ class EngineObject {
             const object = this._collision[name];
 
             if (this !== object
+                && this.isExist
                 && object.isExist
                 && !object.ghost
                 && x + this._width > object.x

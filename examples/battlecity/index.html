@@ -297,9 +297,7 @@
             bullet.rotate(attacking.degrees + 180);
             
             elpy.tick(() => {
-                if (bullet.isExist) {
-                    bullet.run(-1, BULLET_STEP);
-                }
+                bullet.run(-1, BULLET_STEP);
             });
 
             bullet.on('collision', object => {
@@ -312,7 +310,6 @@
                             object.destroy();
                         }, object.options.images.cached.explosion.list.length * object.options.images.cached.explosion.time);
                     }
-
                     bullet.destroy();
                 }
             });
