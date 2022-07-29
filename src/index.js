@@ -1,8 +1,8 @@
 const EngineObject = require('./EngineObject');
 
 class Engine {
-    constructor(id, width, height, options = {}) {
-        this._id = id;
+    constructor(link, width, height, options = {}) {
+        this._link = link;
         this._width = width || window.innerWidth;
         this._height = height || window.innerHeight;
         this._preload = typeof options.preload === 'boolean' ? options.preload : true;
@@ -578,7 +578,14 @@ class Engine {
     }
 
     _setFieldStyle() {
-        this._field = document.querySelector(this._id);
+        if (typeof this._link === 'string') {
+            this._field = document.querySelector(this._link);
+        }
+
+        if (this._link instanceof HTMLCanvasElement) {
+            this._field = this._link;
+        }
+
         this._field.width = this._width;
         this._field.height = this._height;
         this._field.style.display = 'block';
