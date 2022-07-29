@@ -82,8 +82,9 @@ class Engine {
     }
 
     tick(callback) {
-        callback();
-        requestAnimationFrame(this.tick.bind(this, callback));
+        if (callback() !== false) {
+            requestAnimationFrame(this.tick.bind(this, callback));
+        }
     }
 
     nextTick(callback) {

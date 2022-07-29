@@ -163,10 +163,18 @@
         });
 
         elpy.tick(() => {
+            if (!bot.isExist) {
+                return false;
+            }
+            
             botMove();
         });
 
         elpy.tick(() => {
+            if (!character.isExist) {
+                return false;
+            }
+
             if (bot.isExist && character.isExist) {
                 const currentDate = Date.now();
 
@@ -297,6 +305,10 @@
             bullet.rotate(attacking.degrees + 180);
             
             elpy.tick(() => {
+                if (!bullet.isExist) {
+                    return false;
+                }
+                
                 bullet.run(-1, BULLET_STEP);
             });
 
