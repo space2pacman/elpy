@@ -81,7 +81,7 @@
                 ],
                 obstacles: true,
                 custom: {
-                    step: 4
+                    step: 2
                 }
             },
             bot: {
@@ -117,6 +117,9 @@
         const elpy = new Elpy('#field', 784, 784);
         const obstacles = [];
         const BULLET_STEP = 10;
+        const MAX_PRESSED_KEYS = 1;
+        const pressedKeys = [];
+        const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'];
         let bulletIndex = 0;
         let directons = ['h', 'v'];
         let direction = 'h';
@@ -189,28 +192,38 @@
         });
 
         elpy.key(key => {
-            switch(key) {
-                case 'ArrowUp':
-                    character.run(1, character.options.custom.step)
-                    character.rotate(180);
-
-                    break;
-                case 'ArrowDown':
-                    character.run(1, character.options.custom.step)
-                    character.rotate(0);
-
-                    break;
-                case 'ArrowRight':
-                    character.run(1, character.options.custom.step)
-                    character.rotate(270);
-
-                    break;
-                case 'ArrowLeft':
-                    character.run(1, character.options.custom.step)
-                    character.rotate(90);
-
-                    break;
+            if (!pressedKeys.includes(key) && allowedKeys.includes(key)) {
+                pressedKeys.push(key);
             }
+            
+            if (pressedKeys.length === MAX_PRESSED_KEYS) {
+                switch(key) {
+                    case 'ArrowUp':
+                        character.run(1, character.options.custom.step)
+                        character.rotate(180);
+
+                        break;
+                    case 'ArrowDown':
+                        character.run(1, character.options.custom.step)
+                        character.rotate(0);
+
+                        break;
+                    case 'ArrowRight':
+                        character.run(1, character.options.custom.step)
+                        character.rotate(270);
+
+                        break;
+                    case 'ArrowLeft':
+                        character.run(1, character.options.custom.step)
+                        character.rotate(90);
+
+                        break;
+                }
+            }
+        });
+
+        elpy.keyup(() => {
+            keys.splice(0, keys.length);
         });
 
         elpy.keydown(key => {
