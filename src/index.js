@@ -22,7 +22,7 @@ class Engine {
         this._init();
     }
 
-    create(name, x, y, width, height, options) {
+    create(name, x, y, width, height, options = {}) {
         this._objects[name] = new EngineObject(name, x, y, width, height, options);
 
         if (!this._objects[name].options.disabledEvents) {
