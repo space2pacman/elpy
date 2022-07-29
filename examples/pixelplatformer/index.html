@@ -279,38 +279,12 @@
             character.state = 'idle';
 
             if (object.options.type === 'enemy') {
-                if (side === 'top') {
-                    if (!isRebound) {
-                        stopFly(character);
-                        isRebound = true;
-                    }
-
-                    stopJump(character);
-
-                    elpy.nextTick(() => {
-                        character.jump(10, JUMP_MULTIPLIER);
-                        isFalling = true;
-                    });
-
-                    const height = object.height / 2;
-
-                    object.height = height;
-                    object.y = object.y + height;
-                    object.ghost = true;
-                }
+                checkEnemyCollision(object, side);
             }
             
+            
             if (['ground', 'box', 'pipe-hole'].includes(object.options.type)) {
-                if (side === 'top') {
-                    if (isRebound) {
-                        isRebound = false;
-                    }
-
-                    if (character.y + character.height === object.y) {
-                        isFalling = true;
-                        character.fly(FLY_DOWN, FLY_SPEED);
-                    }
-                }
+                checkSubjectCollision(object, side);
             }
         });
 
@@ -389,6 +363,41 @@
                     }
                 }
             });
+        }
+
+        function checkEnemyCollision(object, side) {
+            if (side === 'top') {
+                if (!isRebound) {
+                    stopFly(character);
+                    isRebound = true;
+                }
+
+                stopJump(character);
+
+                elpy.nextTick(() => {
+                    character.jump(10, JUMP_MULTIPLIER);
+                    isFalling = true;
+                });
+
+                const height = object.height / 2;
+
+                object.height = height;
+                object.y = object.y + height;
+                object.ghost = true;
+            }
+        }
+
+        function checkSubjectCollision(object, side) {
+            if (side === 'top') {
+                if (isRebound) {
+                    isRebound = false;
+                }
+
+                if (character.y + character.height === object.y) {
+                    isFalling = true;
+                    character.fly(FLY_DOWN, FLY_SPEED);
+                }
+            }
         }
     </script>
 </body>
