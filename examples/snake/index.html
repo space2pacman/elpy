@@ -154,12 +154,10 @@
         }
 
         function restartGame() {
-            character.fly(0, 0);
             direction = '';
             
-            setTimeout(() => {
-                character.move(((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit);
-            });
+            character.fly(0, 0);
+            character.move(((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit);
 
             tail.forEach(item => {
                 if (item.name !== 'character') {
