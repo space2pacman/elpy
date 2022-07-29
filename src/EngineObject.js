@@ -95,7 +95,7 @@ class EngineObject {
     }
 
     move(x, y) {
-        if (this._checkObjectInViewport()) {
+        if (!this.checkObjectInViewport()) {
             return false;
         }
 
@@ -308,6 +308,14 @@ class EngineObject {
         this._offset.engine.x = x;
         this._offset.engine.y = y;
     }
+
+    checkObjectInViewport() {
+        if (this._checkObjectNotActivity && (this._checkObjectInViewportX || this._checkObjectInViewportY)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     
     get name() {
         return this._name;
@@ -395,6 +403,7 @@ class EngineObject {
 
         this._animate = value;
     }
+    
 
     get ghost() {
         return this._ghost;
@@ -418,7 +427,7 @@ class EngineObject {
         || this._y < this._offset.object.y - this._offset.engine.y - (this._height * 2);
     }
 
-    get _checkObjectActivity() {
+    get _checkObjectNotActivity() {
         return !this._options.activity && this._offset.object;
     }
 
@@ -548,14 +557,6 @@ class EngineObject {
                     this._isFalling = false;
                 }
             }
-        }
-    }
-
-    _checkObjectInViewport() {
-        if (this._checkObjectActivity && (this._checkObjectInViewportX || this._checkObjectInViewportY)) {
-            return true;
-        } else {
-            return false;
         }
     }
 

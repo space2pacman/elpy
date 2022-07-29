@@ -185,7 +185,8 @@
                         ],
                         type: 'enemy',
                         custom: {
-                            delta: -1
+                            delta: -1,
+                            moving: false
                         }
                     }
                     const enemy = elpy.create(`enemy${i}-${j}`, unit * j, unit * i, unit, unit, options);
@@ -236,11 +237,6 @@
                 obstacle.collision(character);
                 obstacle.collision(grounds);
                 obstacle.fly(FLY_DOWN, FLY_SPEED);
-
-                elpy.tick(() => {
-                    // fix учечка памяти
-                    obstacle.move(obstacle.x + obstacle.options.custom.delta, obstacle.y);
-                });
             }
         });
 
@@ -275,6 +271,8 @@
                     character.fall(JUMP_MULTIPLIER);
                 }
             }
+
+            checkObstaclesInViewport();
         });
 
         character.on('collision', (object, side) => {
@@ -361,6 +359,36 @@
 
         function stopJump(object) {
             object.jump(0);
+        }
+
+        function moveObstacle(obstacle) {
+            if (!obstacle.options.custom.moving) {
+                obstacle.options.custom.moving = true;
+
+                elpy.tick(() => {
+                    if (!obstacle.checkObjectInViewport()) {
+                        obstacle.options.custom.moving = false;
+
+                        return false;
+                    }
+
+                    obstacle.move(obstacle.x + obstacle.options.custom.delta, obstacle.y);
+                });
+            }
+        }
+
+        function checkObstaclesInViewport() {
+            obstacles.forEach(obstacle => {
+                if (obstacle.options.type === 'enemy') {
+                    console.log(obstacle.checkObjectInViewport())
+                    if (obstacle.checkObjectInViewport()) {
+                        moveObstacle(obstacle);
+                    } else {
+                        obstacle.options.custom.moving = false;
+                        
+                    }
+                }
+            });
         }
     </script>
 </body>
