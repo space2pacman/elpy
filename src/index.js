@@ -116,6 +116,10 @@ class Engine {
         return this._offset;
     }
 
+    get objects() {
+        return this._objects;
+    }
+
     get _imagesIsLoaded() {
         if (this._preload) {
             const loadedImages = this._storage.images.filter(item => item.loaded);

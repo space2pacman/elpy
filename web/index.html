@@ -81,13 +81,14 @@
 
 
         editor.setValue(code);
-        editor.setOption('useWorker', false)
+        editor.setOption('useWorker', false);
         editor.session.setMode("ace/mode/javascript");
         editor.setTheme("ace/theme/monokai");
 
         const run = document.querySelector('.js-button-run');
+        const elpy = new Elpy('#field', 480, 300, { preload: false });
         run.addEventListener('click', () => {
-            const elpy = new Elpy('#field', 480, 300, { preload: false });
+            
             const func = new Function('elpy', editor.getValue());
 
             func(elpy);
