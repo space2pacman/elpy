@@ -354,7 +354,6 @@
         function checkObstaclesInViewport() {
             obstacles.forEach(obstacle => {
                 if (obstacle.options.type === 'enemy') {
-                    console.log(obstacle.checkObjectInViewport())
                     if (obstacle.checkObjectInViewport()) {
                         moveObstacle(obstacle);
                     } else {
