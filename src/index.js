@@ -6,7 +6,6 @@ class Engine {
         this._width = width || window.innerWidth;
         this._height = height || window.innerHeight;
         this._preload = typeof options.preload === 'boolean' ? options.preload : true;
-        this._isLoaded = false;
         this._field = null;
         this._ctx = null;
         this._keys = [];
@@ -91,9 +90,7 @@ class Engine {
         requestAnimationFrame(callback);
     }
 
-    async load() {
-        this._isLoaded = true;
-        
+    async load() {        
         if (this._imagesIsLoading) {
             await this._render();
 
@@ -274,13 +271,9 @@ class Engine {
                 await this._renderImages(object);
             }
             
-            if (!image && !images && this._imagesIsLoaded && this._isLoaded) {
+            if (!image && !images && this._imagesIsLoaded) {
                 this._renderShape(object);
             }
-        }
-
-        if (!this._isLoaded) {
-            this._showBlackScreen();
         }
 
         if (this._preload) {
@@ -289,7 +282,7 @@ class Engine {
     }
 
     async _renderImage(object) {
-        if (!object.isExist || object.options.image.rendering || !this._isLoaded) {
+        if (!object.isExist || object.options.image.rendering) {
             return;
         }
         
@@ -340,7 +333,7 @@ class Engine {
     }
 
     async _renderImages(object) {
-        if (!object.isExist || object.options.images.rendering || !this._isLoaded) {
+        if (!object.isExist || object.options.images.rendering) {
             return;
         }
 

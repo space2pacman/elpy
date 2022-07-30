@@ -77,22 +77,20 @@
     <script>
         const editor = ace.edit("editor");
 
-        const code = `const elpy = new Elpy('#field', 480, 300);
+        const code = `elpy.add(elpy.create('test', 10, 10, 20, 20));`;
 
-elpy.add(elpy.create('test', 10, 10, 20, 20));
 
-elpy.load();`;
         editor.setValue(code);
         editor.setOption('useWorker', false)
         editor.session.setMode("ace/mode/javascript");
         editor.setTheme("ace/theme/monokai");
 
         const run = document.querySelector('.js-button-run');
-
         run.addEventListener('click', () => {
-            const func = new Function(editor.getValue());
+            const elpy = new Elpy('#field', 480, 300, { preload: false });
+            const func = new Function('elpy', editor.getValue());
 
-            func();
+            func(elpy);
         });
     </script>
 </body>
