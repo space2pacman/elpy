@@ -138,7 +138,7 @@
 
         elpy.load();
 
-        function placeObjects(indexes, width, height, isObstacles = false) {
+        function placeObjects(indexes, width, height, isObstacle = false) {
             for(let i = 0; i < map.length; i++) {
                 for(let j = 0; j < map[i].length; j++) {
                     const cell = map[i][j];
@@ -147,7 +147,7 @@
 
                     if (convertedKeys.includes(cell)) {
                         const name = indexes[cell];
-                        const object = elpy.create(`${name}-${i}-${j}`, width * j, height * i , width, height, { image: `images/${name}.png`, type: name, obstacles: isObstacles });
+                        const object = elpy.create(`${name}-${i}-${j}`, width * j, height * i , width, height, { image: `images/${name}.png`, type: name, obstacle: isObstacle });
 
                         elpy.add(object);
                         obstacles.push(object);

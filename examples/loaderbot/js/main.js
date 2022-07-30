@@ -29,7 +29,7 @@
             '1': {
                 image: 'images/environment_01.png',
                 type: 'environment',
-                obstacles: false,
+                obstacle: false,
             }
         },
         character: {
@@ -145,7 +145,6 @@
         actions: document.querySelector('.js-buttons-actions'),
         run: document.querySelector('.js-button-run')
     }
-    let index = 0;
     let direction = '';
     let algorithmIsRunned = false;
     let boxesMoved = 0;
@@ -239,8 +238,9 @@
     }
     
     function updateAlgorithm() {
+        checkRunButton();
+        
         algorithm.innerHTML = '';
-    
         actions.forEach((action, index) => {
             const button = document.createElement('div');
             const remove = document.createElement('div');
@@ -289,6 +289,14 @@
         algorithm.childNodes.forEach(element => {
             element.classList.remove('active-action');
         });
+    }
+
+    function checkRunButton() {
+        if (actions.length > 0) {
+            buttons.run.classList.remove('disabled');
+        } else {
+            buttons.run.classList.add('disabled');
+        }
     }
     
     function setActiveAction(index) {
@@ -369,6 +377,7 @@
     }
     
     function init() {
+        buttons.run.classList.add('disabled');
         buttons.action.forEach(button => {
             button.addEventListener('click', e => {
                 const action = e.target.getAttribute('data-action');

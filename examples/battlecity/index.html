@@ -79,7 +79,6 @@
                         time: 100
                     }
                 ],
-                obstacles: true,
                 custom: {
                     step: 2
                 }
@@ -96,7 +95,6 @@
                         time: 100
                     }
                 ],
-                obstacles: true,
                 custom: {
                     angle: 0,
                     step: 2
@@ -223,7 +221,7 @@
         });
 
         elpy.keyup(() => {
-            keys.splice(0, keys.length);
+            pressedKeys.splice(0, pressedKeys.length);
         });
 
         elpy.keydown(key => {
@@ -245,7 +243,7 @@
 
         elpy.load();
 
-        function placeObjects(type, indexes, width, height, isObstacles = false) {
+        function placeObjects(type, indexes, width, height, isObstacle = false) {
             for(let i = 0; i < map[type].length; i++) {
                 for(let j = 0; j < map[type][i].length; j++) {
                     const cell = map[type][i][j];
@@ -254,7 +252,7 @@
 
                     if (convertedKeys.includes(cell)) {
                         const name = indexes[cell];
-                        const object = elpy.create(`${name}-${i}-${j}`, width * j, height * i , width, height, { image: `images/${name}.png`, type: name, obstacles: isObstacles });
+                        const object = elpy.create(`${name}-${i}-${j}`, width * j, height * i , width, height, { image: `images/${name}.png`, type: name, obstacle: isObstacle });
 
                         elpy.add(object);
                         obstacles.push(object);
@@ -314,7 +312,7 @@
             bulletIndex++;
 
             elpy.add(bullet);
-            bullet.collision(obstacles.filter(obstacles => obstacles !== attacking));
+            bullet.collision(obstacles.filter(obstacle => obstacle !== attacking));
             bullet.rotate(attacking.degrees + 180);
             
             elpy.tick(() => {
@@ -326,7 +324,7 @@
             });
 
             bullet.on('collision', object => {
-                if (object.options.obstacles) {
+                if (object.options.obstacle) {
                     if (object.name === targetName) {
                         object.state = 'explosion';
                         object.animate = true;

@@ -47,8 +47,7 @@ class EngineObject {
             fly: null
         };
         this._options = {
-            // fix obstacles => obstacle
-            obstacles: typeof options.obstacles === 'boolean' ? options.obstacles : true,
+            obstacle: typeof options.obstacle === 'boolean' ? options.obstacle : true,
             activity: typeof options.activity === 'boolean' ? options.activity : false,
             main: typeof options.main === 'boolean' ? options.main : false,
             pushing: typeof options.pushing === 'boolean' ? options.pushing : false,
@@ -118,7 +117,7 @@ class EngineObject {
 
                 this._dispatchEvent('collision', object, side);
                 
-                if (object.options.obstacles) {
+                if (object.options.obstacle) {
                     return false;
                 }
             }
