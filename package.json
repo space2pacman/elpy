@@ -1,14 +1,22 @@
 {
   "name": "elpy",
   "version": "1.0.6",
-  "description": "",
+  "description": "2D JavaScript game engine",
+  "author": "space2pacman",
+  "license": "ISC",
+  "keywords": [
+    "html5",
+    "game",
+    "rendering",
+    "engine",
+    "2d",
+    "canvas",
+    "web"
+  ],
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "webpack": "^5.64.2",
     "webpack-cli": "^4.9.1"
