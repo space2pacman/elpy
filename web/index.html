@@ -5,36 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>elpy.js</title>
+    <title>Elpy.js</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.8.1/ace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.8.1/mode-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.8.1/theme-monokai.min.js"></script>
+
+    <script src="../dist/elpy.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container" style="width: 960px;">
-        <h1>Elpy.js</h1>
-        <p>2D JavaScript engine for HTML5 game development</p>
-        <button type="button" class="btn btn-success">Get started</button>
-
-        <div class="d-flex justify-content-between">
-            <a href="#" class="card">
-                <img src="test.png" class="card-img-top">
-                <span class="game-caption">Platformer</span>
-            </a>
-            <div class="card">
-                <img src="test.png" class="card-img-top">
-            </div>
-            <div class="card">
-                <img src="test.png" class="card-img-top">
-            </div>
-            <div class="card">
-                <img src="test.png" class="card-img-top">
-            </div>
-            <div class="card">
-                <img src="test.png" class="card-img-top">
-            </div>
-        </div>
-    </div>
-    <script src="js/bootstrap.min.js"></script>
-
     <style>
+        #field {
+            width: 478px;
+            height: 300px;
+            box-sizing: border-box;
+            border: 1px solid black;
+        }
+        #editor {
+            width: 480px;
+            height: 300px;
+            box-sizing: border-box;
+        }
         .game-caption {
             position: absolute;
             bottom: 15px;
@@ -49,5 +41,59 @@
             width: 175px;
         }
     </style>
+    <div class="container" style="width: 960px;margin-top: 200px;text-align: center;">
+        <img src="images/logo.png">
+        <div style="margin-top: 30px;">
+            2D JavaScript engine for HTML5 game development / 
+            <a href="#" target="_blank" class="text-info text-decoration-none">github</a>
+        </div>
+
+        <div class="d-flex" style="margin-top: 30px;">
+            <canvas id="field"></canvas>
+            <div id="editor"></div>
+        </div>
+
+        <button type="button" class="btn btn-lg btn-success js-button-run" style="margin-top: 30px;">Run</button>
+
+            <!-- <div class="d-flex justify-content-between">
+                <a href="#" class="card">
+                    <img src="test.png" class="card-img-top">
+                    <span class="game-caption">Platformer</span>
+                </a>
+                <div class="card">
+                    <img src="test.png" class="card-img-top">
+                </div>
+                <div class="card">
+                    <img src="test.png" class="card-img-top">
+                </div>
+                <div class="card">
+                    <img src="test.png" class="card-img-top">
+                </div>
+                <div class="card">
+                    <img src="test.png" class="card-img-top">
+                </div>
+            </div> -->
+    </div>
+    <script>
+        const editor = ace.edit("editor");
+
+        const code = `const elpy = new Elpy('#field', 480, 300);
+
+elpy.add(elpy.create('test', 10, 10, 20, 20));
+
+elpy.load();`;
+        editor.setValue(code);
+        editor.setOption('useWorker', false)
+        editor.session.setMode("ace/mode/javascript");
+        editor.setTheme("ace/theme/monokai");
+
+        const run = document.querySelector('.js-button-run');
+
+        run.addEventListener('click', () => {
+            const func = new Function(editor.getValue());
+
+            func();
+        });
+    </script>
 </body>
 </html>
