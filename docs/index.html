@@ -4,127 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
     <title>Elpy.js</title>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.8.1/ace.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.8.1/mode-javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.8.1/theme-monokai.min.js"></script>
-
-    <script src="../dist/elpy.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #field {
-            width: 478px;
-            height: 330px;
-            box-sizing: border-box;
-            border: 1px solid black;
-        }
-
-        #editor {
-            width: 480px;
-            height: 330px;
-            box-sizing: border-box;
-        }
-    </style>
-    <div class="container" style="width: 960px;text-align: center;">
-        <img src="images/logo.png">
-        <div style="margin-top: 30px;">
-            2D JavaScript engine for HTML5 game development / 
-            <a href="https://github.com/space2pacman/elpy" target="_blank" class="text-info text-decoration-none">github</a>
-        </div>
-
-        <div class="d-flex" style="margin-top: 30px;">
-            <canvas id="field"></canvas>
-            <div id="editor"></div>
+    <div class="main">
+        <div class="container">
+            <img class="logo" src="images/logo.png">
+            <div class="desc">
+                2D JavaScript engine for HTML5 game development / 
+                <a href="https://github.com/space2pacman/elpy" target="_blank" class="link-project">github</a>
+            </div>
+    
+            <div class="demo">
+                <canvas id="field"></canvas>
+                <div id="editor"></div>
+            </div>
+    
+            <div class="examples-links js-examples-links">
+                <div class="example-link" data-example="moving-elpy">Elpy</div>
+                <div class="example-link" data-example="car">Car</div>
+                <a href="examples.html" class="more-examples">More examples</a>
+            </div>
         </div>
     </div>
-    <script>
-        const editor = ace.edit("editor");
-        const elpy = new Elpy('#field', 480, 300, { preload: false });
-        const code = `const obj = elpy.create('object', 0, 0, 30, 30);
-let x = true;
-let y = true;
-let step = 1;
-let multiplierX = 1;
-let multiplierY = 1;
 
-setInterval(() => {
-    if (x) {
-        if (obj.x >= elpy.width - obj.width) {
-            x = false;
-        }
-        
-        multiplierX = 1;
-    } else {
-        if (obj.x <= 0) {
-            x = true;
-        }
-        
-        multiplierX = -1;
-    }
-
-    if (y) {
-        if (obj.y >= elpy.height - obj.height) {
-            y = false;
-        }
-        
-        multiplierY = 1;
-    } else {
-        if (obj.y <= 0) {
-            y = true;
-        }
-        
-        multiplierY = -1;
-    }
-    
-    obj.move(
-        obj.x + (step * multiplierX), 
-        obj.y + (step * multiplierY)
-    );
-});
-
-elpy.add(obj);`;
-
-        editor.setValue(code);
-        editor.clearSelection();
-        editor.setOption('useWorker', false);
-        editor.session.setMode("ace/mode/javascript");
-        editor.setTheme("ace/theme/monokai");
-        editor.on('change', run);
-
-        run();
-
-        function run() {
-            setTimeout(() => {
-                clearIntervals();            
-                destroyObjects();
-
-                const func = new Function('elpy', editor.getValue());
-
-                func(elpy);
-            });
-        }
-
-        function clearIntervals() {
-            for(let i = 0; i < 10000; i++) {
-                clearInterval(i);
-            }
-        }
-
-        function destroyObjects() {
-            for(const name in elpy.objects) {
-                elpy.objects[name].destroy();
-            }
-        }
-    </script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/mode-javascript.min.js"></script>
+    <script src="js/theme-monokai.min.js"></script>
+    <script src="../dist/elpy.min.js"></script>
+    <script src="js/examplesCode.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
