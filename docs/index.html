@@ -52,7 +52,10 @@
         const elpy = new Elpy('#field', 480, 300, { preload: false });
         const code = `const obj = elpy.create('object', 0, 0, 30, 30);
 let x = true;
-let stepX = 1;
+let y = true;
+let step = 1;
+let multiplierX = 1;
+let multiplierY = 1;
 
 setInterval(() => {
     if (x) {
@@ -60,21 +63,39 @@ setInterval(() => {
             x = false;
         }
         
-        stepX = 1;
+        multiplierX = 1;
     } else {
         if (obj.x <= 0) {
             x = true;
         }
         
-        stepX = -1;
+        multiplierX = -1;
+    }
+
+    if (y) {
+        if (obj.y >= elpy.height - obj.height) {
+            y = false;
+        }
+        
+        multiplierY = 1;
+    } else {
+        if (obj.y <= 0) {
+            y = true;
+        }
+        
+        multiplierY = -1;
     }
     
-    obj.move(obj.x + stepX, obj.y);
-})
+    obj.move(
+        obj.x + (step * multiplierX), 
+        obj.y + (step * multiplierY)
+    );
+});
 
 elpy.add(obj);`;
 
         editor.setValue(code);
+        editor.clearSelection();
         editor.setOption('useWorker', false);
         editor.session.setMode("ace/mode/javascript");
         editor.setTheme("ace/theme/monokai");
