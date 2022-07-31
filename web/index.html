@@ -16,83 +16,94 @@
 </head>
 <body>
     <style>
+        body {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+        }
+
         #field {
             width: 478px;
-            height: 300px;
+            height: 330px;
             box-sizing: border-box;
             border: 1px solid black;
         }
+
         #editor {
             width: 480px;
-            height: 300px;
+            height: 330px;
             box-sizing: border-box;
         }
-        .game-caption {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            padding: 2px 8px;
-            background: rgb(20 20 20 / 50%);
-            color: rgba(255,255,255,0.8);
-            max-width: 170px;
-            border-radius: 4px;
-        }
-        .card {
-            width: 175px;
-        }
     </style>
-    <div class="container" style="width: 960px;margin-top: 200px;text-align: center;">
+    <div class="container" style="width: 960px;text-align: center;">
         <img src="images/logo.png">
         <div style="margin-top: 30px;">
             2D JavaScript engine for HTML5 game development / 
-            <a href="#" target="_blank" class="text-info text-decoration-none">github</a>
+            <a href="https://github.com/space2pacman/elpy" target="_blank" class="text-info text-decoration-none">github</a>
         </div>
 
         <div class="d-flex" style="margin-top: 30px;">
             <canvas id="field"></canvas>
             <div id="editor"></div>
         </div>
-
-        <button type="button" class="btn btn-lg btn-success js-button-run" style="margin-top: 30px;">Run</button>
-
-            <!-- <div class="d-flex justify-content-between">
-                <a href="#" class="card">
-                    <img src="test.png" class="card-img-top">
-                    <span class="game-caption">Platformer</span>
-                </a>
-                <div class="card">
-                    <img src="test.png" class="card-img-top">
-                </div>
-                <div class="card">
-                    <img src="test.png" class="card-img-top">
-                </div>
-                <div class="card">
-                    <img src="test.png" class="card-img-top">
-                </div>
-                <div class="card">
-                    <img src="test.png" class="card-img-top">
-                </div>
-            </div> -->
     </div>
     <script>
         const editor = ace.edit("editor");
+        const elpy = new Elpy('#field', 480, 300, { preload: false });
+        const code = `const obj = elpy.create('object', 0, 0, 30, 30);
+let x = true;
+let stepX = 1;
 
-        const code = `elpy.add(elpy.create('test', 10, 10, 20, 20));`;
+setInterval(() => {
+    if (x) {
+        if (obj.x >= elpy.width - obj.width) {
+            x = false;
+        }
+        
+        stepX = 1;
+    } else {
+        if (obj.x <= 0) {
+            x = true;
+        }
+        
+        stepX = -1;
+    }
+    
+    obj.move(obj.x + stepX, obj.y);
+})
 
+elpy.add(obj);`;
 
         editor.setValue(code);
         editor.setOption('useWorker', false);
         editor.session.setMode("ace/mode/javascript");
         editor.setTheme("ace/theme/monokai");
+        editor.on('change', run);
 
-        const run = document.querySelector('.js-button-run');
-        const elpy = new Elpy('#field', 480, 300, { preload: false });
-        run.addEventListener('click', () => {
-            
-            const func = new Function('elpy', editor.getValue());
+        run();
 
-            func(elpy);
-        });
+        function run() {
+            setTimeout(() => {
+                clearIntervals();            
+                destroyObjects();
+
+                const func = new Function('elpy', editor.getValue());
+
+                func(elpy);
+            });
+        }
+
+        function clearIntervals() {
+            for(let i = 0; i < 10000; i++) {
+                clearInterval(i);
+            }
+        }
+
+        function destroyObjects() {
+            for(const name in elpy.objects) {
+                elpy.objects[name].destroy();
+            }
+        }
     </script>
 </body>
 </html>
