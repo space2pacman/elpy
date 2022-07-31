@@ -1,3 +1,3 @@
-![logo](/web/images/logo.png)
+![logo](/docs/images/logo.png)
 
 2D JavaScript game engine
