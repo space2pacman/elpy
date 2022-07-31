@@ -1,16 +1,23 @@
 (function() {
     const driver = new Driver();
-    const actions = document.querySelector('#actions');
-    const run = document.querySelector('#run');
-    const algorithmList = document.querySelector('#algorithm-list');
+    const actions = document.querySelector('.js-buttons-actions');
+    const run = document.querySelector('.js-button-run');
+    const resetOnboarding = document.querySelector('.js-reset-onboarding');
+    const algorithmList = document.querySelector('.js-algorithm-list');
     const loaderbotOnboarding = localStorage['loaderbot-onboarding'];
+
+    resetOnboarding.addEventListener('click', () => {
+        delete localStorage['loaderbot-onboarding'];
+
+        location.reload();
+    });
 
     if (loaderbotOnboarding === 'true') {
         return;
     }
 
     driver.highlight({
-        element: '#actions',
+        element: '.js-buttons-actions',
         popover: {
             title: 'Click x4 on button "arrow up"',
             showButtons: false
@@ -23,7 +30,7 @@
 
             setTimeout(() => {
                 driver.highlight({
-                    element: '#run',
+                    element: '.js-button-run',
                     popover: {
                         title: 'Click on run',
                         position: 'left',
@@ -38,5 +45,5 @@
 
     run.addEventListener('click', () => {
         driver.reset();
-    })
+    });
 })()
