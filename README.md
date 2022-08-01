@@ -2,7 +2,7 @@
 
 2D JavaScript game engine
 
-[Demo](space2pacman.github.io/elpy/docs/) / [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
+[Demo](https://space2pacman.github.io/elpy/docs/) / [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
 
 ## Engine
 
