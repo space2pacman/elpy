@@ -23,11 +23,20 @@
     <script>
         const options = {
             character: {
-                image: 'images/plane.png',
+                images: [
+                    {
+                        paths: ['images/plane0.png', 'images/plane1.png', 'images/plane2.png'],
+                        state: 'fly',
+                        time: 30
+                    }
+                ],
                 offset: {
                     x: true
                 },
-                main: true
+                main: true,
+                custom: {
+                    degrees: 0
+                }
             },
             ground: {
                 image: {
@@ -46,6 +55,9 @@
             },
             bottom: {
                 color: '#97714a'
+            },
+            pipe: {
+                image: 'images/pipe.png'
             }
         }
 
@@ -53,41 +65,48 @@
         const height = 600;
         const elpy = new Elpy('#field', width, height);
         const obstacles = [];
+        const MAX_PIPES_COUNT = 10;
         const background = elpy.create('background', -1000, 0, width * 100, 480, options.background);
         const sky = elpy.create('sky', -1000, 480, width * 100, height - 480, options.sky);
         const ground = elpy.create('ground', -1000, 498, width * 100, 71, options.ground);
         const bottom = elpy.create('bottom', -1000, 560, width * 100, 100, options.bottom);
         const character = elpy.create('character', 210, 285, 44, 36, options.character);
-        let degrees = 0;
         
-        const pipe = elpy.create('pipe', 300, 285, 40, 60, { color: 'black' });
-
-        //obstacles.push(pipe);
+        createPipe();
 
         elpy.add(background);
         elpy.add(sky);
         elpy.add(ground);
         elpy.add(character);
         character.collision(obstacles);
+        fall(character);
 
         elpy.tick(() => {
             character.move(character.x + 1, character.y);
         });
+
+        character.on('collision', () => {
+            resetGame();
+        });
         
         character.on('move', () => {
+            if (character.y + character.height > elpy.height) {
+                resetGame();
+            }
+
             if (character.y > character.track.y) {
-                if (degrees < 10) {
-                    degrees++;
+                if (character.options.custom.degrees < 10) {
+                    character.options.custom.degrees++;
                 }
             }
 
             if (character.y < character.track.y) {
-                if (degrees > -10) {
-                    degrees--;
+                if (character.options.custom.degrees > -10) {
+                    character.options.custom.degrees--;
                 }
             }
 
-            character.rotate(360 + degrees);
+            character.rotate(360 + character.options.custom.degrees);
         });
 
         elpy.key(key => {
@@ -106,6 +125,38 @@
 
         function stopJump(object) {
             object.jump(0);
+        }
+
+        function fall(object) {
+            object.jump(1);
+        }
+
+        function resetGame() {
+            character.move(210, 285);
+            stopJump(character);
+            elpy.nextTick(() => {
+                fall(character);
+            });
+        }
+
+        function createPipe() {
+            for(let i = 2; i < MAX_PIPES_COUNT; i++) {
+                const x = 200 * i;
+                const y = randomRange(-100, 0);
+
+                const pipeUp = elpy.create(`pipe-up-${i}`, x, y, 50, 300, options.pipe);
+                const pipeDown = elpy.create(`pipe-down-${i}`, x, pipeUp.y + pipeUp.height + 120, 50, 300, options.pipe);
+
+                pipeUp.rotate(180);
+                obstacles.push(pipeUp);
+                obstacles.push(pipeDown);
+                elpy.add(pipeUp);
+                elpy.add(pipeDown);
+            }
+        }
+
+        function randomRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
         }
     </script>
 </body>
