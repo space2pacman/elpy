@@ -52,6 +52,7 @@ class EngineObject {
             main: typeof options.main === 'boolean' ? options.main : false,
             pushing: typeof options.pushing === 'boolean' ? options.pushing : false,
             disabledEvents: typeof options.disabledEvents === 'boolean' ? options.disabledEvents : false,
+            added: false,
             type: options.type || null,
             custom: options.custom || null,
             color: options.color || 'black',
@@ -414,6 +415,14 @@ class EngineObject {
 
     get degrees() {
         return this._degrees;
+    }
+
+    get added() {
+        return this._options.added;
+    }
+
+    set added(value) {
+        return this._options.added = value;
     }
 
     get _checkObjectInViewportX() {

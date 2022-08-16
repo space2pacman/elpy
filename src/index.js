@@ -42,10 +42,12 @@ class Engine {
     add(object) {
         if (Array.isArray(object)) {
             object.forEach(item => {
+                item.added = true;
                 this._addObjectImages(item);
                 this._render();
             });
         } else {
+            object.added = true;
             this._addObjectImages(object);
             this._render();
         }
@@ -91,7 +93,7 @@ class Engine {
         requestAnimationFrame(callback);
     }
 
-    async load() {        
+    async load() {
         if (this._imagesIsLoading) {
             await this._render();
 
@@ -267,6 +269,10 @@ class Engine {
             const object = this._objects[name];
             const images = object.options.images.list;
             const image = object.options.image.src;
+
+            if (!object.added) {
+                return;
+            }
 
             if (image) {
                 await this._renderImage(object);
