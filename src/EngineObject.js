@@ -396,7 +396,7 @@ class EngineObject {
 
     set animate(value) {
         if (value) {
-            if (Array.isArray(this.options.images.list)) {
+            if (Array.isArray(this.options.images.list) && this.options.images.list.length > 0) {
                 requestAnimationFrame(this._animation.bind(this));
             }
         }
