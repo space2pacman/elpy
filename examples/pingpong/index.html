@@ -51,10 +51,12 @@
             y: -1
         };
 
-        placeObjects(indexes, block.width, block.height, true);
         elpy.add(background);
         elpy.add(ball);
         elpy.add(platform);
+
+        placeObjects(indexes, block.width, block.height, true);
+
         ball.collision(obstacles);
         ball.collision(platform);
 

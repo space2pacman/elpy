@@ -160,6 +160,7 @@
         const obstacles = {};
         let index = 0;
         let direction = '';
+        let isAnimate = false;
         
         placeObjects('ground', indexes.ground, unit, unit, options.ground);
         placeObjects('objects', indexes.objects, unit, unit, options.objects);
@@ -218,6 +219,11 @@
         });
 
         elpy.key(key => {
+            if (!isAnimate) {
+                character.animate = true;
+                isAnimate = true;
+            }
+
             switch(key) {
                 case 'ArrowUp':
                     direction = 'up';
@@ -243,6 +249,14 @@
                     character.move(character.x - step, character.y);
 
                     break;
+            }
+        });
+
+        elpy.keyup(key => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(key)) {
+                character.state = `${direction}:idle`;
+                character.animate = false;
+                isAnimate = false;
             }
         });
 

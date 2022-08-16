@@ -97,6 +97,7 @@
         let isRebound = false;
         let isFalling = false;
         let isJumped = true;
+        let isAnimate = false;
 
         elpy.add(background);
         elpy.add(character);
@@ -195,12 +196,23 @@
         character.collision(obstacles);
         character.collision(grounds);
         character.fly(FLY_DOWN, FLY_SPEED);
+
         character.on('move', () => {
             if (character.x > character.track.x) {
+                if (!isAnimate) {
+                    character.animate = true;
+                    isAnimate = true;
+                }
+
                 character.state = 'move:right';
             }
 
             if (character.x < character.track.x) {
+                if (!isAnimate) {
+                    character.animate = true;
+                    isAnimate = true;
+                }
+
                 character.state = 'move:left';
             }
 
@@ -272,6 +284,8 @@
                 case 'ArrowLeft':
                 case 'ArrowRight':
                     character.state = 'idle';
+                    character.animate = false;
+                    isAnimate = false;
 
                     break;
             }
