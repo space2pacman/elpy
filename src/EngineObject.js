@@ -17,6 +17,7 @@ class EngineObject {
         this._state = null;
         this._ghost = false;
         this._animate = false;
+        this._added = false,
         this._track = {
             x: 0,
             y: 0
@@ -52,7 +53,6 @@ class EngineObject {
             main: typeof options.main === 'boolean' ? options.main : false,
             pushing: typeof options.pushing === 'boolean' ? options.pushing : false,
             disabledEvents: typeof options.disabledEvents === 'boolean' ? options.disabledEvents : false,
-            added: false,
             type: options.type || null,
             custom: options.custom || null,
             color: options.color || 'black',
@@ -396,7 +396,7 @@ class EngineObject {
 
     set animate(value) {
         if (value) {
-            if (Array.isArray(this.options.images.list) && this.options.images.list.length > 1) {
+            if (Array.isArray(this.options.images.list)) {
                 requestAnimationFrame(this._animation.bind(this));
             }
         }
@@ -418,11 +418,11 @@ class EngineObject {
     }
 
     get added() {
-        return this._options.added;
+        return this._added;
     }
 
     set added(value) {
-        return this._options.added = value;
+        return this._added = value;
     }
 
     get _checkObjectInViewportX() {

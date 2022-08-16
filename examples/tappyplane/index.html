@@ -78,8 +78,11 @@
         elpy.add(sky);
         elpy.add(ground);
         elpy.add(character);
+        elpy.add(bottom);
         character.collision(obstacles);
         fall(character);
+
+        character.animate = true;
 
         elpy.tick(() => {
             character.move(character.x + 1, character.y);

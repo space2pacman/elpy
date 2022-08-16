@@ -356,7 +356,11 @@ class Engine {
 
         const cached = object.options.images.cached[object.state];
 
-        this._calculateRenderTime(cached);
+        if (object.animate) {
+            this._calculateRenderTime(cached);
+        } else {
+            cached.currentImage = cached.list[0];
+        }
 
         if (this._imagesIsLoading) {
             return;
