@@ -15,10 +15,12 @@
   ],
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "serve": "webpack serve"
   },
   "devDependencies": {
     "webpack": "^5.64.2",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.10.0"
   }
 }

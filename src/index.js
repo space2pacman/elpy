@@ -6,6 +6,7 @@ class Engine {
         this._width = width || window.innerWidth;
         this._height = height || window.innerHeight;
         this._preload = typeof options.preload === 'boolean' ? options.preload : true;
+        this._favicon = typeof options.favicon === 'boolean' ? options.favicon : true;
         this._field = null;
         this._ctx = null;
         this._keys = [];
@@ -591,7 +592,10 @@ class Engine {
     }
 
     _init() {
-        this._setFavIcon();
+        if (this._favicon) {
+            this._setFavIcon();
+        }
+        
         this._setDefaultStyle();
         this._setFieldStyle();
     }
