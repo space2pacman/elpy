@@ -207,7 +207,7 @@
     
     character.on('collision', object => {
         if (object.isPushing) {
-            object.push(character, direction, step);
+            object.push(character, step);
         }
     });
     
@@ -264,15 +264,20 @@
             });
         });
     }
-    
+
     function makeAction(state, delay, callback) {
         const STEP_DELAY = 10;
         let actionTimer = setTimeout(() => {
+            character.animate = true;
             character.state = state;
     
             let count = 1;
             const timer = setInterval(() => {
                 if (count === unit) {
+                    const stateType = state.split(':')[0];
+
+                    character.animate = false;
+                    character.state = `${stateType}:idle`;
                     clearInterval(timer);
                 }
     

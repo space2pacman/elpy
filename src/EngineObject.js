@@ -9,8 +9,6 @@ class EngineObject {
         this._height = height;
         this._events = {};
         this._collision = {};
-        this._direction = null;
-        this._distance = null;
         this._isFlying = false;
         this._isJumping = false;
         this._isFalling = false;
@@ -19,8 +17,12 @@ class EngineObject {
         this._animate = false;
         this._added = false,
         this._track = {
-            x: 0,
-            y: 0
+            x: null,
+            y: null
+        };
+        this._dest = {
+            x: null,
+            y: null
         };
         this._offset = {
             x: 0,
@@ -99,6 +101,8 @@ class EngineObject {
             return false;
         }
 
+        this._dest.x = x;
+        this._dest.y = y;
         this._track.x = this._x;
         this._track.y = this._y;
         
@@ -221,41 +225,55 @@ class EngineObject {
         requestAnimationFrame(this._bounce.bind(this));
     }
 
-    // fix убрать direction?
-    push(pusher, direction, distance) {
-        this._direction = direction;
-        this._distance = distance;
+    push(pusher, distance = 1) {
+        let direction = '';
 
-        switch (this._direction) {
+        if (pusher.dest.y < pusher.y) {
+            direction = 'up';
+        }
+
+        if (pusher.dest.y > pusher.y) {
+            direction = 'down';
+        }
+
+        if (pusher.dest.x > pusher.x) {
+            direction = 'right';
+        }
+
+        if (pusher.dest.x < pusher.x) {
+            direction = 'left';
+        }
+
+        switch (direction) {
             case 'up':
-                this.move(this.x, this.y - this._distance);
+                this.move(this.x, this.y - distance);
 
-                if (pusher.y !== this.y + this.height) {
-                    pusher.move(pusher.x, pusher.y - this._distance);
+                if (this.track.y !== this.y) {
+                    pusher.move(pusher.x, pusher.y - distance);
                 }
 
                 break;
             case 'down':
-                this.move(this.x, this.y + this._distance);
-                
-                if (pusher.y + pusher.height !== this.y) {
-                    pusher.move(pusher.x, pusher.y + this._distance);
+                this.move(this.x, this.y + distance);
+
+                if (this.track.y !== this.y) {
+                    pusher.move(pusher.x, pusher.y + distance);
                 }
 
                 break;
             case 'right':
-                this.move(this.x + this._distance, this.y);
+                this.move(this.x + distance, this.y);
 
-                if (pusher.x + pusher.width !== this.x) {
-                    pusher.move(pusher.x + this._distance, pusher.y);
+                if (this.track.x !== this.x) {
+                    pusher.move(pusher.x + distance, pusher.y);
                 }
 
                 break;
             case 'left':
-                this.move(this.x - this._distance, this.y);
+                this.move(this.x - distance, this.y);
 
-                if (pusher.x !== this.x + this.width) {
-                    pusher.move(pusher.x - this._distance, pusher.y);
+                if (this.track.x !== this.x) {
+                    pusher.move(pusher.x - distance, pusher.y);
                 }
 
                 break;
@@ -327,6 +345,10 @@ class EngineObject {
 
     get track() {
         return this._track;
+    }
+
+    get dest() {
+        return this._dest;
     }
 
     get offset() {
@@ -540,12 +562,6 @@ class EngineObject {
         clearInterval(this._timers.fly);
     }
 
-    _onCollisionPush(object) {
-        if (object.isPushing) {
-            object.push(this, this._direction, this._distance);
-        }
-    }
-
     _onCollisionSide(object, side) {
         if (side === 'top') {
             if (this._y + this._height === object.y) {
@@ -569,7 +585,6 @@ class EngineObject {
     }
 
     _init() {
-        this.on('collision', this._onCollisionPush.bind(this));
         this.on('collision', this._onCollisionSide.bind(this));
     }
 }
