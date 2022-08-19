@@ -443,13 +443,13 @@ class EngineObject {
     }
 
     get _checkObjectInViewportX() {
-        return this._x > this._offset.object.x + this._offset.engine.x + (this._width * 2)
-        || this._x < this._offset.object.x - this._offset.engine.x - (this._width * 2);
+        return this._x > this._offset.object.x + this._offset.engine.x + (this._width * 3)
+        || this._x < this._offset.object.x - this._offset.engine.x - (this._width * 3);
     }
 
     get _checkObjectInViewportY() {
-        return this._y > this._offset.object.y + this._offset.engine.y + (this._height * 2) //fix
-        || this._y < this._offset.object.y - this._offset.engine.y - (this._height * 2); //fix
+        return this._y > this._offset.object.y + this._offset.engine.y + (this._height * 3) //fix
+        || this._y < this._offset.object.y - this._offset.engine.y - (this._height * 3); //fix
     }
 
     get _checkObjectNotActivity() {
