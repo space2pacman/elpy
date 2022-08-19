@@ -84,7 +84,9 @@ class Engine {
     }
 
     tick(callback) {
-        if (callback() !== false) {
+        const response = callback();
+        
+        if (response !== false) {
             requestAnimationFrame(this.tick.bind(this, callback));
         }
     }

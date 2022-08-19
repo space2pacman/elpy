@@ -40,11 +40,6 @@ class EngineObject {
         this._timers = {
             fly: null
         };
-        this._jump = {
-            acceleration: 0,
-            multiplier: 0,
-            docking: false
-        };
         this._degrees = 0;
         this._speeds = {
             fly: null
@@ -74,6 +69,17 @@ class EngineObject {
                 y: typeof options.offset === 'object' && options.offset !== null ? options.offset.y === undefined ? false : options.offset.y : false,
             }
         };
+        this._params = {
+            movement: {
+                acceleration: 0
+            },
+            jump: {
+                multiplier: 0
+            },
+            fall: {
+                multiplier: 0
+            }
+        }
         this._exist = true;
         this._MAX_ACCELERATION = 10;
         this._init();
@@ -197,32 +203,21 @@ class EngineObject {
     }
 
     jump(height, multiplier = 0.1) {
-        if (height === 0) {
-            this._isJumping = false;
-            this._isFalling = false;
-
+        if (this._isJumping) {
             return false;
         }
 
-        if (this._isJumping || this._isFlying) {
-            return false;
-        }
-        
+        this._isFalling = false;
         this._isJumping = true;
-        this._jump.acceleration = this._getMaxJumpAccelerationValue(height, multiplier);
-        this._jump.multiplier = multiplier;
-        this._jump.docking = false;
-
-        requestAnimationFrame(this._bounce.bind(this));
+        this._params.movement.acceleration = this._getMaxJumpAccelerationValue(height, multiplier);
+        this._params.jump.multiplier = multiplier;
+        this._tick(this._onJump.bind(this));
     }
 
     fall(multiplier = 0.1) {
         this._isFalling = true;
-        this._jump.acceleration = 0;
-        this._jump.multiplier = multiplier;
-        this._jump.docking = false;
-        
-        requestAnimationFrame(this._bounce.bind(this));
+        this._params.fall.multiplier = multiplier;
+        this._tick(this._onFall.bind(this));
     }
 
     push(pusher, distance = 1) {
@@ -453,12 +448,16 @@ class EngineObject {
     }
 
     get _checkObjectInViewportY() {
-        return this._y > this._offset.object.y + this._offset.engine.y + (this._height * 2)
-        || this._y < this._offset.object.y - this._offset.engine.y - (this._height * 2);
+        return this._y > this._offset.object.y + this._offset.engine.y + (this._height * 2) //fix
+        || this._y < this._offset.object.y - this._offset.engine.y - (this._height * 2); //fix
     }
 
     get _checkObjectNotActivity() {
         return !this._options.activity && this._offset.object;
+    }
+
+    get _isAccelerationStopped() {
+        return this._params.movement.acceleration <= 0;
     }
 
     _dispatchEvent(name, ...data) {
@@ -477,40 +476,28 @@ class EngineObject {
         }
     }
 
-    _bounce() {
-        if (this._isFalling) {
-            this._landing();
-        } else {
-            this._takeoff();
-        }
-
-        if (this._isJumping || this._isFalling) {
-            requestAnimationFrame(this._bounce.bind(this));
-        }
-    }
-
     _takeoff() {
-        if (this._jump.acceleration <= 0) {
-            this._isFalling = true;
-        } else {
-            this._jump.acceleration = (Math.floor(this._jump.acceleration * 10) - (this._jump.multiplier * 10)) / 10;
-            this.move(this._x, this._y - this._jump.acceleration);
-        }
+        const acceleration = Math.floor(this._params.movement.acceleration * 10);
+        const multiplier = this._params.jump.multiplier * 10;
+
+        this._params.movement.acceleration = (acceleration - multiplier) / 10;
+        this.move(this._x, this._y - this._params.movement.acceleration);
     }
 
     _landing() {
-        if (this._jump.acceleration <= this._MAX_ACCELERATION) {
-            this._jump.acceleration = (Math.floor(this._jump.acceleration * 10) + (this._jump.multiplier * 10)) / 10;
-        }
-        
-        if (this._jump.docking) {
-            this.move(this._x, this._y + this._jump.multiplier);
-        } else {
-            const moving = this.move(this._x, this._y + this._jump.acceleration);
+        if (this._params.movement.acceleration <= this._MAX_ACCELERATION) {
+            const acceleration = Math.floor(this._params.movement.acceleration * 10);
+            const multiplier = this._params.fall.multiplier * 10;
 
-            if (moving === false) {
-                this._jump.docking = true;
-            }
+            this._params.movement.acceleration = (acceleration + multiplier) / 10;
+        }
+
+        const moving = this.move(this._x, this._y + this._params.movement.acceleration);
+
+        if (moving === false) {
+            this._params.movement.acceleration = 0;
+            
+            return true;
         }
     }
 
@@ -563,23 +550,39 @@ class EngineObject {
     }
 
     _onCollisionSide(object, side) {
-        if (side === 'top') {
-            if (this._y + this._height === object.y) {
-                this._isJumping = false;
-                this._isFalling = false;
-            }
-        }
-
         if (side === 'bottom') {
-            if (this._y > object.y + object.height) {
-                this._jump.acceleration = (Math.floor(this._jump.acceleration * 10) - (this._jump.multiplier * 10)) / 10;
-                this.move(this._x, this._y - this._jump.acceleration);
-            } else {
-                this._jump.acceleration = 0;
-                
-                if (this._isJumping) {
-                    this._isFalling = false;
-                }
+            const acceleration = Math.floor(this._params.movement.acceleration * 10);
+            const multiplier = this._params.fall.multiplier * 10;
+
+            this._params.movement.acceleration = (acceleration - multiplier) / 10;
+            this.move(this._x, this._y - this._params.movement.acceleration);
+        }
+    }
+
+    _tick(callback) {
+        const response = callback();
+
+        if (response !== false) {
+            requestAnimationFrame(this._tick.bind(this, callback));
+        }
+    }
+
+    _onJump() {
+        if (this._isAccelerationStopped) {
+            this._isFalling = true;
+
+            return false;
+        } else {
+            this._takeoff();
+        }
+    }
+
+    _onFall() {
+        if (this._isFalling) {
+            const landed = this._landing();
+
+            if (landed === true) {
+                this._isJumping = false;
             }
         }
     }
