@@ -172,7 +172,7 @@
         elpy.add(background);
         elpy.add(character);
         character.collision(obstacles);
-        character.fly(90);
+        character.fall();
 
         character.on('move', () => {
             if (character.y > character.track.y) {
@@ -190,7 +190,6 @@
         character.on('collision', (object, side) => {
             if (side === 'top') {
                 fallDistance = 0;
-                stopJump(character);
                 character.state = 'ready';
                 character.jump(JUMP_HEIGHT);
                 
@@ -271,16 +270,11 @@
         function restartGame() {
             fallDistance = 0;
             
-            stopJump(character);
             destroyObstacles();
             placeObjects(indexes.ground, 50, 25, options.ground);
 
             character.move(210, map.length * 22);
             character.collision(obstacles);
-        }
-
-        function stopJump(object) {
-            object.jump(0);
         }
 
         function destroyObstacles() {

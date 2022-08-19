@@ -481,7 +481,7 @@ class EngineObject {
         const multiplier = this._params.jump.multiplier * 10;
 
         this._params.movement.acceleration = (acceleration - multiplier) / 10;
-        this.move(this._x, this._y - this._params.movement.acceleration);
+        this.move(this._x, Math.floor(this._y - this._params.movement.acceleration));
     }
 
     _landing() {
@@ -492,7 +492,7 @@ class EngineObject {
             this._params.movement.acceleration = (acceleration + multiplier) / 10;
         }
 
-        const moving = this.move(this._x, this._y + this._params.movement.acceleration);
+        const moving = this.move(this._x, Math.floor(this._y + this._params.movement.acceleration));
 
         if (moving === false) {
             this._params.movement.acceleration = 0;
@@ -551,11 +551,7 @@ class EngineObject {
 
     _onCollisionSide(object, side) {
         if (side === 'bottom') {
-            const acceleration = Math.floor(this._params.movement.acceleration * 10);
-            const multiplier = this._params.fall.multiplier * 10;
-
-            this._params.movement.acceleration = (acceleration - multiplier) / 10;
-            this.move(this._x, this._y - this._params.movement.acceleration);
+            this._params.movement.acceleration = 0;
         }
     }
 
