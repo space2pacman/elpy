@@ -35,12 +35,7 @@
             3: 'block_red',
             4: 'block_yellow'
         };
-        const game = {
-            start: false,
-            timer: null,
-            speed: 15
-        };
-        const speed = 5;
+        const ballSpeed = 5;
         const elpy = new Elpy('#field', block.width * 12, block.height * 20);
         const background = elpy.create('background', 0, 0, block.width * 12, block.height * 20, { image: 'images/background.png' });
         const ball = elpy.create('ball', elpy.width / 2 - (20 / 2), elpy.height - 70, 20, 20, { image: 'images/ball.png' });
@@ -50,6 +45,7 @@
             x: 1,
             y: -1
         };
+        let ballIsMoving = false;
 
         elpy.add(background);
         elpy.add(ball);
@@ -60,40 +56,40 @@
         ball.collision(obstacles);
         ball.collision(platform);
 
-        elpy.key(key => {
-            if (key === 'Space') {
-                if (!game.start) {
-                    game.timer = setInterval(() => {
-                        if (ball.y <= 0) {
-                            delta.y = 1;
-                        }
-
-                        if (ball.y + ball.height >= elpy.height) {
-                            restartGame();
-
-                            return;
-                        }
-
-                        if (ball.x <= 0) {
-                            delta.x = 1;
-                        }
-
-                        if (ball.x + ball.width >= elpy.width) {
-                            delta.x = -1;
-                        }
-
-                        ball.move(ball.x + (delta.x * speed), ball.y + (delta.y * speed));
-                    }, game.speed);
+        elpy.tick(() => {
+            if (ballIsMoving) {
+                if (ball.y <= 0) {
+                    delta.y = 1;
                 }
 
-                game.start = true;
+                if (ball.y + ball.height >= elpy.height) {
+                    restartGame();
+
+                    return;
+                }
+
+                if (ball.x <= 0) {
+                    delta.x = 1;
+                }
+
+                if (ball.x + ball.width >= elpy.width) {
+                    delta.x = -1;
+                }
+
+                ball.move(ball.x + (delta.x * ballSpeed), ball.y + (delta.y * ballSpeed));
+            }
+        });
+
+        elpy.key(key => {
+            if (key === 'Space') {
+                ballIsMoving = true;
             }
 
             if (key === 'ArrowLeft') {
                 if (platform.x >= 10) {
                     platform.move(platform.x - 10, platform.y);
                     
-                    if (!game.start) {
+                    if (!ballIsMoving) {
                         ball.move(platform.x + (platform.width / 2) - (ball.width / 2), ball.y);
                     }
                 }
@@ -103,7 +99,7 @@
                 if (platform.x <= elpy.width - (platform.width + 10)) {
                     platform.move(platform.x + 10, platform.y);
 
-                    if (!game.start) {
+                    if (!ballIsMoving) {
                         ball.move(platform.x + (platform.width / 2) - (ball.width / 2), ball.y);
                     }
                 }
@@ -159,8 +155,7 @@
         }
 
         function restartGame() {
-            clearInterval(game.timer);
-            game.start = false;
+            ballIsMoving = false;
             ball.move(platform.x + (platform.width / 2) - (ball.width / 2), elpy.height - 70);
         }
 

@@ -80,7 +80,7 @@
         elpy.add(character);
         elpy.add(bottom);
         character.collision(obstacles);
-        fall(character);
+        character.fall(0.5);
 
         character.animate = true;
 
@@ -112,34 +112,20 @@
             character.rotate(360 + character.options.custom.degrees);
         });
 
-        elpy.key(key => {
+        elpy.keydown(key => {
             switch(key) {
                 case 'Space':
-                    stopJump(character);
-                    elpy.nextTick(() => {
-                        character.jump(30);
-                    });
-
+                    character._isJumping = false;
+                    character.jump(40, 0.5);
+                    
                     break;
             }
         });
 
         elpy.load();
 
-        function stopJump(object) {
-            object.jump(0);
-        }
-
-        function fall(object) {
-            object.jump(1);
-        }
-
         function resetGame() {
             character.move(210, 285);
-            stopJump(character);
-            elpy.nextTick(() => {
-                fall(character);
-            });
         }
 
         function createPipe() {

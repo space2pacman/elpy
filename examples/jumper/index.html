@@ -191,7 +191,9 @@
             if (side === 'top') {
                 fallDistance = 0;
                 character.state = 'ready';
-                character.jump(JUMP_HEIGHT);
+                elpy.nextTick(() => {
+                    character.jump(JUMP_HEIGHT);
+                });
                 
                 setTimeout(() => {
                     object.destroy();
