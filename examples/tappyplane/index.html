@@ -71,17 +71,17 @@
         const ground = elpy.create('ground', -1000, 498, width * 100, 71, options.ground);
         const bottom = elpy.create('bottom', -1000, 560, width * 100, 100, options.bottom);
         const character = elpy.create('character', 210, 285, 44, 36, options.character);
-        
-        createPipe();
+        const JUMP_MULTIPLIER = 0.5;
+        const FALL_MULTIPLIER = 0.5;
+        let gameIsStarted = false;
+        let gameIsReloaded = false;
+        let spacePressed = false;
 
         elpy.add(background);
         elpy.add(sky);
         elpy.add(ground);
         elpy.add(character);
         elpy.add(bottom);
-        character.collision(obstacles);
-        character.fall(0.5);
-
         character.animate = true;
 
         elpy.tick(() => {
@@ -93,7 +93,7 @@
         });
         
         character.on('move', () => {
-            if (character.y + character.height > elpy.height) {
+            if (character.y + character.height > elpy.height || character.y <= 0) {
                 resetGame();
             }
 
@@ -115,8 +115,22 @@
         elpy.keydown(key => {
             switch(key) {
                 case 'Space':
-                    character._isJumping = false;
-                    character.jump(40, 0.5);
+                    if (!spacePressed) {
+                        spacePressed = true;
+                        
+                        startGame();
+                        
+                        character.jump(40, JUMP_MULTIPLIER, true);
+                    }
+                    
+                    break;
+            }
+        });
+
+        elpy.keyup(key => {
+            switch(key) {
+                case 'Space':
+                    spacePressed = false;
                     
                     break;
             }
@@ -125,16 +139,29 @@
         elpy.load();
 
         function resetGame() {
-            character.move(210, 285);
+            if (!gameIsReloaded) {
+                gameIsReloaded = true;
+                window.location.reload();
+            }           
+        }
+
+        function startGame() {
+            if (!gameIsStarted) {
+                gameIsStarted = true;
+
+                createPipe();
+                
+                character.fall(FALL_MULTIPLIER);
+                character.collision(obstacles);
+            }
         }
 
         function createPipe() {
             for(let i = 2; i < MAX_PIPES_COUNT; i++) {
                 const x = 200 * i;
                 const y = randomRange(-100, 0);
-
-                const pipeUp = elpy.create(`pipe-up-${i}`, x, y, 50, 300, options.pipe);
-                const pipeDown = elpy.create(`pipe-down-${i}`, x, pipeUp.y + pipeUp.height + 120, 50, 300, options.pipe);
+                const pipeUp = elpy.create(`pipe-up-${i}`, x + (character.x - elpy.width / 2), y, 50, 300, options.pipe);
+                const pipeDown = elpy.create(`pipe-down-${i}`, x + (character.x - elpy.width / 2), pipeUp.y + pipeUp.height + 120, 50, 300, options.pipe);
 
                 pipeUp.rotate(180);
                 obstacles.push(pipeUp);

@@ -202,7 +202,11 @@ class EngineObject {
         }, this._speeds.fly);
     }
 
-    jump(height, multiplier = 0.1) {
+    jump(height, multiplier = 0.1, forced = false) {
+        if (forced) {
+            this._isJumping = false;
+        }
+
         if (this._isJumping) {
             return false;
         }
@@ -211,13 +215,17 @@ class EngineObject {
         this._isJumping = true;
         this._params.movement.acceleration = this._getMaxJumpAccelerationValue(height, multiplier);
         this._params.jump.multiplier = multiplier;
-        this._tick(this._onJump.bind(this));
+        this._nextTick(() => {
+            this._tick(this._onJump.bind(this));
+        });
     }
 
     fall(multiplier = 0.1) {
         this._isFalling = true;
         this._params.fall.multiplier = multiplier;
-        this._tick(this._onFall.bind(this));
+        this._nextTick(() => {
+            this._tick(this._onFall.bind(this));
+        });
     }
 
     push(pusher, distance = 1) {
@@ -561,6 +569,10 @@ class EngineObject {
         if (response !== false) {
             requestAnimationFrame(this._tick.bind(this, callback));
         }
+    }
+
+    _nextTick(callback) {
+        requestAnimationFrame(callback);
     }
 
     _onJump() {
