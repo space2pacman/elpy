@@ -36,6 +36,7 @@
         }
         let angle = 0;
         let direction = '';
+        let gameIsStarted = false;
         const step = 20;
         const unit = 20;
         const tail = [];
@@ -61,6 +62,7 @@
 
             object.state = 'green';
             object.move(tip.track.x, tip.track.y);
+            
             addTailPart();
 
             switch(direction) {
@@ -99,6 +101,14 @@
             }
         });
 
+        setInterval(() => {
+            if (gameIsStarted) {
+
+                character.fly(angle, 0, step);
+            }
+            
+        }, 100);
+
         elpy.keydown(key => {
             switch(key) {
                 case 'ArrowUp':
@@ -132,7 +142,10 @@
             }
 
             if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(key)) {
-                character.fly(angle, 50, 0, step);
+                if (!gameIsStarted) {
+                    gameIsStarted = true;
+                }
+
             }
         });
 
@@ -154,17 +167,15 @@
         }
 
         function restartGame() {
+            gameIsStarted = false;
             direction = '';
-            
-            character.fly(0, 0);
-            character.move(((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit);
 
+            character.move(((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit);
             tail.forEach(item => {
                 if (item.name !== 'character') {
                     item.destroy();
                 }
-            })
-
+            });
             tail.splice(0, tail.length);
         }
     </script>

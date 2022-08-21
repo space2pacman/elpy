@@ -9,7 +9,6 @@ class EngineObject {
         this._height = height;
         this._events = {};
         this._collision = {};
-        this._isFlying = false;
         this._isJumping = false;
         this._isFalling = false;
         this._state = null;
@@ -154,52 +153,26 @@ class EngineObject {
         this._y = y;
         this._dispatchEvent('move');
     }
-    // fix убрать таймеры?
-    fly(degrees, speed, distance = 0, step = 1) {
-        if (speed === 0) {
-            this._isFlying = false;
-            this._resetTimers();
-
-            return false;
-        }
-
-        if (this._isFlying) {
-            this._isFlying = false;
-            this._resetTimers();
-        }
-
+    
+    fly(degrees, distance = 0, step = 1) {
+        const point = new Point();
         const positions = {
             start: {
                 x: this._x,
                 y: this._y
             }
         }
-        const point = new Point();
 
-        this._speeds.fly = speed;
-        this._timers.fly = setInterval(() => {
-            if (this.track.x === this._x && this.track.y === this._y) {
-                this._isFlying = false;
-            } else {
-                this._isFlying = true;
-            }
+        if (distance > 0 && point.distance(positions.start.x, positions.start.y, this._x, this._y) > distance) {
+            this.destroy();
 
-            if (this._isJumping || this._isFalling) {
-                return;
-            }
+            return;
+        }
 
-            if (distance > 0 && point.distance(positions.start.x, positions.start.y, this._x, this._y) > distance) {
-                this._isFlying = false;
-                this.destroy();
+        let x = this._x + parseFloat(Math.cos(degrees * Math.PI / 180).toFixed(10)) * step;
+        let y = this._y + parseFloat(Math.sin(degrees * Math.PI / 180).toFixed(10)) * step;
 
-                return;
-            }
-
-            let x = this._x + parseFloat(Math.cos(degrees * Math.PI / 180).toFixed(10)) * step;
-            let y = this._y + parseFloat(Math.sin(degrees * Math.PI / 180).toFixed(10)) * step;
-
-            this.move(x, y);
-        }, this._speeds.fly);
+        this.move(x, y);
     }
 
     jump(height, multiplier = 0.1, forced = false) {
@@ -291,8 +264,6 @@ class EngineObject {
     }
 
     destroy() {
-        this._resetTimers();
-
         delete this._collision[this._name];
         this._exist = false;
         this._dispatchEvent('destroy');
@@ -360,10 +331,6 @@ class EngineObject {
 
     get isPushing() {
         return this._options.pushing;
-    }
-
-    get isFlying() {
-        return this._isFlying;
     }
 
     get isFalling() {
@@ -551,10 +518,6 @@ class EngineObject {
         }
 
         return acceleration;
-    }
-
-    _resetTimers() {
-        clearInterval(this._timers.fly);
     }
 
     _onCollisionSide(object, side) {
