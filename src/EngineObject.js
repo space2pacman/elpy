@@ -1,4 +1,4 @@
-const Point = require('./Point');
+const point = require('./Point');
 
 class EngineObject {
     constructor(name, x, y, width, height, options = {}) {
@@ -11,10 +11,12 @@ class EngineObject {
         this._collision = {};
         this._isJumping = false;
         this._isFalling = false;
+        this._isFlying = false;
         this._state = null;
         this._ghost = false;
         this._animate = false;
         this._added = false,
+        this._exist = true;
         this._track = {
             x: null,
             y: null
@@ -36,13 +38,13 @@ class EngineObject {
                 y: 0
             }
         };
-        this._timers = {
-            fly: null
-        };
+        this._positions = {
+            start: {
+                x: null,
+                y: null
+            }
+        }
         this._degrees = 0;
-        this._speeds = {
-            fly: null
-        };
         this._options = {
             obstacle: typeof options.obstacle === 'boolean' ? options.obstacle : true,
             activity: typeof options.activity === 'boolean' ? options.activity : false,
@@ -79,7 +81,6 @@ class EngineObject {
                 multiplier: 0
             }
         }
-        this._exist = true;
         this._MAX_ACCELERATION = 10;
         this._init();
     }
@@ -155,18 +156,16 @@ class EngineObject {
     }
     
     fly(degrees, distance = 0, step = 1) {
-        const point = new Point();
-        const positions = {
-            start: {
-                x: this._x,
-                y: this._y
-            }
+        if (!this._isFlying) {
+            this._isFlying = true;
+            this._positions.start.x = this._x;
+            this._positions.start.y = this._y;
         }
 
-        if (distance > 0 && point.distance(positions.start.x, positions.start.y, this._x, this._y) > distance) {
+        if (distance > 0 && point.distance(this._positions.start.x, this._positions.start.y, this._x, this._y) > distance) {
             this.destroy();
 
-            return;
+            return false;
         }
 
         let x = this._x + parseFloat(Math.cos(degrees * Math.PI / 180).toFixed(10)) * step;
