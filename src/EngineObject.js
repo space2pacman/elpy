@@ -11,7 +11,6 @@ class EngineObject {
         this._collision = {};
         this._isJumping = false;
         this._isFalling = false;
-        this._isFlying = false;
         this._state = null;
         this._ghost = false;
         this._animate = false;
@@ -156,26 +155,19 @@ class EngineObject {
     }
     
     fly(degrees, distance = 0, step = 1) {
-        if (!this._isFlying) {
-            this._isFlying = true;
-            this._positions.start.x = this._x;
-            this._positions.start.y = this._y;
-        }
+        const event = this._getEventObject();
 
-        if (distance > 0 && point.distance(this._positions.start.x, this._positions.start.y, this._x, this._y) > distance) {
-            this._isFlying = false;
-            this.destroy();
+        this._positions.start.x = this._x;
+        this._positions.start.y = this._y;
 
-            return false;
-        }
-
-        let x = this._x + parseFloat(Math.cos(degrees * Math.PI / 180).toFixed(10)) * step;
-        let y = this._y + parseFloat(Math.sin(degrees * Math.PI / 180).toFixed(10)) * step;
-
-        this.move(x, y);
+        this._nextTick(() => {
+            this._tick(this._onFly.bind(this, event, degrees, distance, step));
+        });
     }
 
     jump(height, multiplier = 0.1, forced = false) {
+        const event = this._getEventObject();
+
         if (forced) {
             this._isJumping = false;
         }
@@ -189,15 +181,17 @@ class EngineObject {
         this._params.movement.acceleration = this._getMaxJumpAccelerationValue(height, multiplier);
         this._params.jump.multiplier = multiplier;
         this._nextTick(() => {
-            this._tick(this._onJump.bind(this));
+            this._tick(this._onJump.bind(this, event));
         });
     }
 
     fall(multiplier = 0.1) {
+        const event = this._getEventObject();
+
         this._isFalling = true;
         this._params.fall.multiplier = multiplier;
         this._nextTick(() => {
-            this._tick(this._onFall.bind(this));
+            this._tick(this._onFall.bind(this, event));
         });
     }
 
@@ -538,7 +532,27 @@ class EngineObject {
         requestAnimationFrame(callback);
     }
 
-    _onJump() {
+    _getEventObject() {
+        const event = {
+            _stopped: false,
+            get stopped() {
+                return this._stopped;
+            },
+            stop() {
+                this._stopped = true;
+            }
+        }
+
+        return event;
+    }
+
+    _onJump(event) {
+        if (event.stopped) {
+            this._isFalling = true;
+
+            return false;
+        }
+
         if (this._isAccelerationStopped) {
             this._isFalling = true;
 
@@ -546,9 +560,15 @@ class EngineObject {
         } else {
             this._takeoff();
         }
+
+        this._dispatchEvent('jump', event);
     }
 
-    _onFall() {
+    _onFall(event) {
+        if (event.stopped) {
+            return false;
+        }
+
         if (this._isFalling) {
             const landed = this._landing();
 
@@ -556,6 +576,26 @@ class EngineObject {
                 this._isJumping = false;
             }
         }
+
+        this._dispatchEvent('fall', event);
+    }
+
+    _onFly(event, degrees, distance, step) {
+        if (event.stopped) {
+            return false;
+        }
+
+        if (distance > 0 && point.distance(this._positions.start.x, this._positions.start.y, this._x, this._y) > distance) {
+            this.destroy();
+
+            return false;
+        }
+
+        let x = this._x + parseFloat(Math.cos(degrees * Math.PI / 180).toFixed(10)) * step;
+        let y = this._y + parseFloat(Math.sin(degrees * Math.PI / 180).toFixed(10)) * step;
+
+        this.move(x, y);
+        this._dispatchEvent('fly', event);
     }
 
     _init() {
