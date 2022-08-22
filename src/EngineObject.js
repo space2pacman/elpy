@@ -163,6 +163,7 @@ class EngineObject {
         }
 
         if (distance > 0 && point.distance(this._positions.start.x, this._positions.start.y, this._x, this._y) > distance) {
+            this._isFlying = false;
             this.destroy();
 
             return false;
