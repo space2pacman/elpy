@@ -81,6 +81,7 @@ class EngineObject {
             }
         }
         this._MAX_ACCELERATION = 10;
+
         this._init();
     }
 
@@ -151,6 +152,7 @@ class EngineObject {
 
         this._x = x;
         this._y = y;
+
         this._dispatchEvent('move');
     }
     
@@ -180,6 +182,7 @@ class EngineObject {
         this._isJumping = true;
         this._params.movement.acceleration = this._getMaxJumpAccelerationValue(height, multiplier);
         this._params.jump.multiplier = multiplier;
+
         this._nextTick(() => {
             this._tick(this._onJump.bind(this, event));
         });
@@ -190,6 +193,7 @@ class EngineObject {
 
         this._isFalling = true;
         this._params.fall.multiplier = multiplier;
+
         this._nextTick(() => {
             this._tick(this._onFall.bind(this, event));
         });
@@ -254,12 +258,14 @@ class EngineObject {
         this._offset.rotate.x = x || 0;
         this._offset.rotate.y = y || 0;
         this._degrees = degrees;
+
         this._dispatchEvent('rotate');
     }
 
     destroy() {
         delete this._collision[this._name];
         this._exist = false;
+
         this._dispatchEvent('destroy');
     }
 
@@ -373,6 +379,7 @@ class EngineObject {
 
     set state(state) {
         this._state = state;
+
         this._dispatchEvent('state');
     }
 
@@ -450,6 +457,7 @@ class EngineObject {
         const multiplier = this._params.jump.multiplier * 10;
 
         this._params.movement.acceleration = (acceleration - multiplier) / 10;
+        
         this.move(this._x, Math.floor(this._y - this._params.movement.acceleration));
     }
 

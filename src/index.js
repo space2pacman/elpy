@@ -43,11 +43,13 @@ class Engine {
         if (Array.isArray(object)) {
             object.forEach(item => {
                 item.added = true;
+                
                 this._addObjectImages(item);
                 this._render();
             });
         } else {
             object.added = true;
+
             this._addObjectImages(object);
             this._render();
         }
@@ -56,6 +58,7 @@ class Engine {
     key(callback) {
         document.addEventListener('keydown', this._onMultiKeydown.bind(this));
         document.addEventListener('keyup', this._onMultiKeyup.bind(this));
+        
         requestAnimationFrame(this._streamKeys.bind(this, callback));
     }
 
@@ -128,8 +131,9 @@ class Engine {
     get _imagesIsLoaded() {
         if (this._preload) {
             const loadedImages = this._storage.images.filter(item => item.loaded);
+            const isLoaded = loadedImages.length === this._storage.images.length;
 
-            return loadedImages.length === this._storage.images.length;
+            return isLoaded;
         } else {
             return true;
         }
@@ -138,8 +142,9 @@ class Engine {
     get _imagesIsLoading() {
         if (this._preload) {
             const loadedImages = this._storage.images.filter(item => item.loaded);
+            const isLoading = loadedImages.length !== this._storage.images.length;
 
-            return loadedImages.length !== this._storage.images.length;
+            return isLoading;
         } else {
             return false;
         }
@@ -254,12 +259,14 @@ class Engine {
     }
 
     _getImageParams(image) {
-        return {
+        const params = {
             list: [],
             time: image.time || 0,
             currentImage: null,
             lastRenderTime: 0
-        };
+        }
+
+        return params;
     }
 
     async _render() {
@@ -581,6 +588,7 @@ class Engine {
         
         link.rel = 'shortcut icon';
         link.href = 'data:image/png;base64,' + favicon;
+        
         head.appendChild(link);
     }
 
