@@ -595,6 +595,8 @@ class EngineObject {
         }
 
         if (event.stopped) {
+            this._isJumping = false;
+            
             return false;
         }
 
