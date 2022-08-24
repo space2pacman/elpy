@@ -543,11 +543,21 @@ class EngineObject {
     _getEventObject() {
         const event = {
             _stopped: false,
+            _paused: false,
             get stopped() {
                 return this._stopped;
             },
+            get paused() {
+                return this._paused;
+            },
             stop() {
                 this._stopped = true;
+            },
+            pause() {
+                this._paused = true;
+            },
+            resume() {
+                this._paused = false;
             }
         }
 
@@ -555,6 +565,12 @@ class EngineObject {
     }
 
     _onJump(event) {
+        if (event.paused) {
+            this._dispatchEvent('jump', event);
+            
+            return;
+        }
+
         if (event.stopped) {
             this._isFalling = true;
 
@@ -567,12 +583,17 @@ class EngineObject {
             return false;
         } else {
             this._takeoff();
+            this._dispatchEvent('jump', event);
         }
-
-        this._dispatchEvent('jump', event);
     }
 
     _onFall(event) {
+        if (event.paused) {
+            this._dispatchEvent('fall', event);
+
+            return;
+        }
+
         if (event.stopped) {
             return false;
         }
@@ -583,12 +604,18 @@ class EngineObject {
             if (landed === true) {
                 this._isJumping = false;
             }
-        }
 
-        this._dispatchEvent('fall', event);
+            this._dispatchEvent('fall', event);
+        }
     }
 
     _onFly(event, degrees, distance, step) {
+        if (event.paused) {
+            this._dispatchEvent('fly', event);
+            
+            return;
+        }
+
         if (event.stopped) {
             return false;
         }
