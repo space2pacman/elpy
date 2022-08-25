@@ -117,7 +117,7 @@
         const step = 3;
         const elpy = new Elpy('#field', 500, unit * 15);
         const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
-        const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, unit, unit, options.character);
+        const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
         const grounds = [];
         const obstacles = [];
         const CHARACTER_JUMP_HEIGHT = 100;
