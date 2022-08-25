@@ -15,8 +15,7 @@
     </style>
     <canvas id="field"></canvas>
 
-    <!-- <script src="../../dist/elpy.min.js"></script> -->
-    <script src="http://localhost:8080/elpy.min.js"></script>
+    <script src="../../dist/elpy.min.js"></script>
     <script>
         const options = {
             character: {
@@ -106,6 +105,14 @@
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
 
+        const enums = {
+            box: 1,
+            enemy: 2,
+            pipeHole: 3,
+            pipe: 4,
+            treasure: 5
+        }
+
         const unit = 24;
         const step = 3;
         const elpy = new Elpy('#field', 500, unit * 15);
@@ -113,14 +120,16 @@
         const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, unit, unit, options.character);
         const grounds = [];
         const obstacles = [];
-        const JUMP_HEIGHT = 100;
-        const JUMP_MULTIPLIER = 0.3;
+        const CHARACTER_JUMP_HEIGHT = 100;
+        const CHARACTER_JUMP_REBOUND = 10;
+        const CHARACTER_JUMP_MULTIPLIER = 0.3;
         const FALL_MULTIPLIER = 0.3;
         const TREASURE_JUMP_HEIGHT = 10;
         const TREASURE_JUMP_MULTIPLIER = 1;
         const TREASURE_FALL_MULTIPLIER = 0.3;
         const ENEMY_JUMP_MULTIPLIER = 1;
         const ENEMY_JUMP_HEIGHT = 20;
+        const ENEMY_ROTATE = 180;
         const DESTROY_TIME_DELAY = 500;
         const COIN_JUMP_HEIGHT = 30;
         const MAX_MAP_LENGTH = (map[0].length - 1) * unit;
@@ -129,7 +138,6 @@
 
         elpy.add(background);
         elpy.add(character);
-
         character.move(60, character.y);
 
         const ground01 = elpy.create('ground01', 0, unit * 13, unit * 69, unit * 2, options.ground);
@@ -149,59 +157,13 @@
         character.collision(obstacles);
         character.collision(grounds);
         character.fall(FALL_MULTIPLIER);
-
-        character.on('move', () => {
-            if (character.x > character.track.x) {
-                if (!isAnimate) {
-                    character.animate = true;
-                    isAnimate = true;
-                }
-
-                character.state = 'move:right';
-            }
-
-            if (character.x < character.track.x) {
-                if (!isAnimate) {
-                    character.animate = true;
-                    isAnimate = true;
-                }
-
-                character.state = 'move:left';
-            }
-
-            if (character.x <= 0) {
-                character.move(character.x + 1, character.y);
-                character.state = 'idle';
-            }
-
-            if (character.x >= MAX_MAP_LENGTH) {
-                character.move(character.x - 1, character.y);
-                character.state = 'idle';
-            }
-
-            checkObstaclesInViewport();
-        });
-
-        character.on('collision', (object, side) => {
-            character.state = 'idle';
-
-            if (object.options.type === 'enemy') {
-                checkEnemyCollision(object, side);
-            }
-
-            if (object.options.type === 'treasure' && side === 'bottom' && object.state === 'full') {
-                object.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER);
-
-                object.state = 'empty';
-                
-                dropCoin(object);
-            }
-        });
+        character.on('move', characterOnMove);
+        character.on('collision', characterOnCollision);
 
         elpy.key(key => {
             switch(key) {
                 case 'ArrowUp':
-                    character.jump(JUMP_HEIGHT, JUMP_MULTIPLIER);
+                    character.jump(CHARACTER_JUMP_HEIGHT, CHARACTER_JUMP_MULTIPLIER);
                     
                     break;
                 case 'ArrowLeft':
@@ -221,6 +183,7 @@
                 case 'ArrowRight':
                     character.state = 'idle';
                     character.animate = false;
+                    
                     isAnimate = false;
 
                     break;
@@ -232,85 +195,164 @@
         function placeObjects() {
             for(let i = 0; i < map.length; i++) {
                 for(let j = 0; j < map[i].length; j++) {
-                    if (map[i][j] === 1) {
-                        const box = elpy.create(`box${i}${j}`, unit * j, unit * i, unit, unit, options.box);
-                        
-                        elpy.add(box);
-                        obstacles.push(box);
+                    if (map[i][j] === enums.box) {
+                        placeBoxes(i, j);
                     }
 
-                    if (map[i][j] === 2) {
-                        const options = {
-                            images: [
-                                {
-                                    paths: ['images/enemies/enemy_move_left_0.png'],
-                                    state: 'move:left'
-                                },
-                                {
-                                    paths: ['images/enemies/enemy_move_right_0.png'],
-                                    state: 'move:right'
-                                }
-                            ],
-                            type: 'enemy',
-                            custom: {
-                                delta: -1,
-                                moving: false
-                            }
-                        }
-                        const enemy = elpy.create(`enemy${i}-${j}`, unit * j, unit * i, unit, unit, options);
-
-                        enemy.state = 'move:left';
-                        enemy.animate = true;
-                        
-                        elpy.add(enemy);
-                        obstacles.push(enemy);
-                        enemy.on('fall', event => {
-                            if (elpy.checkObjectInViewport(enemy)) {
-                                event.resume();
-                            } else {
-                                event.pause();
-                            }
-                            
-                            if (enemy.ghost) {
-                                event.stop();
-                            }
-                        });
+                    if (map[i][j] === enums.enemy) {
+                       placeEnemies(i, j);
                     }
 
-                    if (map[i][j] === 3) {
-                        const pipeHole = elpy.create(`pipe-hole${i}${j}`, unit * j, unit * i, unit, unit, options.pipeHole);
-                        
-                        elpy.add(pipeHole);
-                        obstacles.push(pipeHole);
+                    if (map[i][j] === enums.pipeHole) {
+                        placePipeHoles(i, j);
                     }
 
-                    if (map[i][j] === 4) {
-                        const pipe = elpy.create(`pipe${i}${j}`, unit * j, unit * i, unit, unit, options.pipe);
-                        
-                        elpy.add(pipe);
-                        obstacles.push(pipe);
+                    if (map[i][j] === enums.pipe) {
+                        placePipe(i, j);
                     }
 
-                    if (map[i][j] === 5) {
-                        const treasure = elpy.create(`treasure${i}${j}`, unit * j, unit * i, unit, unit, options.treasure);
-                        
-                        elpy.add(treasure);
-                        obstacles.push(treasure);
-                        treasure.collision(obstacles.filter(obstacle => obstacle.options.type === 'enemy'));
-                        treasure.on('collision', object => {
-                            object.ghost = true;
-                            
-                            object.jump(ENEMY_JUMP_HEIGHT, ENEMY_JUMP_MULTIPLIER);
-                            object.rotate(180);
-                            treasure.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER, true);
-                            
-                            delayedDestroy(object, DESTROY_TIME_DELAY);
-                        });
-
-                        rebound(treasure, TREASURE_FALL_MULTIPLIER);
+                    if (map[i][j] === enums.treasure) {
+                        placeTreasures(i, j);
                     }
                 }
             }
+        }
+
+        function placeBoxes(i, j) {
+            const box = elpy.create(`box-${i}-${j}`, unit * j, unit * i, unit, unit, options.box);
+                        
+            elpy.add(box);
+            obstacles.push(box);
+        }
+
+        function placeEnemies(i, j) {
+            const options = {
+                images: [
+                    {
+                        paths: ['images/enemies/enemy_move_left_0.png'],
+                        state: 'move:left'
+                    },
+                    {
+                        paths: ['images/enemies/enemy_move_right_0.png'],
+                        state: 'move:right'
+                    }
+                ],
+                type: 'enemy',
+                custom: {
+                    delta: -1,
+                    moving: false
+                }
+            }
+            const enemy = elpy.create(`enemy-${i}-${j}`, unit * j, unit * i, unit, unit, options);
+
+            enemy.animate = true;
+            
+            elpy.add(enemy);
+            obstacles.push(enemy);
+            enemy.on('fall', event => {
+                enemyOnFall(enemy, event);
+            });
+        }
+
+        function placePipeHoles(i, j) {
+            const pipeHole = elpy.create(`pipe-hole-${i}-${j}`, unit * j, unit * i, unit, unit, options.pipeHole);
+                        
+            elpy.add(pipeHole);
+            obstacles.push(pipeHole);
+        }
+
+        function placePipe(i, j) {
+            const pipe = elpy.create(`pipe-${i}-${j}`, unit * j, unit * i, unit, unit, options.pipe);
+                        
+            elpy.add(pipe);
+            obstacles.push(pipe);
+        }
+
+        function placeTreasures(i, j) {
+            const treasure = elpy.create(`treasure-${i}-${j}`, unit * j, unit * i, unit, unit, options.treasure);
+                        
+            elpy.add(treasure);
+            obstacles.push(treasure);
+            treasure.collision(getObstaclesEnemies());
+            treasure.on('collision', object => {
+                treasureOnCollision(treasure, object);
+            });
+
+            rebound(treasure, TREASURE_FALL_MULTIPLIER);
+        }
+
+        function characterOnMove() {
+            if (character.x > character.track.x) {
+                if (!isAnimate) {
+                    character.animate = true;
+                    
+                    isAnimate = true;
+                }
+
+                character.state = 'move:right';
+            }
+
+            if (character.x < character.track.x) {
+                if (!isAnimate) {
+                    character.animate = true;
+                    
+                    isAnimate = true;
+                }
+
+                character.state = 'move:left';
+            }
+
+            if (character.x <= 0) {
+                character.move(character.x + 1, character.y);
+                
+                character.state = 'idle';
+            }
+
+            if (character.x >= MAX_MAP_LENGTH) {
+                character.move(character.x - 1, character.y);
+                
+                character.state = 'idle';
+            }
+
+            checkObstaclesInViewport();
+        }
+
+        function characterOnCollision(object, side) {
+            character.state = 'idle';
+
+            if (object.options.type === 'enemy') {
+                checkEnemyCollision(object, side);
+            }
+
+            if (object.options.type === 'treasure' && side === 'bottom' && object.state === 'full') {
+                checkTreasureCollision(object);
+            }
+        }
+
+        function enemyOnFall(enemy, event) {
+            if (elpy.checkObjectInViewport(enemy)) {
+                event.resume();
+            } else {
+                event.pause();
+            }
+            
+            if (enemy.ghost) {
+                event.stop();
+            }
+        }
+
+        function treasureOnCollision(treasure, object) {
+            object.ghost = true;
+            
+            object.jump(ENEMY_JUMP_HEIGHT, ENEMY_JUMP_MULTIPLIER);
+            object.rotate(ENEMY_ROTATE);
+            treasure.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER, true);
+            
+            delayedDestroy(object, DESTROY_TIME_DELAY);
+        }
+
+        function getObstaclesEnemies() {
+            return obstacles.filter(obstacle => obstacle.options.type === 'enemy');
         }
 
         function setObstaclesParams() {
@@ -373,7 +415,7 @@
         function checkEnemyCollision(object, side) {
             if (side === 'top') {
                 elpy.nextTick(() => {
-                    character.jump(10, JUMP_MULTIPLIER);
+                    character.jump(CHARACTER_JUMP_REBOUND, CHARACTER_JUMP_MULTIPLIER);
                 });
 
                 const height = object.height / 2;
@@ -384,6 +426,14 @@
 
                 delayedDestroy(object, DESTROY_TIME_DELAY);
             }
+        }
+
+        function checkTreasureCollision(object) {
+            object.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER);
+
+            object.state = 'empty';
+                
+            dropCoin(object);
         }
 
         function rebound(object, fallMultiplier = 0.1) {
