@@ -98,6 +98,14 @@ class Engine {
         requestAnimationFrame(callback);
     }
 
+    checkObjectInViewport(object) {
+        if (this._checkObjectNotActivity(object) && (this._checkObjectInViewportX(object) || this._checkObjectInViewportY(object))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     async load() {
         if (this._imagesIsLoading) {
             await this._render();
@@ -267,6 +275,20 @@ class Engine {
         }
 
         return params;
+    }
+
+    _checkObjectInViewportX(object) {
+        return object.x > object.offset.object.x + this._width
+        || object.x < object.offset.object.x - this._width;
+    }
+
+    _checkObjectInViewportY(object) {
+        return object.y > object.offset.object.y + this._height
+        || object.y < object.offset.object.y - this._height;
+    }
+
+    _checkObjectNotActivity(object) {
+        return !object.options.activity && object.offset.object;
     }
 
     async _render() {

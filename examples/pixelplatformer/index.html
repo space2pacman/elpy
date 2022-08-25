@@ -15,7 +15,8 @@
     </style>
     <canvas id="field"></canvas>
 
-    <script src="../../dist/elpy.min.js"></script>
+    <!-- <script src="../../dist/elpy.min.js"></script> -->
+    <script src="http://localhost:8080/elpy.min.js"></script>
     <script>
         const options = {
             character: {
@@ -264,6 +265,12 @@
                         elpy.add(enemy);
                         obstacles.push(enemy);
                         enemy.on('fall', event => {
+                            if (elpy.checkObjectInViewport(enemy)) {
+                                event.resume();
+                            } else {
+                                event.pause();
+                            }
+                            
                             if (enemy.ghost) {
                                 event.stop();
                             }
@@ -340,7 +347,7 @@
                 obstacle.options.custom.moving = true;
 
                 elpy.tick(() => {
-                    if (!obstacle.checkObjectInViewport() || obstacle.ghost) {
+                    if (!elpy.checkObjectInViewport(obstacle) || obstacle.ghost) {
                         obstacle.options.custom.moving = false;
 
                         return false;
@@ -354,7 +361,7 @@
         function checkObstaclesInViewport() {
             obstacles.forEach(obstacle => {
                 if (obstacle.options.type === 'enemy') {
-                    if (obstacle.checkObjectInViewport()) {
+                    if (elpy.checkObjectInViewport(obstacle)) {
                         moveObstacle(obstacle);
                     } else {
                         obstacle.options.custom.moving = false;
@@ -384,6 +391,7 @@
 
             object.on('fall', event => {
                 if (object.y >= y) {
+                    object.move(object.x, y);
                     event.stop();
                 }
             });

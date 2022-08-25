@@ -103,10 +103,6 @@ class EngineObject {
     }
 
     move(x, y) {
-        if (!this.checkObjectInViewport()) {
-            return false;
-        }
-
         this._dest.x = x;
         this._dest.y = y;
         this._track.x = this._x;
@@ -301,13 +297,7 @@ class EngineObject {
         this._offset.engine.y = y;
     }
 
-    checkObjectInViewport() {
-        if (this._checkObjectNotActivity && (this._checkObjectInViewportX || this._checkObjectInViewportY)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    
     
     get name() {
         return this._name;
@@ -416,20 +406,6 @@ class EngineObject {
 
     set added(value) {
         return this._added = value;
-    }
-
-    get _checkObjectInViewportX() {
-        return this._x > this._offset.object.x + this._offset.engine.x + (this._width * 3)
-        || this._x < this._offset.object.x - this._offset.engine.x - (this._width * 3);
-    }
-
-    get _checkObjectInViewportY() {
-        return this._y > this._offset.object.y + this._offset.engine.y + (this._height * 3) //fix
-        || this._y < this._offset.object.y - this._offset.engine.y - (this._height * 3); //fix
-    }
-
-    get _checkObjectNotActivity() {
-        return !this._options.activity && this._offset.object;
     }
 
     get _isAccelerationStopped() {
