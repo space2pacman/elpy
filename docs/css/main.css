@@ -123,3 +123,37 @@ body {
 .game-link:hover:before {
     background: rgba(0, 0, 0, .3);
 }
+
+.all-games-list {
+    text-align: center;
+    width: 50%;
+    margin: 120px auto 0px auto;
+}
+
+.all-games__game-link{
+    display: block;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc;
+    padding: 40px 0px;
+    font-size: 24px;
+    text-decoration: none;
+    color: #000;
+}
+
+.all-games__game-background {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    right: -30px;
+    top: -60px;
+    transform: rotate(-25deg);
+}
+
+.all-games-link {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
