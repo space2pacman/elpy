@@ -258,6 +258,10 @@
                 obstacles.push(bot);
                 elpy.add(bot);
                 elpy.tick(() => {
+                    if (!elpy.checkObjectInViewport(bot)) {
+                        return;
+                    }
+
                     if (bot.options.custom.speed === 0) {
                         return false;
                     }
