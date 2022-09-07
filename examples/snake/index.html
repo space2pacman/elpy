@@ -15,8 +15,7 @@
     </style>
     <canvas id="field"></canvas>
 
-    <!-- <script src="../../dist/elpy.min.js"></script> -->
-    <script src="http://localhost:8080/elpy.min.js"></script>
+    <script src="../../dist/elpy.min.js"></script>
     <script>
         const options = {
             tailPart: {
@@ -42,9 +41,9 @@
         const tail = [];
         const elpy = new Elpy('#field', 400, 400);
         const character = elpy.create('character', ((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit, unit, unit, options.character);
+        const SNAKE_SPEED = 100;
 
         elpy.add(character);
-
         character.on('collision', object => {
             if (tail.length === 0) {
                 tail.unshift(character);
@@ -58,30 +57,14 @@
                 return;
             }
 
-            let tip = tail[tail.length - 1];
+            const tip = tail[tail.length - 1];
 
             object.state = 'green';
+
             object.move(tip.track.x, tip.track.y);
             
             addTailPart();
-
-            switch(direction) {
-                case 'up':
-                    character.move(character.x, character.y - step);
-                    break;
-                case 'down':
-                    character.move(character.x, character.y + step);
-
-                    break;
-                case 'right':
-                    character.move(character.x + step, character.y);
-
-                    break;
-                case 'left':
-                    character.move(character.x - step, character.y);
-
-                    break
-            }
+            characterMove();
         });
 
         character.on('move', data => {
@@ -101,16 +84,9 @@
             }
         });
 
-        // let lastDate = null
-
-        // character.on('fly', event => {
-        //     if (lastDate + 1000 < Date.now() || lastDate === null) {
-        //         lastDate = Date.now();
-        //         event.resume();
-        //     } else {
-        //         event.pause();
-        //     }
-        // });
+        setInterval(() => {
+            characterMove();
+        }, SNAKE_SPEED);
 
         elpy.keydown(key => {
             switch(key) {
@@ -118,9 +94,6 @@
                     if (direction !== 'down') {
                         angle = 270;
                         direction = 'up';
-                        
-                        character.stop();
-                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -128,9 +101,6 @@
                     if (direction !== 'up') {
                         angle = 90;
                         direction = 'down';
-                        
-                        character.stop();
-                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -138,9 +108,6 @@
                     if (direction !== 'left') {
                         angle = 0;
                         direction = 'right';
-                        
-                        character.stop();
-                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -148,9 +115,6 @@
                     if (direction !== 'right') {
                         angle = 180;
                         direction = 'left';
-                        
-                        character.stop();
-                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -172,6 +136,26 @@
 
         function getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function characterMove() {
+            switch(direction) {
+                case 'up':
+                    character.move(character.x, character.y - step);
+                    break;
+                case 'down':
+                    character.move(character.x, character.y + step);
+
+                    break;
+                case 'right':
+                    character.move(character.x + step, character.y);
+
+                    break;
+                case 'left':
+                    character.move(character.x - step, character.y);
+
+                    break
+            }
         }
 
         function restartGame() {
