@@ -15,7 +15,8 @@
     </style>
     <canvas id="field"></canvas>
 
-    <script src="../../dist/elpy.min.js""></script>
+    <!-- <script src="../../dist/elpy.min.js"></script> -->
+    <script src="http://localhost:8080/elpy.min.js"></script>
     <script>
         const options = {
             tailPart: {
@@ -36,7 +37,6 @@
         }
         let angle = 0;
         let direction = '';
-        let gameIsStarted = false;
         const step = 20;
         const unit = 20;
         const tail = [];
@@ -101,13 +101,16 @@
             }
         });
 
-        setInterval(() => {
-            if (gameIsStarted) {
+        // let lastDate = null
 
-                character.fly(angle, 0, step);
-            }
-            
-        }, 100);
+        // character.on('fly', event => {
+        //     if (lastDate + 1000 < Date.now() || lastDate === null) {
+        //         lastDate = Date.now();
+        //         event.resume();
+        //     } else {
+        //         event.pause();
+        //     }
+        // });
 
         elpy.keydown(key => {
             switch(key) {
@@ -115,6 +118,9 @@
                     if (direction !== 'down') {
                         angle = 270;
                         direction = 'up';
+                        
+                        character.stop();
+                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -122,6 +128,9 @@
                     if (direction !== 'up') {
                         angle = 90;
                         direction = 'down';
+                        
+                        character.stop();
+                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -129,6 +138,9 @@
                     if (direction !== 'left') {
                         angle = 0;
                         direction = 'right';
+                        
+                        character.stop();
+                        character.fly(angle, 0, 1);
                     }
 
                     break;
@@ -136,16 +148,12 @@
                     if (direction !== 'right') {
                         angle = 180;
                         direction = 'left';
+                        
+                        character.stop();
+                        character.fly(angle, 0, 1);
                     }
 
                     break;
-            }
-
-            if (['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'].includes(key)) {
-                if (!gameIsStarted) {
-                    gameIsStarted = true;
-                }
-
             }
         });
 
@@ -167,7 +175,6 @@
         }
 
         function restartGame() {
-            gameIsStarted = false;
             direction = '';
 
             character.move(((elpy.width / unit) / 2) * unit, ((elpy.height / unit) / 2) * unit);

@@ -11,6 +11,7 @@ class EngineObject {
         this._collision = {};
         this._isJumping = false;
         this._isFalling = false;
+        this._isStopped = false;
         this._state = null;
         this._ghost = false;
         this._animate = false;
@@ -159,6 +160,7 @@ class EngineObject {
         this._positions.start.y = this._y;
 
         this._nextTick(() => {
+            this._isStopped = false;
             this._tick(this._onFly.bind(this, event, degrees, distance, step));
         });
     }
@@ -180,6 +182,7 @@ class EngineObject {
         this._params.jump.multiplier = multiplier;
 
         this._nextTick(() => {
+            this._isStopped = false;
             this._tick(this._onJump.bind(this, event));
         });
     }
@@ -191,6 +194,7 @@ class EngineObject {
         this._params.fall.multiplier = multiplier;
 
         this._nextTick(() => {
+            this._isStopped = false;
             this._tick(this._onFall.bind(this, event));
         });
     }
@@ -256,6 +260,10 @@ class EngineObject {
         this._degrees = degrees;
 
         this._dispatchEvent('rotate');
+    }
+
+    stop() {
+        this._isStopped = true;
     }
 
     destroy() {
@@ -541,6 +549,10 @@ class EngineObject {
     }
 
     _onJump(event) {
+        if (this._isStopped) {
+            return false;
+        }
+
         if (event.paused) {
             this._dispatchEvent('jump', event);
             
@@ -564,6 +576,10 @@ class EngineObject {
     }
 
     _onFall(event) {
+        if (this._isStopped) {
+            return false;
+        }
+        
         if (event.paused) {
             this._dispatchEvent('fall', event);
 
@@ -588,6 +604,10 @@ class EngineObject {
     }
 
     _onFly(event, degrees, distance, step) {
+        if (this._isStopped) {
+            return false;
+        }
+
         if (event.paused) {
             this._dispatchEvent('fly', event);
             
