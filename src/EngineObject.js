@@ -11,6 +11,7 @@ class EngineObject {
         this._collision = {};
         this._isJumping = false;
         this._isFalling = false;
+        this._isFlying = false;
         this._isStopped = false;
         this._state = null;
         this._ghost = false;
@@ -161,6 +162,7 @@ class EngineObject {
 
         this._nextTick(() => {
             this._isStopped = false;
+            this._isFlying = true;
             this._tick(this._onFly.bind(this, event, degrees, distance, step));
         });
     }
@@ -304,8 +306,6 @@ class EngineObject {
         this._offset.engine.x = x;
         this._offset.engine.y = y;
     }
-
-    
     
     get name() {
         return this._name;
@@ -331,8 +331,16 @@ class EngineObject {
         return this._options.pushing;
     }
 
+    get isJumping() {
+        return this._isJumping;
+    }
+
     get isFalling() {
         return this._isFalling;
+    }
+
+    get isFlying() {
+        return this._isFlying;
     }
 
     get isExist() {
@@ -605,6 +613,8 @@ class EngineObject {
 
     _onFly(event, degrees, distance, step) {
         if (this._isStopped) {
+            this._isFlying = false;
+
             return false;
         }
 
@@ -615,6 +625,8 @@ class EngineObject {
         }
 
         if (event.stopped) {
+            this._isFlying = false;
+            
             return false;
         }
 
