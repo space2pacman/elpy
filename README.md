@@ -84,7 +84,11 @@ const player = elpy.create(
 )
 
 player.run();
-player.move();
+
+### _move_(x: number, y: number);
+Move by coordinates
+
+
 player.fly();
 player.jump();
 player.fall();
