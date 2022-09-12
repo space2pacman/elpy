@@ -35,6 +35,8 @@ elpy.keyup();
 elpy.mousemove();
 elpy.click();
 
+elpy.checkObjectInViewport();
+
 elpy.tick();
 elpy.nextTick();
 
@@ -88,18 +90,20 @@ player.jump();
 player.fall();
 player.push();
 player.rotate();
+player.stop();
 player.destroy();
 player.collision();
 player.obstacles();
 player.on();
-player.checkObjectInViewport();
 
 //getters
 player.name;
 player.options;
 player.track;
+player.dest;
 player.offset;
 player.isPushing;
+player.isJumping;
 player.isFlying;
 player.isFalling;
 player.isExist;
@@ -111,4 +115,5 @@ player.state;
 player.animate;
 player.ghost;
 player.degrees;
+player.added;
 ```
