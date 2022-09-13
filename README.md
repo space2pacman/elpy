@@ -48,7 +48,7 @@ elpy.objects;
 ```
 
 ## Engine object
-
+### _create object_
 ```js
 const player = elpy.create(
   'player',
@@ -82,13 +82,26 @@ const player = elpy.create(
     }
   }
 )
+```
+### _run_(delta, step)
+```delta``` type: ```Number``` | default: ```1``` | value: ```1,-1```  
+```step``` type: ```Number``` | default: ```1```
 
+Vector movement.
+```js
 player.run(-1, 10);
+```
+---
+### _move_(x, y)
+```x``` type: ```Number```  
+```y``` type: ```Number```
 
-### _move_(x: number, y: number);
-Move by coordinates
+Move by coordinates.
+```js
+player.move(10, 10);
+```
 
-
+```
 player.fly(degrees: number, distance: number, step: number);
 player.jump();
 player.fall();
