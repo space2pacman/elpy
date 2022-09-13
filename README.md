@@ -83,13 +83,13 @@ const player = elpy.create(
   }
 )
 
-player.run();
+player.run(-1, 10);
 
 ### _move_(x: number, y: number);
 Move by coordinates
 
 
-player.fly();
+player.fly(degrees: number, distance: number, step: number);
 player.jump();
 player.fall();
 player.push();
