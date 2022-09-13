@@ -83,6 +83,7 @@ const player = elpy.create(
   }
 )
 ```
+---
 ### _run_(delta, step)
 ```delta``` type: ```Number``` | default: ```1``` | value: ```1,-1```  
 ```step``` type: ```Number``` | default: ```1```
@@ -100,9 +101,19 @@ Move by coordinates.
 ```js
 player.move(10, 10);
 ```
+---
+### _fly_(degrees, distance, step)
+```degrees``` type: ```Number```  
+```distance``` type: ```Number``` | default: ```0```  
+```step``` type: ```Number``` | default: ```1```
+
+Vector flight.
+```js
+player.fly(0, 100, 10);
+```
+---
 
 ```
-player.fly(degrees: number, distance: number, step: number);
 player.jump();
 player.fall();
 player.push();
