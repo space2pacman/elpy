@@ -256,9 +256,9 @@ class EngineObject {
         }
     }
 
-    rotate(degrees, x, y) {
-        this._offset.rotate.x = x || 0;
-        this._offset.rotate.y = y || 0;
+    rotate(degrees, x = 0, y = 0) {
+        this._offset.rotate.x = x;
+        this._offset.rotate.y = y;
         this._degrees = degrees;
 
         this._dispatchEvent('rotate');
