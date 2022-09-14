@@ -84,8 +84,10 @@ const player = elpy.create(
 ```
 ---
 ### _run_(delta, step)
-`delta` type: `Number` | default: `1` | value: `1,-1`  
-`step` type: `Number` | default: `1`
+| name | type | default | value |
+| :---: | :---: | :---: | :---: |
+| **`delta`** | `<Number>` | `1` | `1, -1` |
+| **`step`** | `<Number>` | `1` | |
 
 >Vector movement.
 
