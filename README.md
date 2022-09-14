@@ -4,8 +4,7 @@
 
 [Demo](https://space2pacman.github.io/elpy/docs/) / [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
 
-## Engine
-
+## Engine instance
 ```js
 // Create app
 const elpy = new Elpy(
@@ -47,7 +46,7 @@ elpy.offset;
 elpy.objects;
 ```
 
-## Engine object
+## Object
 ### _create object_
 ```js
 const player = elpy.create(
@@ -88,7 +87,13 @@ const player = elpy.create(
 ```delta``` type: ```Number``` | default: ```1``` | value: ```1,-1```  
 ```step``` type: ```Number``` | default: ```1```
 
-Vector movement.
+>Vector movement.
+
+<sub>_min example_</sub>
+```js
+player.run();
+```
+<sub>_max example_</sub>
 ```js
 player.run(-1, 10);
 ```
@@ -97,7 +102,8 @@ player.run(-1, 10);
 ```x``` type: ```Number```  
 ```y``` type: ```Number```
 
-Move by coordinates.
+>Move by coordinates.
+
 ```js
 player.move(10, 10);
 ```
@@ -107,9 +113,29 @@ player.move(10, 10);
 ```distance``` type: ```Number``` | default: ```0```  
 ```step``` type: ```Number``` | default: ```1```
 
-Vector flight.
+>Vector flight.
+
+<sub>_min example_</sub>
+```js
+player.fly(0);
+```
+<sub>_max example_</sub>
 ```js
 player.fly(0, 100, 10);
+```
+---
+### _jump_(height, multiplier, forced);
+```height``` type: ```Number```  
+```multiplier``` type: ```Number``` | default: ```0.1```  
+```forced``` type: ```Boolean``` | default: ```false```
+
+<sub>_min example_</sub>
+```js
+player.jump(10);
+```
+<sub>_max example_</sub>
+```js
+player.jump(10, 0.5, true);
 ```
 ---
 
