@@ -47,7 +47,7 @@ elpy.objects;
 ```
 
 ## Object
-### _create object_
+### create object
 ```js
 const player = elpy.create(
   'player',
