@@ -198,15 +198,33 @@ player.rotote(90, 10, 20);
 ```
 ---
 ### _stop_()
+
 > Stop: jump, fall, fly.
 
 ```js
 player.stop();
 ```
 ---
-```
+### _destroy_()
+
+> Destroy object.
+
+```js
 player.destroy();
-player.collision();
+```
+---
+### _collision_(object)
+| name | type | default |
+| :---: | :---: | :---: |
+| **`object`** | `<Object>` |
+
+> Add collision object.
+
+```js
+player.collision(object);
+```
+---
+```
 player.obstacles();
 player.on();
 
