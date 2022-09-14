@@ -84,8 +84,8 @@ const player = elpy.create(
 ```
 ---
 ### _run_(delta, step)
-```delta``` type: ```Number``` | default: ```1``` | value: ```1,-1```  
-```step``` type: ```Number``` | default: ```1```
+`delta` type: `Number` | default: `1` | value: `1,-1`  
+`step` type: `Number` | default: `1`
 
 >Vector movement.
 
@@ -99,8 +99,8 @@ player.run(-1, 10);
 ```
 ---
 ### _move_(x, y)
-```x``` type: ```Number```  
-```y``` type: ```Number```
+`x` type: `Number`  
+`y` type: `Number`
 
 >Move by coordinates.
 
@@ -109,9 +109,9 @@ player.move(10, 10);
 ```
 ---
 ### _fly_(degrees, distance, step)
-```degrees``` type: ```Number```  
-```distance``` type: ```Number``` | default: ```0```  
-```step``` type: ```Number``` | default: ```1```
+`degrees` type: `Number`  
+`distance` type: `Number` | default: `0`  
+`step` type: `Number` | default: `1`
 
 >Vector flight.
 
@@ -125,9 +125,9 @@ player.fly(0, 100, 10);
 ```
 ---
 ### _jump_(height, multiplier, forced);
-```height``` type: ```Number```  
-```multiplier``` type: ```Number``` | default: ```0.1```  
-```forced``` type: ```Boolean``` | default: ```false```
+`height` type: `Number`  
+`multiplier` type: `Number` | default: `0.1`  
+`forced` type: `Boolean` | default: `false`
 
 <sub>_min example_</sub>
 ```js
