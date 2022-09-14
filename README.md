@@ -83,7 +83,7 @@ const player = elpy.create(
 )
 ```
 ---
-### _run_(delta, step)
+### run(delta, step)
 | name | type | default | value |
 | :---: | :---: | :---: | :---: |
 | **`delta`** | `<Number>` | `1` | `1, -1` |
@@ -100,7 +100,7 @@ player.run();
 player.run(-1, 10);
 ```
 ---
-### _move_(x, y)
+### move(x, y)
 | name | type |
 | :---: | :---: |
 | **`x`** | `<Number>` |
@@ -112,7 +112,7 @@ player.run(-1, 10);
 player.move(10, 10);
 ```
 ---
-### _fly_(degrees, distance, step)
+### fly(degrees, distance, step)
 | name | type | default |
 | :---: | :---: | :---: |
 | **`degrees`** | `<Number>` |
@@ -130,7 +130,7 @@ player.fly(0);
 player.fly(0, 100, 10);
 ```
 ---
-### _jump_(height, multiplier, forced)
+### jump(height, multiplier, forced)
 | name | type | default |
 | :---: | :---: | :---: |
 | **`height`** | `<Number>` |
@@ -146,7 +146,7 @@ player.jump(10);
 player.jump(10, 0.5, true);
 ```
 ---
-### _fall_(multiplier)
+### fall(multiplier)
 | name | type | default |
 | :---: | :---: | :---: |
 | **`multiplier`** | `<Number>` | `0.1` |
@@ -162,7 +162,7 @@ player.fall();
 player.fall(0.5);
 ```
 ---
-### _push_(object, distance)
+### push(object, distance)
 | name | type | default |
 | :---: | :---: | :---: |
 | **`object`** | `<Object>` |
@@ -179,7 +179,7 @@ player.push(object);
 player.push(object, 10);
 ```
 ---
-### _rotate_(degrees, x, y)
+### rotate(degrees, x, y)
 | name | type | default |
 | :---: | :---: | :---: |
 | **`degrees`** | `<Number>` |
@@ -197,7 +197,7 @@ player.rotate(90);
 player.rotote(90, 10, 20);
 ```
 ---
-### _stop_()
+### stop()
 
 > Stop: jump, fall, fly.
 
@@ -205,7 +205,7 @@ player.rotote(90, 10, 20);
 player.stop();
 ```
 ---
-### _destroy_()
+### destroy()
 
 > Destroy object.
 
@@ -213,7 +213,7 @@ player.stop();
 player.destroy();
 ```
 ---
-### _collision_(object)
+### collision(object)
 | name | type | default |
 | :---: | :---: | :---: |
 | **`object`** | `<Object>` |
