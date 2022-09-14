@@ -146,13 +146,65 @@ player.jump(10);
 player.jump(10, 0.5, true);
 ```
 ---
+### _fall_(multiplier)
+| name | type | default |
+| :---: | :---: | :---: |
+| **`multiplier`** | `<Number>` | `0.1` |
 
-```
-player.jump();
+>Free fall.
+
+<sub>_min example_</sub>
+```js
 player.fall();
-player.push();
-player.rotate();
+```
+<sub>_max example_</sub>
+```js
+player.fall(0.5);
+```
+---
+### _push_(object, distance)
+| name | type | default |
+| :---: | :---: | :---: |
+| **`object`** | `<Object>` |
+| **`distance`** | `<Number>` | `1` |
+
+> Pushing an object. The one who pushes must have a collision with what he pushes.
+
+<sub>_min example_</sub>
+```js
+player.push(object);
+```
+<sub>_max example_</sub>
+```js
+player.push(object, 10);
+```
+---
+### _rotate_(degrees, x, y)
+| name | type | default |
+| :---: | :---: | :---: |
+| **`degrees`** | `<Number>` |
+| **`x`** | `<Number>` | `0` |
+| **`y`** | `<Number>` | `0` |
+
+> Object rotation.
+
+<sub>_min example_</sub>
+```js
+player.rotate(90);
+```
+<sub>_max example_</sub>
+```js
+player.rotote(90, 10, 20);
+```
+---
+### _stop_()
+> Stop: jump, fall, fly.
+
+```js
 player.stop();
+```
+---
+```
 player.destroy();
 player.collision();
 player.obstacles();
