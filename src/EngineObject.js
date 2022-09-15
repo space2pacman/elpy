@@ -289,10 +289,6 @@ class EngineObject {
         }
     }
 
-    obstacles() {
-        return Object.values(this._collision);
-    }
-
     on(event, callback) {
         if (!this._events[event]) {
             this._events[event] = [];
@@ -313,6 +309,10 @@ class EngineObject {
 
     get options() {
         return this._options;
+    }
+
+    get obstacles() {
+        return Object.values(this._collision);
     }
 
     get track() {
