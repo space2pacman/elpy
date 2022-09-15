@@ -238,27 +238,80 @@ player.on('eventName', () => {
 });
 ```
 ---
-```
-player.on();
 
-//getters
-player.name;
-player.options;
-player.track;
-player.dest;
-player.offset;
-player.isPushing;
-player.isJumping;
-player.isFlying;
-player.isFalling;
-player.isExist;
-player.x;
-player.y;
-player.width;
-player.height;
-player.state;
-player.animate;
-player.ghost;
-player.degrees;
-player.added;
-```
+## Getters
+### name
+`<String>`
+> Object name.
+---
+### options
+`<Object>`
+> ...
+---
+### track
+`<Object>`
+> ...
+---
+### dest
+`<Object>`
+> ...
+---
+### offset
+`<Object>`
+> ...
+---
+### isPushing
+`<Boolean>`
+> ...
+---
+### isJumping
+`<Boolean>`
+> ...
+---
+### isFlying
+`<Boolean>`
+> ...
+---
+### isFalling
+`<Boolean>`
+> ...
+---
+### isExist
+`<Boolean>`
+> ...
+---
+### x
+`<Number>`
+> ...
+---
+### y
+`<Number>`
+> ...
+---
+### width
+`<Number>`
+> ...
+---
+### height
+`<Number>`
+> ...
+---
+### state
+`<String>`
+> ...
+---
+### animate
+`<Boolean>`
+> ...
+---
+### ghost
+`<Boolean>`
+> ...
+---
+### degrees
+`<Number>`
+> ...
+---
+### added
+`<Boolean>`
+> ...
