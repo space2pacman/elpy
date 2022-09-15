@@ -316,3 +316,37 @@ player.on('eventName', () => {
 `<Boolean>`
 > ...
 ---
+
+## Setters
+### x
+`<Number>`
+> ...
+---
+### y
+`<Number>`
+> ...
+---
+### width
+`<Number>`
+> ...
+---
+### height
+`<Number>`
+> ...
+---
+### state
+`<String>`
+> ...
+---
+### animate
+`<Boolean>`
+> ...
+---
+### ghost
+`<Boolean>`
+> ...
+---
+### added
+`<Boolean>`
+> ...
+---
