@@ -232,20 +232,63 @@ player.collision(object);
 
 > Add an event listener.
 
-**`collision`** | object `<Object>` | side `<String>`  
-**`move`**  
-**`rotate`**  
-**`destroy`**  
-**`state`**  
-**`jump`** | event `<Object>`  
-**`fall`** | event `<Object>`  
-**`fly`** | event `<Object>`
-
 ```js
 player.on('eventName', () => {
   // Event handling.
 });
 ```
+#### Event: collision
+
+> ...
+
+Returns
+| name | type |
+| :---: | :---: |
+| **`object`** | `<Object>` |
+| **`side`** | `<String>` |
+
+#### Event: move
+
+> ...
+
+#### Event: rotate
+
+> ...
+
+#### Event: destroy
+
+> ...
+
+#### Event: state
+
+> ...
+
+#### Event: jump
+
+> ...
+
+Returns
+| name | type |
+| :---: | :---: |
+| **`event`** | `<Object>` |
+
+#### Event: fall
+
+> ...
+
+Returns
+| name | type |
+| :---: | :---: |
+| **`event`** | `<Object>` |
+
+#### Event: fly
+
+> ...
+
+Returns
+| name | type |
+| :---: | :---: |
+| **`event`** | `<Object>` |
 ---
 
 ## Getters
@@ -359,3 +402,6 @@ player.on('eventName', () => {
 `<Boolean>`
 > ...
 ---
+
+## Events
+### 
