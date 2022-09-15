@@ -237,7 +237,7 @@ player.on('eventName', () => {
   // Event handling.
 });
 ```
-#### Event: collision
+#### Event: `'collision'`
 
 > ...
 
@@ -247,32 +247,23 @@ Returns
 | **`object`** | `<Object>` |
 | **`side`** | `<String>` |
 
-#### Event: move
+#### Event: `'move'`
 
 > ...
 
-#### Event: rotate
+#### Event: `'rotate'`
 
 > ...
 
-#### Event: destroy
+#### Event: `'destroy'`
 
 > ...
 
-#### Event: state
+#### Event: `'state'`
 
 > ...
 
-#### Event: jump
-
-> ...
-
-Returns
-| name | type |
-| :---: | :---: |
-| **`event`** | `<Object>` |
-
-#### Event: fall
+#### Event: `'jump'`
 
 > ...
 
@@ -281,7 +272,16 @@ Returns
 | :---: | :---: |
 | **`event`** | `<Object>` |
 
-#### Event: fly
+#### Event: `'fall'`
+
+> ...
+
+Returns
+| name | type |
+| :---: | :---: |
+| **`event`** | `<Object>` |
+
+#### Event: `'fly'`
 
 > ...
 
