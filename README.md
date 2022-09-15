@@ -315,3 +315,4 @@ player.on('eventName', () => {
 ### added
 `<Boolean>`
 > ...
+---
