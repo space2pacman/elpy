@@ -402,6 +402,3 @@ Returns
 `<Boolean>`
 > ...
 ---
-
-## Events
-### 
