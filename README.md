@@ -214,8 +214,8 @@ player.destroy();
 ```
 ---
 ### collision(object)
-| name | type | default |
-| :---: | :---: | :---: |
+| name | type |
+| :---: | :---: |
 | **`object`** | `<Object>` |
 
 > Add collision object.
@@ -224,8 +224,21 @@ player.destroy();
 player.collision(object);
 ```
 ---
+### on(event, callback)
+| name | type |
+| :---: | :---: |
+| **`event`** | `<String>` |
+| **`callback`** | `<Function>` |
+
+> Add an event listener.
+
+```js
+player.on('eventName', () => {
+  // Event handling.
+});
 ```
-player.obstacles();
+---
+```
 player.on();
 
 //getters
