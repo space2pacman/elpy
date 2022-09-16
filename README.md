@@ -35,8 +35,43 @@
 
 ```
 ## Basic usage example
-```js
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Elpy.js</title>
+</head>
+<body>
+  <canvas id="field"></canvas>
+  <script src="elpy.min.js"></script>
+  <script>
+    const elpy = new Elpy('#field', 500, 500);
+    const player = elpy.create('player', 50, 50, 20, 20);
+    const wall = elpy.create('wall', 100, 50, 20, 20, { color: 'brown' })
 
+    elpy.add(player);
+    elpy.add(wall);
+    player.collision(wall);
+
+    elpy.key(key => {
+      if (key === 'ArrowUp') {
+        player.move(player.x, player.y - 1);
+      }
+      if (key === 'ArrowDown') {
+        player.move(player.x, player.y + 1);
+      }
+      if (key === 'ArrowLeft') {
+        player.move(player.x - 1, player.y);
+      }
+      if (key === 'ArrowRight') {
+        player.move(player.x + 1, player.y);
+      }
+    });
+    
+    elpy.load();
+  </script>
+</body>
+</html>
 ```
 ## Engine instance
 ```js
