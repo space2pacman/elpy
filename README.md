@@ -238,57 +238,78 @@ player.on('eventName', () => {
 });
 ```
 #### Event: `'collision'`
-
-> ...
-
-Returns
 | name | type |
 | :---: | :---: |
 | **`object`** | `<Object>` |
 | **`side`** | `<String>` |
 
-#### Event: `'move'`
+```js
+player.on('collision', (object, side) => {
+  // object - collision object
+  // side - side of the object that was collided
+});
+```
 
-> ...
+#### Event: `'move'`
+```js
+player.on('move', () => {
+  // Event handling.
+});
+```
 
 #### Event: `'rotate'`
-
-> ...
+```js
+player.on('rotate', () => {
+  // Event handling.
+});
+```
 
 #### Event: `'destroy'`
-
-> ...
+```js
+player.on('destroy', () => {
+  // Event handling.
+});
+```
 
 #### Event: `'state'`
-
-> ...
+```js
+player.on('state', () => {
+  // Event handling.
+});
+```
 
 #### Event: `'jump'`
-
-> ...
-
-Returns
 | name | type |
 | :---: | :---: |
 | **`event`** | `<Object>` |
+
+```js
+player.on('jump', (event) => {
+  // event - event object
+});
+```
 
 #### Event: `'fall'`
-
-> ...
-
-Returns
 | name | type |
 | :---: | :---: |
 | **`event`** | `<Object>` |
+
+```js
+player.on('fall', (event) => {
+  // event - event object
+});
+```
 
 #### Event: `'fly'`
-
-> ...
-
-Returns
 | name | type |
 | :---: | :---: |
 | **`event`** | `<Object>` |
+
+```js
+player.on('fly', (event) => {
+  // event - event object
+});
+```
 ---
 
 ## Getters
