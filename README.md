@@ -95,7 +95,6 @@ Needed for the preloader if it is enabled (it is enabled by default).
 If the preloader is disabled, then the "elpy.load();" method is not needed.
 */
 
-
 elpy.create();
 alpy.add();
 elpy.key();
@@ -114,7 +113,6 @@ elpy.height;
 elpy.offset;
 elpy.objects;
 ```
-
 ## Object
 ### Create object
 ```js
@@ -320,35 +318,30 @@ player.on('collision', (object, side) => {
   // side - side of the object that was collided.
 });
 ```
-
 #### Event: `'move'`
 ```js
 player.on('move', () => {
   // Event handling.
 });
 ```
-
 #### Event: `'rotate'`
 ```js
 player.on('rotate', () => {
   // Event handling.
 });
 ```
-
 #### Event: `'destroy'`
 ```js
 player.on('destroy', () => {
   // Event handling.
 });
 ```
-
 #### Event: `'state'`
 ```js
 player.on('state', () => {
   // Event handling.
 });
 ```
-
 #### Event: `'jump'`
 > Callback arguments.
 
@@ -361,7 +354,6 @@ player.on('jump', (event) => {
   // event - event object.
 });
 ```
-
 #### Event: `'fall'`
 > Callback arguments.
 
@@ -374,7 +366,6 @@ player.on('fall', (event) => {
   // event - event object.
 });
 ```
-
 #### Event: `'fly'`
 > Callback arguments.
 
@@ -387,7 +378,6 @@ player.on('fly', (event) => {
   // event - event object.
 });
 ```
-
 #### Event object
 
 > The object that is returned in the event callback: `jump`, `fall`, `fly`.
@@ -409,115 +399,281 @@ player.on('jump', (event) => {
   event.resume();
 })
 ```
-## Getters
-### name
-`<String>`
-> Object name.
----
-### options
-`<Object>`
-> ...
----
-### track
-`<Object>`
-> ...
----
-### dest
-`<Object>`
-> ...
----
-### offset
-`<Object>`
-> ...
----
-### isPushing
-`<Boolean>`
-> ...
----
-### isJumping
-`<Boolean>`
-> ...
----
-### isFlying
-`<Boolean>`
-> ...
----
-### isFalling
-`<Boolean>`
-> ...
----
-### isExist
-`<Boolean>`
-> ...
----
-### x
-`<Number>`
-> ...
----
-### y
-`<Number>`
-> ...
----
-### width
-`<Number>`
-> ...
----
-### height
-`<Number>`
-> ...
----
-### state
-`<String>`
-> ...
----
-### animate
-`<Boolean>`
-> ...
----
-### ghost
-`<Boolean>`
-> ...
----
-### degrees
-`<Number>`
-> ...
----
-### added
-`<Boolean>`
-> ...
----
+## Getters / Setters
+<table width="100%" style="display: table">
+  <tr>
+    <td>
+      <b>Getters</b>
+    </td>
+    <td>
+      <b>Setters</b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td align="center">
+            <b>name</b>
+          </td>
+          <td align="center">
+            <b>type</b>
+          </td>
+          <td>
+            <b>description</b>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">name</td>
+          <td align="center">
+            <code>&lt;String&gt;</code>
+          </td>
+          <td>Returns the name of the object</td>
+        </tr>
+        <tr>
+          <td align="center">options</td>
+          <td align="center">
+            <code>&lt;Object&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">track</td>
+          <td align="center">
+            <code>&lt;Object&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">dest</td>
+          <td align="center">
+            <code>&lt;Object&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">offset</td>
+          <td align="center">
+            <code>&lt;Object&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">isPushing</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">isJumping</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">isFlying</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">isExist</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">x</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">y</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">width</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">height</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">state</td>
+          <td align="center">
+            <code>&lt;String&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">animate</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">ghost</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">degrees</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">added</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <td align="center">
+            <b>name</b>
+          </td>
+          <td align="center">
+            <b>type</b>
+          </td>
+          <td>
+            <b>description</b>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">x</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">y</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">width</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">height</td>
+          <td align="center">
+            <code>&lt;Number&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">state</td>
+          <td align="center">
+            <code>&lt;String&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">animate</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="center">ghost</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">added</td>
+          <td align="center">
+            <code>&lt;Boolean&gt;</code>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
-## Setters
-### x
-`<Number>`
-> ...
----
-### y
-`<Number>`
-> ...
----
-### width
-`<Number>`
-> ...
----
-### height
-`<Number>`
-> ...
----
-### state
-`<String>`
-> ...
----
-### animate
-`<Boolean>`
-> ...
----
-### ghost
-`<Boolean>`
-> ...
----
-### added
-`<Boolean>`
-> ...
 ## License
 [MIT](https://github.com/space2pacman/elpy/blob/master/LICENSE.md)
