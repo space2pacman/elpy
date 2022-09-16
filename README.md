@@ -279,9 +279,9 @@ player.on('state', () => {
 ```
 
 #### Event: `'jump'`
-| name | type |
-| :---: | :---: |
-| **`event`** | `<Object>` |
+| name | type | description |
+| :---: | :---: | :--: |
+| **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
 player.on('jump', (event) => {
@@ -290,9 +290,9 @@ player.on('jump', (event) => {
 ```
 
 #### Event: `'fall'`
-| name | type |
-| :---: | :---: |
-| **`event`** | `<Object>` |
+| name | type | description |
+| :---: | :---: | :--: |
+| **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
 player.on('fall', (event) => {
@@ -301,14 +301,36 @@ player.on('fall', (event) => {
 ```
 
 #### Event: `'fly'`
-| name | type |
-| :---: | :---: |
-| **`event`** | `<Object>` |
+| name | type | description |
+| :---: | :---: | :--: |
+| **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
 player.on('fly', (event) => {
   // event - event object
 });
+```
+
+#### Event object
+
+> The object that is returned in the event callback: `jump`, `fall`, `fly`.
+
+| name | type | description |
+| :---: | :---: | :--- |
+| `stopped` | `<Boolean>` | The property will be `true` if the object has been stopped. |
+| `paused` | `<Boolean>` | The property will be `true` if the object has been paused. |
+| `stop()` | | Stop object. If he was in a state: `jump`, `fall`, `fly`. |
+| `pause()` | | Pause object. If he was in a state: `jump`, `fall`, `fly`. |
+| `resume()` | | Resume object. If it was paused. |
+
+```js
+player.on('jump', (event) => {
+  event.stopped; // true / false
+  event.paused; // true / false
+  event.stop();
+  event.pause();
+  event.resume();
+})
 ```
 ---
 
