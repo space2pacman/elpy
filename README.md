@@ -272,6 +272,8 @@ player.on('eventName', () => {
 });
 ```
 #### Event: `'collision'`
+> Callback arguments.
+
 | name | type |
 | :---: | :---: |
 | **`object`** | `<Object>` |
@@ -279,8 +281,8 @@ player.on('eventName', () => {
 
 ```js
 player.on('collision', (object, side) => {
-  // object - collision object
-  // side - side of the object that was collided
+  // object - collision object.
+  // side - side of the object that was collided.
 });
 ```
 
@@ -313,35 +315,41 @@ player.on('state', () => {
 ```
 
 #### Event: `'jump'`
+> Callback arguments.
+
 | name | type | description |
 | :---: | :---: | :--: |
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
 player.on('jump', (event) => {
-  // event - event object
+  // event - event object.
 });
 ```
 
 #### Event: `'fall'`
+> Callback arguments.
+
 | name | type | description |
 | :---: | :---: | :--: |
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
 player.on('fall', (event) => {
-  // event - event object
+  // event - event object.
 });
 ```
 
 #### Event: `'fly'`
+> Callback arguments.
+
 | name | type | description |
 | :---: | :---: | :--: |
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
 player.on('fly', (event) => {
-  // event - event object
+  // event - event object.
 });
 ```
 
