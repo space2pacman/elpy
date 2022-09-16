@@ -5,30 +5,30 @@
 [Demo](https://space2pacman.github.io/elpy/docs/) / [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
 
 ## Docs
-<a href="#install">Install</a>  
-<a href="#basic-usage-example">Basic usage example</a>  
-<a href="#object">Object</a>
-- <a href="#create-object">Create object</a>
-- <a href="#rundelta-step">run()</a>
-- <a href="#movex-y">move()</a>
-- <a href="#flydegrees-distance-step">fly()</a>
-- <a href="#jumpheight-multiplier-forced">jump()</a>
-- <a href="#fallmultiplier">fall()</a>
-- <a href="#pushobject-distance">push()</a>
-- <a href="#rotatedegrees-x-y">rotate()</a>
-- <a href="#stop">stop()</a>
-- <a href="#destroy">destroy()</a>
-- <a href="#collisionobject">collision()</a>
-- <a href="#onevent-callback">on()</a>
-  - <a href="#event-collision">Event `'collision'`</a>
-  - <a href="#event-move">Event `'move'`</a>
-  - <a href="#event-rotate">Event `'rotate'`</a>
-  - <a href="#event-destroy">Event `'destroy'`</a>
-  - <a href="#event-state">Event `'state'`</a>
-  - <a href="#event-jump">Event `'jump'`</a>
-  - <a href="#event-fall">Event `'fall'`</a>
-  - <a href="#event-fly">Event `'fly'`</a>
-  - <a href="#event-object">Event object</a>
+- <a href="#install">Install</a>
+- <a href="#basic-usage-example">Basic usage example</a>
+- <a href="#object">Object</a>
+  - <a href="#create-object">Create object</a>
+  - <a href="#rundelta-step">run()</a>
+  - <a href="#movex-y">move()</a>
+  - <a href="#flydegrees-distance-step">fly()</a>
+  - <a href="#jumpheight-multiplier-forced">jump()</a>
+  - <a href="#fallmultiplier">fall()</a>
+  - <a href="#pushobject-distance">push()</a>
+  - <a href="#rotatedegrees-x-y">rotate()</a>
+  - <a href="#stop">stop()</a>
+  - <a href="#destroy">destroy()</a>
+  - <a href="#collisionobject">collision()</a>
+  - <a href="#onevent-callback">on()</a>
+    - <a href="#event-collision">Event `'collision'`</a>
+    - <a href="#event-move">Event `'move'`</a>
+    - <a href="#event-rotate">Event `'rotate'`</a>
+    - <a href="#event-destroy">Event `'destroy'`</a>
+    - <a href="#event-state">Event `'state'`</a>
+    - <a href="#event-jump">Event `'jump'`</a>
+    - <a href="#event-fall">Event `'fall'`</a>
+    - <a href="#event-fly">Event `'fly'`</a>
+    - <a href="#event-object">Event object</a>
 ## Install
 ```js
 
