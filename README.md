@@ -31,6 +31,7 @@
     - <a href="#event-object">Event object</a>
 - <a href="#getters">Getters</a>
 - <a href="#setters">Setters</a>
+- <a href="#development">Development</a>
 - <a href="#license">License</a>
 ## Install
 ```js
@@ -441,5 +442,9 @@ player.x;
 | animate | `<Boolean>` | Whether to animate the object. |
 | ghost | `<Boolean>` | Cancels collision with other objects that go to it. |
 | added | `<Boolean>` | Is the object added. |
+## Development
+```
+npm run serve
+```
 ## License
 [MIT](https://github.com/space2pacman/elpy/blob/master/LICENSE.md)
