@@ -49,7 +49,7 @@
   <script>
     const elpy = new Elpy('#field', 500, 500);
     const player = elpy.create('player', 50, 50, 20, 20);
-    const wall = elpy.create('wall', 100, 50, 20, 20, { color: 'brown' })
+    const wall = elpy.create('wall', 100, 50, 20, 20, { color: 'brown' });
 
     elpy.add(player);
     elpy.add(wall);
@@ -399,11 +399,15 @@ player.on('jump', (event) => {
   event.stop();
   event.pause();
   event.resume();
-})
+});
 ```
 ## Getters
+<sub>_min example_</sub>
+```js
+player.name;
+```
 | name | type | description |
-| :---: | :---: | :---: |
+| :---: | :---: | :--- |
 | name | `<String>` | Returns the name of the object. |
 | options | `<Object>` | Returns object options. |
 | track | `<Object>` | Returns the object's previous moves. |
@@ -423,8 +427,12 @@ player.on('jump', (event) => {
 | degrees | `<Number>` |  |
 | added | `<Boolean>` | Is the object added. |
 ## Setters
+<sub>_min example_</sub>
+```js
+player.x;
+```
 | name | type | description |
-| :---: | :---: | :---: |
+| :---: | :---: | :--- |
 | x | `<Number>` |  |
 | y | `<Number>` |  |
 | width | `<Number>` |  |
