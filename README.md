@@ -29,7 +29,8 @@
     - <a href="#event-fall">Event `'fall'`</a>
     - <a href="#event-fly">Event `'fly'`</a>
     - <a href="#event-object">Event object</a>
-- <a href="#getters--setters">Getters / Setters</a>
+- <a href="#getters">Getters</a>
+- <a href="#setters">Setters</a>
 - <a href="#license">License</a>
 ## Install
 ```js
