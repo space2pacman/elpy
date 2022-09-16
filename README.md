@@ -29,6 +29,7 @@
     - <a href="#event-fall">Event `'fall'`</a>
     - <a href="#event-fly">Event `'fly'`</a>
     - <a href="#event-object">Event object</a>
+- <a href="#license">License</a>
 ## Install
 ```js
 
@@ -475,4 +476,5 @@ player.on('jump', (event) => {
 ### added
 `<Boolean>`
 > ...
----
+## License
+[MIT](https://github.com/space2pacman/elpy/blob/master/LICENSE.md)
