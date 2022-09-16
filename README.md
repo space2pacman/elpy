@@ -74,8 +74,8 @@
 </html>
 ```
 ## Engine instance
+### Create engine instance
 ```js
-// Create app
 const elpy = new Elpy(
   "#element", // id element canvas or HTML object element get by document.querySelector()
   500, // width
@@ -88,25 +88,25 @@ const elpy = new Elpy(
 )
 
 /*
+elpy.load();
+
 Method called at the end of the code. 
 Needed for the preloader if it is enabled (it is enabled by default).
 If the preloader is disabled, then the "elpy.load();" method is not needed.
 */
-elpy.load();
+
 
 elpy.create();
 alpy.add();
-
 elpy.key();
 elpy.keydown();
 elpy.keyup();
 elpy.mousemove();
 elpy.click();
-
-elpy.checkObjectInViewport();
-
 elpy.tick();
 elpy.nextTick();
+elpy.checkObjectInViewport();
+elpy.load();
 
 // getters
 elpy.width;
