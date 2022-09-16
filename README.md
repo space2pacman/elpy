@@ -29,6 +29,7 @@
     - <a href="#event-fall">Event `'fall'`</a>
     - <a href="#event-fly">Event `'fly'`</a>
     - <a href="#event-object">Event object</a>
+- <a href="#getters--setters">Getters / Setters</a>
 - <a href="#license">License</a>
 ## Install
 ```js
@@ -428,63 +429,63 @@ player.on('jump', (event) => {
           <td align="center">
             <code>&lt;String&gt;</code>
           </td>
-          <td>Returns the name of the object</td>
+          <td>Returns the name of the object.</td>
         </tr>
         <tr>
           <td align="center">options</td>
           <td align="center">
             <code>&lt;Object&gt;</code>
           </td>
-          <td></td>
+          <td>Returns object options.</td>
         </tr>
         <tr>
           <td align="center">track</td>
           <td align="center">
             <code>&lt;Object&gt;</code>
           </td>
-          <td></td>
+          <td>Returns the object's<br> previous moves.</td>
         </tr>
         <tr>
           <td align="center">dest</td>
           <td align="center">
             <code>&lt;Object&gt;</code>
           </td>
-          <td></td>
+          <td>Returns the coordinates<br> where the object is moving.</td>
         </tr>
         <tr>
           <td align="center">offset</td>
           <td align="center">
             <code>&lt;Object&gt;</code>
           </td>
-          <td></td>
+          <td>Returns the offset<br> coordinates of an object.</td>
         </tr>
         <tr>
           <td align="center">isPushing</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Is it possible to push an object.</td>
         </tr>
         <tr>
           <td align="center">isJumping</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Is the object in a jump.</td>
         </tr>
         <tr>
           <td align="center">isFlying</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Is the object in fly.</td>
         </tr>
         <tr>
           <td align="center">isExist</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Does the object exist.</td>
         </tr>
         <tr>
           <td align="center">x</td>
@@ -519,21 +520,21 @@ player.on('jump', (event) => {
           <td align="center">
             <code>&lt;String&gt;</code>
           </td>
-          <td></td>
+          <td>Returns the current state of the object.</td>
         </tr>
         <tr>
           <td align="center">animate</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Is the object animated.</td>
         </tr>
         <tr>
           <td align="center">ghost</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Whether collision is canceled<br> with other objects that go to it.</td>
         </tr>
         <tr>
           <td align="center">degrees</td>
@@ -547,7 +548,7 @@ player.on('jump', (event) => {
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Is the object added.</td>
         </tr>
       </table>
     </td>
@@ -577,17 +578,17 @@ player.on('jump', (event) => {
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>&nbsp;<br>&nbsp;</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>&nbsp;<br>&nbsp;</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>&nbsp;<br>&nbsp;</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -642,21 +643,21 @@ player.on('jump', (event) => {
           <td align="center">
             <code>&lt;String&gt;</code>
           </td>
-          <td></td>
+          <td>Used to switch textures.</td>
         </tr>
         <tr>
           <td align="center">animate</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Whether to animate the object.</td>
         </tr>
         <tr>
           <td align="center">ghost</td>
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Cancels collision with<br> other objects that go to it.</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -668,7 +669,7 @@ player.on('jump', (event) => {
           <td align="center">
             <code>&lt;Boolean&gt;</code>
           </td>
-          <td></td>
+          <td>Is the object added.</td>
         </tr>
       </table>
     </td>
