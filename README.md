@@ -1,8 +1,8 @@
 ![logo](/docs/images/logo.png)
 
-2D JavaScript game engine
+2D JavaScript game engine.
 
-[Demo](https://space2pacman.github.io/elpy/docs/) / [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
+[Demo](https://space2pacman.github.io/elpy/docs/) | [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
 
 ## Docs
 - <a href="#install">Install</a>
