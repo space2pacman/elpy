@@ -203,7 +203,7 @@
         // });
 
         elpy.tick(() => {
-            character.run(1, character.options.custom.step);
+            character.run(character.options.custom.step);
             character.rotate(character.options.custom.degrees);
         })
 
@@ -308,7 +308,7 @@
         //     }
 
         //     bot.rotate(bot.options.custom.angle);
-        //     bot.run(1, bot.options.custom.step);
+        //     bot.run(bot.options.custom.step);
         // }
 
         // function hit(attacking, targetName) {
@@ -329,7 +329,7 @@
         //             return false;
         //         }
                 
-        //         bullet.run(-1, BULLET_STEP);
+        //         bullet.run(-BULLET_STEP);
         //     });
 
         //     bullet.on('collision', object => {
