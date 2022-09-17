@@ -87,19 +87,9 @@ class EngineObject {
         this._init();
     }
 
-    run(delta = 1, step = 1) {
-        let x;
-        let y;
-
-        if (delta === 1) {
-            x = this._x + Math.cos((delta * (this._degrees + 90)) * Math.PI / 180) * step;
-            y = this._y + Math.sin((delta * (this._degrees + 90)) * Math.PI / 180) * step;
-        }
-
-        if (delta === -1) {
-            x = this._x + Math.sin((delta * (this._degrees - 180)) * Math.PI / 180) * step;
-            y = this._y + Math.cos((delta * (this._degrees - 180)) * Math.PI / 180) * step;
-        }
+    run(step = 1) {
+        const x = this._x + Math.cos((this._degrees + 90) * Math.PI / 180) * step;
+        const y = this._y + Math.sin((this._degrees + 90) * Math.PI / 180) * step;
             
         this.move(x, y);
     }

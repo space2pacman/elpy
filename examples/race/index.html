@@ -169,7 +169,7 @@
                 return false;
             }
 
-            character.run(-1, character.options.custom.speed);
+            character.run(-character.options.custom.speed);
         });
 
         elpy.keydown(key => {
@@ -266,7 +266,7 @@
                         return false;
                     }
 
-                    bot.run(-1, bot.options.custom.speed);
+                    bot.run(-bot.options.custom.speed);
                 });
             });
         }

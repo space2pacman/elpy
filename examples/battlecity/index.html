@@ -197,22 +197,22 @@
             if (pressedKeys.length === MAX_PRESSED_KEYS) {
                 switch(key) {
                     case 'ArrowUp':
-                        character.run(1, character.options.custom.step)
+                        character.run(character.options.custom.step)
                         character.rotate(180);
 
                         break;
                     case 'ArrowDown':
-                        character.run(1, character.options.custom.step)
+                        character.run(character.options.custom.step)
                         character.rotate(0);
 
                         break;
                     case 'ArrowRight':
-                        character.run(1, character.options.custom.step)
+                        character.run(character.options.custom.step)
                         character.rotate(270);
 
                         break;
                     case 'ArrowLeft':
-                        character.run(1, character.options.custom.step)
+                        character.run(character.options.custom.step)
                         character.rotate(90);
 
                         break;
@@ -299,7 +299,7 @@
             }
 
             bot.rotate(bot.options.custom.angle);
-            bot.run(1, bot.options.custom.step);
+            bot.run(bot.options.custom.step);
         }
 
         function hit(attacking, targetName) {
@@ -320,7 +320,7 @@
                     return false;
                 }
                 
-                bullet.run(-1, BULLET_STEP);
+                bullet.run(-BULLET_STEP);
             });
 
             bullet.on('collision', object => {

@@ -153,13 +153,12 @@ const player = elpy.create(
 )
 ```
 ---
-### run(delta, step)
-| name | type | default | value |
-| :---: | :---: | :---: | :---: |
-| **`delta`** | `<Number>` | `1` | `1, -1` |
+### run(step)
+| name | type | default |
+| :---: | :---: | :---: |
 | **`step`** | `<Number>` | `1` |
 
->Vector movement.
+>Vector movement. Moves in different directions depending on positive or negative values.
 
 <sub>_min example_</sub>
 ```js
@@ -167,7 +166,7 @@ player.run();
 ```
 <sub>_max example_</sub>
 ```js
-player.run(-1, 10);
+player.run(-1);
 ```
 ---
 ### move(x, y)
