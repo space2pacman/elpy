@@ -30,10 +30,6 @@ class EngineObject {
             x: 0,
             y: 0,
             object: null,
-            engine: {
-                x: 0,
-                y: 0
-            },
             rotate: {
                 x: 0,
                 y: 0
@@ -294,8 +290,6 @@ class EngineObject {
     //fix remove ?
     addOffsetObject(object, x, y) {
         this._offset.object = object;
-        this._offset.engine.x = x;
-        this._offset.engine.y = y;
     }
     
     get name() {
