@@ -168,7 +168,7 @@ class Engine {
         for (const name in this._objects) {
             const object = this._objects[name];
 
-            object.addOffsetObject(this._offset.object, this._offset.x, this._offset.y);
+            object.addOffsetObject(this._offset.object);
         }
     }
 
