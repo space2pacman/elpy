@@ -34,8 +34,15 @@
 - <a href="#development">Development</a>
 - <a href="#license">License</a>
 ## Install
+#### Download
+Latest builds are available in the project [releases page](https://github.com/space2pacman/elpy/releases/latest).
+#### CDN
 ```js
-
+https://
+```
+#### NPM
+```js
+npm install
 ```
 ## Basic usage example
 ```html
