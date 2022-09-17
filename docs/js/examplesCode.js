@@ -64,5 +64,27 @@ setInterval(() => {
     degrees++;
 })
     
-elpy.add(car);`
+elpy.add(car);`,
+    'paint':`let i = 0;
+
+elpy.mousemove((x, y) => {
+    const obj = elpy.create('object' + i, x, y - 10, 1, 1, {
+        image: 'images/elpy.png'
+    });
+    
+    i++;
+    
+    elpy.tick(() => {
+        if (obj.width >= 40) {
+            obj.destroy();
+
+            return false;
+        }
+        
+        obj.height = obj.height + 2;
+        obj.width = obj.width + 2;
+        obj.move(obj.x - 1, obj.y - 1);
+    });
+    elpy.add(obj);
+});`
 }
