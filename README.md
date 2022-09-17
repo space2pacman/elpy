@@ -29,8 +29,8 @@
     - <a href="#event-fall">Event `'fall'`</a>
     - <a href="#event-fly">Event `'fly'`</a>
     - <a href="#event-object">Event object</a>
-- <a href="#getters">Getters</a>
-- <a href="#setters">Setters</a>
+- <a href="#object-getters">Object getters</a>
+- <a href="#object-setters">Object setters</a>
 - <a href="#development">Development</a>
 - <a href="#license">License</a>
 ## Install
@@ -402,7 +402,7 @@ player.on('jump', (event) => {
   event.resume();
 });
 ```
-## Getters
+## Object getters
 <sub>_min example_</sub>
 ```js
 player.name;
@@ -427,7 +427,7 @@ player.name;
 | ghost | `<Boolean>` | Whether collision is canceled with other objects that go to it. |
 | degrees | `<Number>` |  |
 | added | `<Boolean>` | Is the object added. |
-## Setters
+## Object setters
 <sub>_min example_</sub>
 ```js
 player.x;
