@@ -9,7 +9,7 @@
 - <a href="#basic-usage-example">Basic usage example</a>
 - <a href="#object">Object</a>
   - <a href="#create-object">Create object</a>
-  - <a href="#rundelta-step">run()</a>
+  - <a href="#runstep">run()</a>
   - <a href="#movex-y">move()</a>
   - <a href="#flydegrees-distance-step">fly()</a>
   - <a href="#jumpheight-multiplier-forced">jump()</a>
