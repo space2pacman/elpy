@@ -191,23 +191,28 @@ class EngineObject {
         });
     }
 
-    push(pusher, distance = 1) {
-        let direction = '';
+    push(pusher) {
+        let direction;
+        let distance;
 
         if (pusher.dest.y < pusher.y) {
             direction = 'up';
+            distance = Math.abs(pusher.dest.y - pusher.y);
         }
 
         if (pusher.dest.y > pusher.y) {
             direction = 'down';
+            distance = Math.abs(pusher.dest.y - pusher.y);
         }
 
         if (pusher.dest.x > pusher.x) {
             direction = 'right';
+            distance = Math.abs(pusher.dest.x - pusher.x);
         }
 
         if (pusher.dest.x < pusher.x) {
             direction = 'left';
+            distance = Math.abs(pusher.dest.x - pusher.x);
         }
 
         switch (direction) {

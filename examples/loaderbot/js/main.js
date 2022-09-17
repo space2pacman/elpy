@@ -207,7 +207,7 @@
     
     character.on('collision', object => {
         if (object.isPushing) {
-            object.push(character, step);
+            object.push(character);
         }
     });
     
