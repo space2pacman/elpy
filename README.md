@@ -14,7 +14,7 @@
   - <a href="#flydegrees-distance-step">fly()</a>
   - <a href="#jumpheight-multiplier-forced">jump()</a>
   - <a href="#fallmultiplier">fall()</a>
-  - <a href="#pushobject-distance">push()</a>
+  - <a href="#pushobject">push()</a>
   - <a href="#rotatedegrees-x-y">rotate()</a>
   - <a href="#stop">stop()</a>
   - <a href="#destroy">destroy()</a>
@@ -238,21 +238,15 @@ player.fall();
 player.fall(0.5);
 ```
 ---
-### push(object, distance)
-| name | type | default |
-| :---: | :---: | :---: |
+### push(object)
+| name | type |
+| :---: | :---: |
 | **`object`** | `<Object>` |
-| **`distance`** | `<Number>` | `1` |
 
 > Pushing an object. The one who pushes must have a collision with what he pushes.
 
-<sub>_min example_</sub>
 ```js
 player.push(object);
-```
-<sub>_max example_</sub>
-```js
-player.push(object, 10);
 ```
 ---
 ### rotate(degrees, x, y)
