@@ -212,7 +212,6 @@
     });
     
     init();
-    elpy.load();
     
     function placeObjects(type, indexes, width, height, options) {
         for(let i = 0; i < map[type].length; i++) {

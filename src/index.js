@@ -106,18 +106,6 @@ class Engine {
         }
     }
 
-    async load() {
-        if (this._imagesIsLoading) {
-            await this._render();
-
-            requestAnimationFrame(this.load.bind(this));
-        } else {
-            this._preload = false;
-
-            await this._render();
-        }
-    }
-
     get width() {
         return this._width;
     }
@@ -215,6 +203,18 @@ class Engine {
                 }
             });
         });
+    }
+
+    async _load() {
+        if (this._imagesIsLoading) {
+            await this._render();
+
+            requestAnimationFrame(this._load.bind(this));
+        } else {
+            this._preload = false;
+
+            await this._render();
+        }
     }
 
     _loadImage(url, object, state) {
@@ -652,6 +652,14 @@ class Engine {
         this._ctx = this._field.getContext('2d');
     }
 
+    _checkReadyStateChange() {
+        document.addEventListener('readystatechange', () => {
+            if (document.readyState === 'complete') {
+                this._load();
+            }
+        });
+    }
+
     _init() {
         if (this._favicon) {
             this._setFavIcon();
@@ -659,6 +667,7 @@ class Engine {
         
         this._setDefaultStyle();
         this._setFieldStyle();
+        this._checkReadyStateChange();
     }
 }
 

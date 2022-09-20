@@ -144,25 +144,25 @@
         function off() {
             Object.values(elpy._objects).forEach(object => {
                 if (object !== elpy._offset.object) {
-                    object.x = object.x - character.offset.x;
+                    object.x = object.x - elpy._offset.object.offset.x;
                     //object.y = object.y - character.offset.y;
                 }
             });
 
-            elpy._offset.object.x = character.x - character.offset.x;
+            elpy._offset.object.x = elpy._offset.object.x - elpy._offset.object.offset.x;
             //elpy._offset.object.y = character.y - character.offset.y;
             elpy._offset.object = null;
             elpy._offset.x = 0;
             elpy._offset.y = 0;
         }
 
-        function on() {
-            elpy._setOffsetObject(character);
+        function on(object) {
+            elpy._setOffsetObject(object);
             elpy._setOffsetObjects();
 
-            character.options.offset.x = true;
+            object.options.offset.x = true;
             //character.options.offset.y = true;
-            character._offset.x = (elpy._offset.x - 240);
+            object._offset.x = (elpy._offset.x - 240);
             //character._offset.y = (elpy._offset.y - 180);
             elpy._offset.x = 240;
             //elpy._offset.y = 180;
@@ -170,7 +170,7 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === '1') {
-                on();
+                on(character);
             }
 
             if (e.key === '2') {
@@ -227,9 +227,7 @@
 
                     break;
             }
-        });
-
-        elpy.load();
+        });        
 
         function placeObjects() {
             for(let i = 0; i < map.length; i++) {
