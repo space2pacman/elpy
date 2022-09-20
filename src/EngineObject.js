@@ -287,8 +287,8 @@ class EngineObject {
 
         this._events[event].push(callback);
     }
-    //fix remove ?
-    addOffsetObject(object) {
+
+    setOffsetObject(object) {
         this._offset.object = object;
     }
     

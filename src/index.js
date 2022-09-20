@@ -33,7 +33,7 @@ class Engine {
         }
 
         if (typeof options.main === 'boolean' ? options.main : false) {
-            this._addOffsetObject(this._objects[name]);
+            this._setOffsetObject(this._objects[name]);
         }
 
         return this._objects[name];
@@ -111,8 +111,6 @@ class Engine {
             await this._render();
 
             requestAnimationFrame(this.load.bind(this));
-
-            this._addOffsetObjects();
         } else {
             this._preload = false;
 
@@ -158,17 +156,17 @@ class Engine {
         }
     }
 
-    _addOffsetObject(object) {
+    _setOffsetObject(object) {
         this._offset.object = object;
         this._offset.x = object.x;
         this._offset.y = object.y;
     }
 
-    _addOffsetObjects() {
+    _setOffsetObjects() {
         for (const name in this._objects) {
             const object = this._objects[name];
 
-            object.addOffsetObject(this._offset.object);
+            object.setOffsetObject(this._offset.object);
         }
     }
 
@@ -568,17 +566,43 @@ class Engine {
 
     _drawRepeatImage(object, offset) {
         const pattern = this._ctx.createPattern(object.options.image.cached, 'repeat');
+        const delta = this._getRepeatImageDelta(object);
 
         this._ctx.fillStyle = pattern;
         this._ctx.save();
-        this._ctx.translate(-offset.x, -offset.y);
-        this._ctx.fillRect(object.x, object.y, object.width, object.height);
+        this._ctx.translate(-offset.x + delta.x, -offset.y + delta.y);
+        this._ctx.fillRect(object.x - delta.x, object.y - delta.y, object.width, object.height);
         this._ctx.restore();
     }
 
+    _getRepeatImageDelta(object) {
+        const delta = {
+            x: 0,
+            y: 0
+        }
+        const difference = {
+            x: object.width - Math.abs(object.x),
+            y: object.height - Math.abs(object.y)
+        }
+
+        if (object.x < 0) {
+            delta.x = difference.x % object.options.image.cached.width;
+        } else {
+            delta.x = -(difference.x % object.options.image.cached.width);
+        }
+
+        if (object.y < 0) {
+            delta.y = difference.y % object.options.image.cached.height;
+        } else {
+            delta.y = -(difference.y % object.options.image.cached.height);
+        }
+
+        return delta;
+    }
+
     _showLoadingScreen() {
-        const x = this._width / 2 - ((this._width / 2) / 2);
-        const y = this._height / 2 - (((this._height / 100) * 10) / 2);
+        const x = (this._width / 2) - ((this._width / 2) / 2);
+        const y = (this._height / 2) - (((this._height / 100) * 10) / 2);
         const width = this._width / 2;
         const height = (this._height / 100) * 10;
         const images = this._storage.images.length;
@@ -592,11 +616,6 @@ class Engine {
         this._ctx.fillRect(x + 5, y + 6, width - 10, height - 12);
         this._ctx.fillStyle = 'white';
         this._ctx.fillRect(x + 4, y + 5, ((width - 8) / images) * imagesLoaded, height - 10);
-    }
-
-    _showBlackScreen() {
-        this._ctx.fillStyle = 'black';
-        this._ctx.fillRect(0, 0, this._width, this._height);
     }
 
     _isEmpty(object) {
