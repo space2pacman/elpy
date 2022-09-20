@@ -30,10 +30,6 @@
                         time: 30
                     }
                 ],
-                offset: {
-                    x: true
-                },
-                main: true,
                 custom: {
                     degrees: 0
                 }
@@ -87,6 +83,10 @@
         elpy.tick(() => {
             character.move(character.x + 1, character.y);
         });
+
+        elpy.fixingCamera(character, {
+            x: true
+        })
 
         character.on('collision', () => {
             resetGame();
