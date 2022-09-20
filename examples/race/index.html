@@ -163,7 +163,7 @@
 
         elpy.fixingCamera(character, {
             y: true
-        })
+        });
 
         elpy.tick(() => {
             if (character.y + (character.height / 2) < 0 && character.options.fixedCamera.y) {
