@@ -36,11 +36,7 @@
                         paths: ['images/player/jump.png'],
                         state: 'jump'
                     }
-                ],
-                offset: {
-                    y: true
-                },
-                main: true
+                ]
             },
             ground: {
                 image: 'images/ground.png',
@@ -173,6 +169,9 @@
         elpy.add(character);
         character.collision(obstacles);
         character.fall();
+        elpy.fixingCamera(character, {
+            y: true
+        })
 
         character.on('move', () => {
             if (character.y > character.track.y) {
