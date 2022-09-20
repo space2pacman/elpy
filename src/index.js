@@ -32,10 +32,6 @@ class Engine {
             this._objects[name].on('destroy', this._onDestroyObject.bind(this, name));
         }
 
-        if (typeof options.main === 'boolean' ? options.main : false) {
-            this._setOffsetObject(this._objects[name]);
-        }
-
         return this._objects[name];
     }
 
@@ -103,6 +99,40 @@ class Engine {
             return false;
         } else {
             return true;
+        }
+    }
+
+    unfixingCamera() {
+        Object.values(this._objects).forEach(object => {
+            if (object !== this._offset.object) {
+                object.x = object.x - this._offset.object.offset.x;
+                object.y = object.y - this._offset.object.offset.y;
+            }
+        });
+        
+        this._offset.object.options.fixedCamera.x = false;
+        this._offset.object.options.fixedCamera.y = false;
+        this._offset.object.x = this._offset.object.x - this._offset.object.offset.x;
+        this._offset.object.y = this._offset.object.y - this._offset.object.offset.y;
+        this._offset.x = 0;
+        this._offset.y = 0;
+    }
+
+    fixingCamera(object, fixedCamera = {}) {
+        this._setOffsetObject(object);
+        this._setOffsetObjects();
+
+        object.options.fixedCamera.x = typeof fixedCamera === 'object' && fixedCamera !== null ? fixedCamera.x === undefined ? false : fixedCamera.x : false;
+        object.options.fixedCamera.y = typeof fixedCamera === 'object' && fixedCamera !== null ? fixedCamera.y === undefined ? false : fixedCamera.y : false;
+        
+        if (object.options.fixedCamera.x) {
+            object.offset.x = (this._offset.x - ((this._width / 2) - (object.width / 2)));
+            this._offset.x = ((this._width / 2) - (object.width / 2));
+        }
+
+        if (object.options.fixedCamera.y) {
+            object.offset.y = (this._offset.y - ((this._height / 2) - (object.height / 2)));
+            this._offset.y = ((this._height / 2)- (object.height / 2));
         }
     }
 
@@ -341,11 +371,11 @@ class Engine {
             offset.y = this._offset.y;
         }
 
-        if (this._offset.object && !this._offset.object.options.offset.x) {
+        if (this._offset.object && !this._offset.object.options.fixedCamera.x) {
             offset.x = 0;
         }
 
-        if (this._offset.object && !this._offset.object.options.offset.y) {
+        if (this._offset.object && !this._offset.object.options.fixedCamera.y) {
             offset.y = 0;
         }
 
@@ -408,11 +438,11 @@ class Engine {
             offset.y = this._offset.y;
         }
 
-        if (this._offset.object && !this._offset.object.options.offset.x) {
+        if (this._offset.object && !this._offset.object.options.fixedCamera.x) {
             offset.x = 0;
         }
 
-        if (this._offset.object && !this._offset.object.options.offset.y) {
+        if (this._offset.object && !this._offset.object.options.fixedCamera.y) {
             offset.y = 0;
         }
 
@@ -440,13 +470,13 @@ class Engine {
             let x;
             let y;
             
-            if (this._offset.object.options.offset.x) {
+            if (this._offset.object.options.fixedCamera.x) {
                 x = this._offset.x;
             } else {
                 x = object.x;
             }
 
-            if (this._offset.object.options.offset.y) {
+            if (this._offset.object.options.fixedCamera.y) {
                 y = this._offset.y;
             } else {
                 y = object.y;
@@ -494,11 +524,11 @@ class Engine {
             offset.y = this._offset.y;
         }
 
-        if (this._offset.object && !this._offset.object.options.offset.x) {
+        if (this._offset.object && !this._offset.object.options.fixedCamera.x) {
             offset.x = 0;
         }
 
-        if (this._offset.object && !this._offset.object.options.offset.y) {
+        if (this._offset.object && !this._offset.object.options.fixedCamera.y) {
             offset.y = 0;
         }
         

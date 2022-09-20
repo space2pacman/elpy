@@ -62,9 +62,9 @@ class EngineObject {
                 rendering: false,
                 cached: {}
             },
-            offset: {
-                x: typeof options.offset === 'object' && options.offset !== null ? options.offset.x === undefined ? false : options.offset.x : false,
-                y: typeof options.offset === 'object' && options.offset !== null ? options.offset.y === undefined ? false : options.offset.y : false,
+            fixedCamera: {
+                x: false,
+                y: false,
             }
         };
         this._params = {
@@ -118,19 +118,19 @@ class EngineObject {
             }
         }
 
-        if (this._options.offset.x && x > this._track.x) {
+        if (this._options.fixedCamera.x && x > this._track.x) {
             this._offset.x += Math.abs(this._track.x - x);
         }
 
-        if (this._options.offset.x && x < this._track.x) {
+        if (this._options.fixedCamera.x && x < this._track.x) {
             this._offset.x -= Math.abs(this._track.x - x);
         }
 
-        if (this._options.offset.y && y > this._track.y) {
+        if (this._options.fixedCamera.y && y > this._track.y) {
             this._offset.y += Math.abs(this._track.y - y);
         }
 
-        if (this._options.offset.y && y < this._track.y) {
+        if (this._options.fixedCamera.y && y < this._track.y) {
             this._offset.y -= Math.abs(this._track.y - y);
         }
 

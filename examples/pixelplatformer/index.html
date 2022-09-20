@@ -35,10 +35,6 @@
                         time: 100
                     }
                 ],
-                // offset: {
-                //     x: true
-                // },
-                //main: true
             },
             background: {
                 image: {
@@ -138,46 +134,10 @@
 
         elpy.add(background);
         elpy.add(character);
-        //character.move(60, character.y);
-
-        //
-        function off() {
-            Object.values(elpy._objects).forEach(object => {
-                if (object !== elpy._offset.object) {
-                    object.x = object.x - elpy._offset.object.offset.x;
-                    //object.y = object.y - character.offset.y;
-                }
-            });
-
-            elpy._offset.object.x = elpy._offset.object.x - elpy._offset.object.offset.x;
-            //elpy._offset.object.y = character.y - character.offset.y;
-            elpy._offset.object = null;
-            elpy._offset.x = 0;
-            elpy._offset.y = 0;
-        }
-
-        function on(object) {
-            elpy._setOffsetObject(object);
-            elpy._setOffsetObjects();
-
-            object.options.offset.x = true;
-            //character.options.offset.y = true;
-            object._offset.x = (elpy._offset.x - 240);
-            //character._offset.y = (elpy._offset.y - 180);
-            elpy._offset.x = 240;
-            //elpy._offset.y = 180;
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '1') {
-                on(character);
-            }
-
-            if (e.key === '2') {
-                off();
-            }
-        })
-        //
+        character.move(60, character.y);
+        elpy.fixingCamera(character, {
+            x: true
+        });
 
         const ground01 = elpy.create('ground01', 0, unit * 13, unit * 69, unit * 2, options.ground);
         const ground02 = elpy.create('ground02', unit * 71, unit * 13, unit * 15, unit * 2, options.ground);
