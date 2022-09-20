@@ -102,22 +102,6 @@ class Engine {
         }
     }
 
-    unfixingCamera() {
-        Object.values(this._objects).forEach(object => {
-            if (object !== this._offset.object) {
-                object.x = object.x - this._offset.object.offset.x;
-                object.y = object.y - this._offset.object.offset.y;
-            }
-        });
-        
-        this._offset.object.options.fixedCamera.x = false;
-        this._offset.object.options.fixedCamera.y = false;
-        this._offset.object.x = this._offset.object.x - this._offset.object.offset.x;
-        this._offset.object.y = this._offset.object.y - this._offset.object.offset.y;
-        this._offset.x = 0;
-        this._offset.y = 0;
-    }
-
     fixingCamera(object, fixedCamera = {}) {
         this._setOffsetObject(object);
         this._setOffsetObjects();
@@ -134,6 +118,22 @@ class Engine {
             object.offset.y = (this._offset.y - ((this._height / 2) - (object.height / 2)));
             this._offset.y = ((this._height / 2)- (object.height / 2));
         }
+    }
+
+    unfixingCamera() {
+        Object.values(this._objects).forEach(object => {
+            if (object !== this._offset.object) {
+                object.x = object.x - this._offset.object.offset.x;
+                object.y = object.y - this._offset.object.offset.y;
+            }
+        });
+        
+        this._offset.object.options.fixedCamera.x = false;
+        this._offset.object.options.fixedCamera.y = false;
+        this._offset.object.x = this._offset.object.x - this._offset.object.offset.x;
+        this._offset.object.y = this._offset.object.y - this._offset.object.offset.y;
+        this._offset.x = 0;
+        this._offset.y = 0;
     }
 
     get width() {
