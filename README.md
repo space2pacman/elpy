@@ -105,6 +105,8 @@ elpy.click();
 elpy.tick();
 elpy.nextTick();
 elpy.checkObjectInViewport();
+elpy.fixingCamera();
+elpy.unfixingCamera();
 
 // getters
 elpy.width;
