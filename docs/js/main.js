@@ -45,7 +45,7 @@ function init() {
                 examplesLinks.children[i].classList.remove('active');
             }
     
-            event.target.classList.add('active')
+            event.target.classList.add('active');
     
             if (examplesCode[exampleCode]) {
                 editor.setValue(examplesCode[exampleCode]);
