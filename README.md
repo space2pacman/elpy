@@ -77,8 +77,6 @@ npm install
         player.move(player.x + 1, player.y);
       }
     });
-    
-    elpy.load();
   </script>
 </body>
 </html>
@@ -97,14 +95,6 @@ const elpy = new Elpy(
   }
 )
 
-/*
-elpy.load();
-
-Method called at the end of the code. 
-Needed for the preloader if it is enabled (it is enabled by default).
-If the preloader is disabled, then the "elpy.load();" method is not needed.
-*/
-
 elpy.create();
 alpy.add();
 elpy.key();
@@ -115,7 +105,6 @@ elpy.click();
 elpy.tick();
 elpy.nextTick();
 elpy.checkObjectInViewport();
-elpy.load();
 
 // getters
 elpy.width;
