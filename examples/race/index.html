@@ -26,11 +26,7 @@
                 image: 'images/player.png',
                 custom: {
                     speed: 16
-                },
-                offset: {
-                    y: true
-                },
-                main: true
+                }
             },
             ground: {
                 image: 'images/ground.png',
@@ -130,7 +126,12 @@
                 right: elpy.create('road_right', 256, 128, 128, roadHeight, options.road.main.right)
             }
         };
+        const turned = {
+            right: false,
+            left: false
+        }
         const character = elpy.create('character', 156, 285, 71, 131, options.character);
+        let roadLine = 2;
 
         createBots(botsConfig);
 
@@ -160,8 +161,16 @@
             }
         });
 
+        elpy.fixingCamera(character, {
+            y: true
+        })
+
         elpy.tick(() => {
-            if (character.y + (character.height / 2) < 0) {
+            if (character.y + (character.height / 2) < 0 && character.options.fixedCamera.y) {
+                elpy.unfixingCamera();
+            }
+
+            if (character.y + (character.height / 2) < -500) {
                 slowdown(character);
             }
 
@@ -175,11 +184,35 @@
         elpy.keydown(key => {
             switch(key) {
                 case 'ArrowRight':
-                    turn('right');
+                    if (roadLine === 3) {
+                        return;
+                    }
 
+                    if (!turned.right) {
+                        turned.right = true;
+
+                        if (roadLine < 3) {
+                            roadLine++;
+                        }
+                        
+                        turn('right');
+                    }
+                    
                     break;
                 case 'ArrowLeft':
-                    turn('left');
+                    if (roadLine === 1) {
+                        return;
+                    }
+
+                    if (!turned.left) {
+                        turned.left = true;
+
+                        if (roadLine > 1) {
+                            roadLine--;
+                        }
+                        
+                        turn('left');
+                    }
 
                     break;
             }
@@ -219,6 +252,10 @@
 
                     if (degrees === -MAX_DEGREES_ROTATION) {
                         degrees = 0;
+                        
+                        turned.right = false;
+                        turned.left = false;
+
                         return false; // exit after end animation
                     }
 
