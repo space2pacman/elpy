@@ -10,6 +10,7 @@ class Engine {
         this._field = null;
         this._ctx = null;
         this._keys = [];
+        this._events = {};
         this._storage = {
             images: []
         };
@@ -137,6 +138,14 @@ class Engine {
         this._offset.y = 0;
     }
 
+    on(event, callback) {
+        if (!this._events[event]) {
+            this._events[event] = [];
+        }
+
+        this._events[event].push(callback);
+    }
+
     get width() {
         return this._width;
     }
@@ -245,6 +254,8 @@ class Engine {
             this._preload = false;
 
             await this._render();
+
+            this._dispatchEvent('load');
         }
     }
 
@@ -690,6 +701,14 @@ class Engine {
                 this._load();
             }
         });
+    }
+
+    _dispatchEvent(name, ...data) {
+        if (this._events[name] && Array.isArray(this._events[name]) && this._events[name].length > 0) {
+            this._events[name].forEach(callback => {
+                callback(...data);
+            });
+        }
     }
 
     _init() {

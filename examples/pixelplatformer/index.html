@@ -156,6 +156,8 @@
             x: true
         });
 
+        loadHiddenObjectTextures();
+
         const ground01 = elpy.create('ground01', 0, unit * 13, unit * 69, unit * 2, options.ground);
         const ground02 = elpy.create('ground02', unit * 71, unit * 13, unit * 15, unit * 2, options.ground);
         const ground03 = elpy.create('ground03', unit * 89, unit * 13, unit * 64, unit * 2, options.ground);
@@ -474,6 +476,15 @@
             setTimeout(() => {
                 object.destroy();
             }, time);
+        }
+
+        function loadHiddenObjectTextures() {
+            const coin = elpy.create('coin', -18, -18, 18, 18, options.coin);
+
+            elpy.add(coin);
+            elpy.on('load', () => {
+                coin.destroy();
+            });
         }
     </script>
 </body>

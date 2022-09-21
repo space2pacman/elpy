@@ -163,31 +163,33 @@
             }
         });
 
-        elpy.tick(() => {
-            if (!bot.isExist) {
-                return false;
-            }
-            
-            botMove();
-        });
-
-        elpy.tick(() => {
-            if (!character.isExist) {
-                return false;
-            }
-
-            if (bot.isExist && character.isExist) {
-                const currentDate = Date.now();
-
-                if (currentDate > lastTimeUpdateBotHit + interval) {
-                    lastTimeUpdateBotHit = currentDate;
-                } else {
-                    return;
+        elpy.on('load', () => {
+            elpy.tick(() => {
+                if (!bot.isExist) {
+                    return false;
                 }
                 
-                hit(bot, 'character');
-            }
-        });
+                botMove();
+            });
+
+            elpy.tick(() => {
+                if (!character.isExist) {
+                    return false;
+                }
+
+                if (bot.isExist && character.isExist) {
+                    const currentDate = Date.now();
+
+                    if (currentDate > lastTimeUpdateBotHit + interval) {
+                        lastTimeUpdateBotHit = currentDate;
+                    } else {
+                        return;
+                    }
+                    
+                    hit(bot, 'character');
+                }
+            });
+        })
 
         elpy.key(key => {
             if (!pressedKeys.includes(key) && allowedKeys.includes(key)) {
