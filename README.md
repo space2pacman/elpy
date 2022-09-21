@@ -109,7 +109,6 @@ const elpy = new Elpy(
   "#element", // id element canvas or HTML object element get by document.querySelector()
   500, // width
   500, // height
-  
   // options
   {
     preload, // default - true, enable / disable preloader
