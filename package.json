@@ -3,7 +3,14 @@
   "version": "1.1.0",
   "description": "2D JavaScript game engine.",
   "author": "space2pacman",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/space2pacman/elpy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/space2pacman/elpy/issues"
+  },
   "keywords": [
     "html5",
     "game",
