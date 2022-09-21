@@ -97,7 +97,8 @@ const elpy = new Elpy(
   
   // options
   {
-    preload: true // default - true, enable / disable preloader
+    preload, // default - true, enable / disable preloader
+    favicon // default - true, enable / disable favicon
   }
 )
 
