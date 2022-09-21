@@ -52,7 +52,7 @@ class EngineObject {
             color: options.color || 'black',
             image: {
                 src: (typeof options.image === 'object' && options.image !== null ? options.image.src : options.image) || null,
-                repeat: (typeof options.image === 'object' && options.image !== null ? options.image.repeat : null) || null,
+                repeat: (typeof options.image === 'object' && options.image !== null ? options.image.repeat : false) || false,
                 rendering: false,
                 cached: null
             },
