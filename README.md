@@ -164,7 +164,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### add(object)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`object`** | `<String>` |
 
 > 
 
@@ -180,7 +180,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### key(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -196,7 +196,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### keydown(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -212,7 +212,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### keyup(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -228,7 +228,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### mousemove(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -244,7 +244,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### click(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -260,7 +260,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### tick(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -276,7 +276,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### nextTick(callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
@@ -292,7 +292,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### checkObjectInViewport(object)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`object`** | `<Object>` |
 
 > 
 
@@ -308,7 +308,8 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### fixingCamera(object, fixedCamera)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`object`** | `<Object>` |
+| **`fixedCamera`** | `<Object>` |
 
 > 
 
@@ -322,10 +323,6 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ```
 ---
 ### unfixingCamera()
-| name | type |
-| :---: | :---: |
-| **`name`** | `<String>` |
-
 > 
 
 <sub>_min example_</sub>
@@ -340,7 +337,8 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ### on(event, callback)
 | name | type |
 | :---: | :---: |
-| **`name`** | `<String>` |
+| **`event`** | `<String>` |
+| **`callback`** | `<Function>` |
 
 > 
 
