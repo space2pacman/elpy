@@ -10,8 +10,9 @@
 ## Docs
 - <a href="#install">Install</a>
 - <a href="#basic-usage-example">Basic usage example</a>
-- <a href="#object">Object</a>
+- <a href="#engine">Engine</a>
   - <a href="#createname-x-y-width-height-options">create()</a>
+- <a href="#object">Object</a>
   - <a href="#runstep">run()</a>
   - <a href="#movex-y">move()</a>
   - <a href="#flydegrees-distance-step">fly()</a>
@@ -87,7 +88,7 @@ npm install
 </body>
 </html>
 ```
-## Engine instance
+## Engine
 ### Create engine instance
 ```js
 const elpy = new Elpy(
@@ -122,7 +123,7 @@ elpy.height;
 elpy.offset;
 elpy.objects;
 ```
-## Object
+---
 ### create(name, x, y, width, height, options)
 | name | type |
 | :---: | :---: |
@@ -136,11 +137,11 @@ elpy.objects;
 
 <sub>_min example_</sub>
 ```js
-elpy.create('player', 10, 10, 20, 20);
+const player = elpy.create('player', 10, 10, 20, 20);
 ```
 <sub>_max example_</sub>
 ```js
-elpy.create('player', 10, 10, 20, 20, {
+const player = elpy.create('player', 10, 10, 20, 20, {
   obstacle, // default - true
   activity, // default - false
   pushing, // default - false
@@ -158,6 +159,7 @@ elpy.create('player', 10, 10, 20, 20, {
 });
 ```
 ---
+## Object
 ### run(step)
 | name | type | default |
 | :---: | :---: | :---: |
