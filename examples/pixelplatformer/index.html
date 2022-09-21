@@ -36,6 +36,23 @@
                     }
                 ],
             },
+            enemy: {
+                images: [
+                    {
+                        paths: ['images/enemies/enemy_move_left_0.png'],
+                        state: 'move:left'
+                    },
+                    {
+                        paths: ['images/enemies/enemy_move_right_0.png'],
+                        state: 'move:right'
+                    }
+                ],
+                type: 'enemy',
+                custom: {
+                    delta: -1,
+                    moving: false
+                }
+            },
             background: {
                 image: {
                     src: 'images/background/background_0000.png',
@@ -223,24 +240,7 @@
         }
 
         function placeEnemies(i, j) {
-            const options = {
-                images: [
-                    {
-                        paths: ['images/enemies/enemy_move_left_0.png'],
-                        state: 'move:left'
-                    },
-                    {
-                        paths: ['images/enemies/enemy_move_right_0.png'],
-                        state: 'move:right'
-                    }
-                ],
-                type: 'enemy',
-                custom: {
-                    delta: -1,
-                    moving: false
-                }
-            }
-            const enemy = elpy.create(`enemy-${i}-${j}`, unit * j, unit * i, 15, 13, options);
+            const enemy = elpy.create(`enemy-${i}-${j}`, unit * j, unit * i, 15, 13, JSON.parse(JSON.stringify(options.enemy)));
 
             enemy.animate = true;
             

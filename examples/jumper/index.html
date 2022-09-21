@@ -226,7 +226,7 @@
 
                     if (convertedKeys.includes(cell)) {
                         const name = indexes[cell];
-                        const object = elpy.create(`${name}-${i}-${j}`, width * j, height * i , width, height, options ? options : {});
+                        const object = elpy.create(`${name}-${i}-${j}`, width * j, height * i , width, height, options ? JSON.parse(JSON.stringify(options)) : {});
                         
                         elpy.add(object);
                         obstacles.push(object);
