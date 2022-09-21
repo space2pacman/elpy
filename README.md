@@ -95,7 +95,7 @@ const elpy = new Elpy(
   500, // width
   500, // height
   
-  // options, not required
+  // options
   {
     preload: true // default - true, enable / disable preloader
   }
@@ -113,6 +113,7 @@ elpy.nextTick();
 elpy.checkObjectInViewport();
 elpy.fixingCamera();
 elpy.unfixingCamera();
+elpy.on();
 
 // getters
 elpy.width;
@@ -124,34 +125,25 @@ elpy.objects;
 ### Create object
 ```js
 const player = elpy.create(
-  'player',
-  10,
-  10,
-  20,
-  20,
-  {
-    obstacle,
-    activity,
-    main,
-    pushing,
-    disabledEvents,
-    type,
-    custom,
-    color,
-    image: {
-      src,
-      repeat,
-      rendering,
-      cached
+  'player', // name
+  10, // x
+  10, // y
+  20, // width
+  20, // height
+  { // options
+    obstacle, // default - true
+    activity, // default - false
+    pushing, // default - false
+    disabledEvents, // default - false
+    type, // default - null
+    custom, // default - null
+    color, // default - 'black'
+    image: { // image: '' || image: { src: '', repeat: '' }
+      src, // default - null
+      repeat // default - false
     },
     images: {
-      list,
-      rendering,
-      cached
-    },
-    offset: {
-      x,
-      y
+      list, // default - null
     }
   }
 )
