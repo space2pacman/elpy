@@ -13,6 +13,7 @@
 - <a href="#basic-usage-example">Basic usage example</a>
 - <a href="#engine">Engine</a>
   - <a href="#createname-x-y-width-height-options">create()</a>
+- <a href="#engine-getters">Engine-getters</a>
 - <a href="#object">Object</a>
   - <a href="#runstep">run()</a>
   - <a href="#movex-y">move()</a>
@@ -103,26 +104,6 @@ const elpy = new Elpy(
     favicon // default - true, enable / disable favicon
   }
 )
-
-elpy.create();
-alpy.add();
-elpy.key();
-elpy.keydown();
-elpy.keyup();
-elpy.mousemove();
-elpy.click();
-elpy.tick();
-elpy.nextTick();
-elpy.checkObjectInViewport();
-elpy.fixingCamera();
-elpy.unfixingCamera();
-elpy.on();
-
-// getters
-elpy.width;
-elpy.height;
-elpy.offset;
-elpy.objects;
 ```
 ---
 ### create(name, x, y, width, height, options)
@@ -168,6 +149,208 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 });
 ```
 ---
+### add(object)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### key(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### keydown(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### keyup(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### mousemove(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### click(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### tick(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### nextTick(callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### checkObjectInViewport(object)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### fixingCamera(object, fixedCamera)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### unfixingCamera()
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+---
+### on(event, callback)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+
+> 
+
+<sub>_min example_</sub>
+```js
+
+```
+<sub>_max example_</sub>
+```js
+
+```
+## Engine getters
+<sub>_min example_</sub>
+```js
+elpy.width;
+```
+| name | type | description |
+| :---: | :---: | :--- |
+| width | `<Number>` | Returns the width of the canvas. |
+| height | `<Number>` | Returns the height of the canvas. |
+| offset | `<Object>` | Returns information on object and field offset. |
+| objects | `<Object>` | Returns all added objects. |
 ## Object
 ### run(step)
 | name | type | default |
