@@ -156,7 +156,7 @@
 
         function createPipe() {
             for(let i = 2; i < MAX_PIPES_COUNT; i++) {
-                const x = 200 * i;
+                const x = 220 * i;
                 const y = randomRange(-100, 0);
                 const pipeUp = elpy.create(`pipe-up-${i}`, x + (character.x - elpy.width / 2), y, 50, 300, options.pipe);
                 const pipeDown = elpy.create(`pipe-down-${i}`, x + (character.x - elpy.width / 2), pipeUp.y + pipeUp.height + 120, 50, 300, options.pipe);
