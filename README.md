@@ -125,6 +125,7 @@ const elpy = new Elpy(
 | **`y`** | `<Number>` |
 | **`width`** | `<Number>` |
 | **`height`** | `<Number>` |
+| **`options`** | `<Object>` |
 
 > Creates and returns an engine object.
 
