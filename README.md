@@ -142,19 +142,27 @@ const player = elpy.create('player', 10, 10, 20, 20);
 <sub>_max example_</sub>
 ```js
 const player = elpy.create('player', 10, 10, 20, 20, {
-  obstacle, // default - true
-  activity, // default - false
-  pushing, // default - false
-  disabledEvents, // default - false
-  type, // default - null
-  custom, // default - null
+  obstacle: true, // default - true
+  activity: false, // default - false
+  pushing: false, // default - false
+  disabledEvents: false, // default - false
+  type: 'player object', // default - null
+  custom: {}, // default - null
   color, // default - 'black'
-  image: { // image: '' || image: { src: '', repeat: '' }
-    src, // default - null
-    repeat // default - false
+  // image: '' or image: { src: '', repeat: false }
+  image: { 
+    src: '', // default - null
+    repeat: false // default - false
   },
   images: {
-    list, // default - null
+    list: // default - null
+    [
+      {
+        paths: ['images/player_left.png', 'images/player_right.png'], // links for image.
+        state: 'move:left', // in what condition are the images available. player.state = 'move:left'.
+        time: 100 // if player.animate = true - switching time between images.
+      }
+    ], 
   }
 });
 ```
