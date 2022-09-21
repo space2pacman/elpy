@@ -11,7 +11,7 @@
 - <a href="#install">Install</a>
 - <a href="#basic-usage-example">Basic usage example</a>
 - <a href="#object">Object</a>
-  - <a href="#create-object">Create object</a>
+  - <a href="#createname-x-y-width-height-options">create()</a>
   - <a href="#runstep">run()</a>
   - <a href="#movex-y">move()</a>
   - <a href="#flydegrees-distance-step">fly()</a>
@@ -123,31 +123,39 @@ elpy.offset;
 elpy.objects;
 ```
 ## Object
-### Create object
+### create(name, x, y, width, height, options)
+| name | type |
+| :---: | :---: |
+| **`name`** | `<String>` |
+| **`x`** | `<Number>` |
+| **`y`** | `<Number>` |
+| **`width`** | `<Number>` |
+| **`height`** | `<Number>` |
+
+> Creates and returns an engine object.
+
+<sub>_min example_</sub>
 ```js
-const player = elpy.create(
-  'player', // name
-  10, // x
-  10, // y
-  20, // width
-  20, // height
-  { // options
-    obstacle, // default - true
-    activity, // default - false
-    pushing, // default - false
-    disabledEvents, // default - false
-    type, // default - null
-    custom, // default - null
-    color, // default - 'black'
-    image: { // image: '' || image: { src: '', repeat: '' }
-      src, // default - null
-      repeat // default - false
-    },
-    images: {
-      list, // default - null
-    }
+elpy.create('player', 10, 10, 20, 20);
+```
+<sub>_max example_</sub>
+```js
+elpy.create('player', 10, 10, 20, 20, {
+  obstacle, // default - true
+  activity, // default - false
+  pushing, // default - false
+  disabledEvents, // default - false
+  type, // default - null
+  custom, // default - null
+  color, // default - 'black'
+  image: { // image: '' || image: { src: '', repeat: '' }
+    src, // default - null
+    repeat // default - false
+  },
+  images: {
+    list, // default - null
   }
-)
+});
 ```
 ---
 ### run(step)
