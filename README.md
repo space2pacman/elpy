@@ -2,6 +2,9 @@
 
 2D JavaScript game engine.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/space2pacman/elpy/blob/master/LICENSE.md)
+[![Javascript](https://img.shields.io/badge/language-javascript-green.svg)](https://en.wikipedia.org/wiki/JavaScript)
+
 [Demo](https://space2pacman.github.io/elpy/docs/) | [Game examples](https://space2pacman.github.io/elpy/docs/examples.html)
 
 ## Docs
