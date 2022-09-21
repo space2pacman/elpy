@@ -319,17 +319,17 @@ class Engine {
     }
 
     _checkObjectInViewportX(object) {
-        return object.x > object.offset.object.x + this._width
-        || object.x < object.offset.object.x - this._width;
+        return object.x > this._offset.object.x + this._width
+        || object.x < this._offset.object.x - this._width;
     }
 
     _checkObjectInViewportY(object) {
-        return object.y > object.offset.object.y + this._height
-        || object.y < object.offset.object.y - this._height;
+        return object.y > this._offset.object.y + this._height
+        || object.y < this._offset.object.y - this._height;
     }
 
     _checkObjectNotActivity(object) {
-        return !object.options.activity && object.offset.object;
+        return !object.options.activity && this._offset.object;
     }
 
     async _render() {
