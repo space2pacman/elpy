@@ -45,7 +45,6 @@ class EngineObject {
         this._options = {
             obstacle: typeof options.obstacle === 'boolean' ? options.obstacle : true,
             activity: typeof options.activity === 'boolean' ? options.activity : false,
-            main: typeof options.main === 'boolean' ? options.main : false,
             pushing: typeof options.pushing === 'boolean' ? options.pushing : false,
             disabledEvents: typeof options.disabledEvents === 'boolean' ? options.disabledEvents : false,
             type: options.type || null,
@@ -64,7 +63,7 @@ class EngineObject {
             },
             fixedCamera: {
                 x: false,
-                y: false,
+                y: false
             }
         };
         this._params = {

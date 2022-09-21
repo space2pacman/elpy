@@ -19,6 +19,7 @@ class Engine {
             x: 0,
             y: 0
         };
+
         this._init();
     }
 
@@ -104,7 +105,7 @@ class Engine {
 
     fixingCamera(object, fixedCamera = {}) {
         this._setOffsetObject(object);
-        this._setOffsetObjects();
+        this._setOffsetObjectToObjects();
 
         object.options.fixedCamera.x = typeof fixedCamera === 'object' && fixedCamera !== null ? fixedCamera.x === undefined ? false : fixedCamera.x : false;
         object.options.fixedCamera.y = typeof fixedCamera === 'object' && fixedCamera !== null ? fixedCamera.y === undefined ? false : fixedCamera.y : false;
@@ -180,7 +181,7 @@ class Engine {
         this._offset.y = object.y;
     }
 
-    _setOffsetObjects() {
+    _setOffsetObjectToObjects() {
         for (const name in this._objects) {
             const object = this._objects[name];
 
@@ -252,6 +253,7 @@ class Engine {
             const image = new Image();
 
             image.src = url;
+            
             image.addEventListener('load', () => {
                 if (state) {
                     const id = `${object.name}:${state}:${url}`;
