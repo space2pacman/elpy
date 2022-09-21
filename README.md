@@ -36,6 +36,9 @@
 - <a href="#object-setters">Object setters</a>
 - <a href="#development">Development</a>
 - <a href="#license">License</a>
+
+![games](/docs/images/games-background.png)
+
 ## Install
 #### Download
 Latest builds are available in the project [releases page](https://github.com/space2pacman/elpy/releases/latest).
