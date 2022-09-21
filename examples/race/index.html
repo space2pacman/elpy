@@ -81,7 +81,7 @@
         const height = 600;
         const elpy = new Elpy('#field', width, height);
         const obstacles = [];
-        const roadHeight = 10000;
+        const roadHeight = 11000;
         const botsConfig = [
             {
                 x: 156,
@@ -147,7 +147,7 @@
         elpy.add(character);
 
         character.collision(obstacles);
-        character.move(character.x, roadHeight);
+        character.move(character.x, roadHeight - 200);
         character.on('collision', (object, side) => {
             if (['bottom', 'left', 'right'].includes(side)) {
                 character.options.custom.speed = object.options.custom.speed;
