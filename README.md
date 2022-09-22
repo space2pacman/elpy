@@ -166,7 +166,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`object`** | `<String>` |
 
-> 
+> Add an object to the engine.
 
 <sub>_min example_</sub>
 ```js
@@ -182,7 +182,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Listen for keydown and keyup events. Сallback is always called when a key is pressed.
 
 <sub>_min example_</sub>
 ```js
@@ -198,7 +198,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Сallback fires once on click.
 
 <sub>_min example_</sub>
 ```js
@@ -214,7 +214,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Сallback fires once on click.
 
 <sub>_min example_</sub>
 ```js
@@ -230,7 +230,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Handles mouse movement on the canvas.
 
 <sub>_min example_</sub>
 ```js
@@ -246,7 +246,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Handles mouse click on the canvas.
 
 <sub>_min example_</sub>
 ```js
@@ -262,7 +262,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Called recursively. The next call is queued after the scene is updated (render). To cancel the call inside the callback, return false.
 
 <sub>_min example_</sub>
 ```js
@@ -278,7 +278,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`callback`** | `<Function>` |
 
-> 
+> Adds a callback to the queue after the scene is updated (rendered) and calls callback once.
 
 <sub>_min example_</sub>
 ```js
@@ -294,7 +294,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | :---: | :---: |
 | **`object`** | `<Object>` |
 
-> 
+> Checking if the object is in the visible area.
 
 <sub>_min example_</sub>
 ```js
@@ -311,7 +311,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | **`object`** | `<Object>` |
 | **`fixedCamera`** | `<Object>` |
 
-> 
+> Fix the camera behind the object. You can fix both in one coordinate and in two.
 
 <sub>_min example_</sub>
 ```js
@@ -323,7 +323,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 ```
 ---
 ### unfixingCamera()
-> 
+> Unfix the camera from the one previously fixed behind the object.
 
 <sub>_min example_</sub>
 ```js
@@ -340,7 +340,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | **`event`** | `<String>` |
 | **`callback`** | `<Function>` |
 
-> 
+> Listen to the engine event.
 
 <sub>_min example_</sub>
 ```js
