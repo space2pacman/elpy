@@ -582,7 +582,7 @@ player.on('fly', (event) => {
 | `resume()` | | Resume object. If it was paused. |
 
 ```js
-player.on('jump', (event) => {
+player.on('jump', event => {
   event.stopped; // returns true or false
   event.paused; // returns true or false
   event.stop();
