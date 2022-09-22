@@ -3,7 +3,7 @@
 ![logo](/docs/images/background.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/space2pacman/elpy/blob/master/LICENSE.md)
-[![Javascript](https://img.shields.io/badge/language-javascript-brightgreen.svg)](https://en.wikipedia.org/wiki/JavaScript)
+[![Javascript](https://img.shields.io/badge/Language-Javascript-brightgreen.svg)](https://en.wikipedia.org/wiki/JavaScript)
 ![](https://img.badgesize.io/space2pacman/elpy/master/dist/elpy.min.js)
 
 | [Demo](https://space2pacman.github.io/elpy/docs/) | [Game examples](https://space2pacman.github.io/elpy/docs/examples.html) |
