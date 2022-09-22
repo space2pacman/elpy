@@ -38,7 +38,7 @@
   - <a href="#stop">stop()</a>
   - <a href="#destroy">destroy()</a>
   - <a href="#collisionobject">collision()</a>
-  - <a href="#onevent-callback">on()</a>
+  - <a href="#onevent-callback-1">on()</a>
     - <a href="#event-collision">Event `'collision'`</a>
     - <a href="#event-move">Event `'move'`</a>
     - <a href="#event-rotate">Event `'rotate'`</a>
@@ -167,13 +167,8 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Add an object to the engine.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.add(player);
 ```
 ---
 ### key(callback)
@@ -183,13 +178,12 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Listen for keydown and keyup events. Сallback is always called when a key is pressed.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.key(key => {
+  if (key === 'ArrowUp') {
+    // ...
+  }
+});
 ```
 ---
 ### keydown(callback)
@@ -199,13 +193,12 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Сallback fires once on click.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.keydown(key => {
+  if (key === 'ArrowUp') {
+    // ...
+  }
+});
 ```
 ---
 ### keyup(callback)
@@ -215,13 +208,12 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Сallback fires once on click.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.keyup(key => {
+  if (key === 'ArrowUp') {
+    // ...
+  }
+});
 ```
 ---
 ### mousemove(callback)
@@ -231,13 +223,10 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Handles mouse movement on the canvas.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.mousemove((x, y) => {
+  // x, y - coordinates inside the canvas.
+});
 ```
 ---
 ### click(callback)
@@ -247,13 +236,10 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Handles mouse click on the canvas.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.click((x, y) => {
+  // x, y - coordinates inside the canvas.
+});
 ```
 ---
 ### tick(callback)
@@ -263,13 +249,18 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Called recursively. The next call is queued after the scene is updated (render). To cancel the call inside the callback, return false.
 
-<sub>_min example_</sub>
 ```js
+let delta = 0;
+// tick will be called 100 times
+elpy.tick(() => {
+  if (delta === 100) {
+    return false; // stop tick
+  }
 
-```
-<sub>_max example_</sub>
-```js
-
+  delta++;
+  
+  player.move(player.x + delta, player.y + delta);
+});
 ```
 ---
 ### nextTick(callback)
@@ -279,13 +270,10 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Adds a callback to the queue after the scene is updated (rendered) and calls callback once.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.nextTick(() => {
+  // ...
+});
 ```
 ---
 ### checkObjectInViewport(object)
@@ -295,13 +283,8 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Checking if the object is in the visible area.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.checkObjectInViewport(player); // returns true or false
 ```
 ---
 ### fixingCamera(object, fixedCamera)
@@ -314,23 +297,23 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 <sub>_min example_</sub>
 ```js
-
+elpy.fixingCamera(player, {
+  x: true
+});
 ```
 <sub>_max example_</sub>
 ```js
-
+elpy.fixingCamera(player, {
+  x: true,
+  y: true
+});
 ```
 ---
 ### unfixingCamera()
 > Unfix the camera from the one previously fixed behind the object.
 
-<sub>_min example_</sub>
 ```js
-
-```
-<sub>_max example_</sub>
-```js
-
+elpy.unfixingCamera();
 ```
 ---
 ### on(event, callback)
@@ -341,13 +324,16 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 
 > Listen to the engine event.
 
-<sub>_min example_</sub>
 ```js
-
+elpy.on('eventName', () => {
+  // Event handling.
+});
 ```
-<sub>_max example_</sub>
+#### Event: `'load'`
 ```js
-
+elpy.on('load', () => {
+  // Event handling.
+});
 ```
 ## Engine getters
 <sub>_min example_</sub>
