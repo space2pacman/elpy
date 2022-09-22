@@ -583,8 +583,8 @@ player.on('fly', (event) => {
 
 ```js
 player.on('jump', (event) => {
-  event.stopped; // true / false
-  event.paused; // true / false
+  event.stopped; // returns true or false
+  event.paused; // returns true or false
   event.stop();
   event.pause();
   event.resume();
