@@ -384,7 +384,7 @@ player.run(-1);
 | **`x`** | `<Number>` |
 | **`y`** | `<Number>` |
 
->Move by coordinates.
+>Move at coordinates.
 
 ```js
 player.move(10, 10);
