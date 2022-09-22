@@ -151,7 +151,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
   // default - null
   images: [
     {
-      paths: ['images/player_left.png', 'images/player_right.png'], // links for image.
+      paths: ['images/player_left.png', 'images/player_right.png'], // path to image.
       state: 'move:left', // in what condition are the images available. player.state = 'move:left'.
       time: 100 // if player.animate = true - switching time between images.
     }
