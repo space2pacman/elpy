@@ -99,6 +99,25 @@
                         time: 100
                     }
                 ],
+            },
+            flagpoleTip: {
+                image: 'images/tiles/flagpoleTip.png'
+            },
+            flagpole: {
+                obstacle: false,
+                image: {
+                    src: 'images/tiles/flagpole.png',
+                    repeat: true
+                }
+            },
+            flag: {
+                images: [
+                    {
+                        paths: ['images/tiles/flag_up.png', 'images/tiles/flag_down.png'],
+                        state: 'flutters',
+                        time: 100
+                    }
+                ]
             }
         }
 
@@ -130,42 +149,6 @@
         const step = 3;
         const grounds = [];
         const obstacles = [];
-        const elpy = new Elpy('#field', 500, unit * 15);
-        const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
-
-        //
-        const flagpoleTip = elpy.create('flagpole-tip', (unit * 198) + 9, (unit * 3), 6, 4, {
-            image: 'images/tiles/flagpoleTip.png'
-        });
-
-        const flagpole = elpy.create('flagpole', (unit * 198) + 9, (unit * 3) + 4, 6, (unit * 9) - 4, {
-            obstacle: false,
-            image: {
-                src: 'images/tiles/flagpole.png',
-                repeat: true
-            }
-        });
-
-        const flag = elpy.create('flag', (unit * 198) + 9, (unit * 3) + 4, 18, 18, {
-            images: [
-                {
-                    paths: ['images/tiles/flag_up.png', 'images/tiles/flag_down.png'],
-                    state: 'flutters',
-                    time: 100
-                }
-            ]
-        });
-
-        flag.animate = true;
-        
-        elpy.add(flagpoleTip);
-        elpy.add(flagpole);
-        elpy.add(flag);
-
-        obstacles.push(flagpole);
-        //
-
-        const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
         const CHARACTER_JUMP_HEIGHT = 100;
         const CHARACTER_JUMP_REBOUND = 10;
         const CHARACTER_JUMP_MULTIPLIER = 0.3;
@@ -180,12 +163,17 @@
         const COIN_JUMP_HEIGHT = 30;
         const MAX_FLAG_LOWERING_HEIGHT = 270;
         const MAX_MAP_LENGTH = (map[0].length - 1) * unit;
+        const elpy = new Elpy('#field', 500, unit * 15);
+        const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
+        const flag = createFlag();
+        const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
         let isAnimate = false;
+        let isFlagLowered = false;
         let coinCounter = 0;
-        
+         
         elpy.add(background);
         elpy.add(character);
-        character.move(4700, character.y);
+        character.move(60, character.y);
         elpy.fixingCamera(character, {
             x: true
         });
@@ -362,7 +350,11 @@
             }
 
             if (object.name === 'flagpole') {
-                lowerFlag();
+                if (!isFlagLowered) {
+                    isFlagLowered = true;
+
+                    lowerFlag();
+                }
             }
         }
 
@@ -525,11 +517,27 @@
             });
         }
 
+        function createFlag() {
+            const flagpoleTip = elpy.create('flagpole-tip', (unit * 198) + 9, (unit * 3), 6, 4, options.flagpoleTip);
+            const flagpole = elpy.create('flagpole', (unit * 198) + 9, (unit * 3) + 4, 6, (unit * 9) - 4, options.flagpole);
+            const flag = elpy.create('flag', (unit * 198) + 9, (unit * 3) + 4, 18, 18, options.flag);
+
+            flag.animate = true;
+            
+            elpy.add(flagpoleTip);
+            elpy.add(flagpole);
+            elpy.add(flag);
+
+            obstacles.push(flagpole);
+
+            return flag;
+        }
+
         function lowerFlag() {
             if (flag.y >= MAX_FLAG_LOWERING_HEIGHT) {
                 return;
             }
-            
+
             let y = flag.y;
 
             elpy.tick(() => {
