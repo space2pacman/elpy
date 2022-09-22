@@ -353,7 +353,7 @@ elpy.width;
 | :---: | :---: | :---: |
 | **`step`** | `<Number>` | `1` |
 
->Vector movement. Moves in different directions depending on positive or negative values.
+> Vector movement. Moves in different directions depending on positive or negative values.
 
 <sub>_min example_</sub>
 ```js
@@ -370,7 +370,7 @@ player.run(-1);
 | **`x`** | `<Number>` |
 | **`y`** | `<Number>` |
 
->Move at coordinates.
+> Move at coordinates.
 
 ```js
 player.move(10, 10);
@@ -383,7 +383,7 @@ player.move(10, 10);
 | **`distance`** | `<Number>` | `0` |
 | **`step`** | `<Number>` | `1` |
 
->Vector flight.
+> Vector flight.
 
 <sub>_min example_</sub>
 ```js
@@ -415,7 +415,7 @@ player.jump(10, 0.5, true);
 | :---: | :---: | :---: |
 | **`multiplier`** | `<Number>` | `0.1` |
 
->Free fall.
+> Free fall.
 
 <sub>_min example_</sub>
 ```js
@@ -541,7 +541,7 @@ player.on('state', () => {
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
-player.on('jump', (event) => {
+player.on('jump', event => {
   // event - event object.
 });
 ```
@@ -553,7 +553,7 @@ player.on('jump', (event) => {
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
-player.on('fall', (event) => {
+player.on('fall', event => {
   // event - event object.
 });
 ```
@@ -565,12 +565,11 @@ player.on('fall', (event) => {
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
 
 ```js
-player.on('fly', (event) => {
+player.on('fly', event => {
   // event - event object.
 });
 ```
 #### Event object
-
 > The object that is returned in the event callback: `jump`, `fall`, `fly`.
 
 | name | type | description |
