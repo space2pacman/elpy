@@ -27,6 +27,7 @@
   - <a href="#unfixingcamera">unfixingCamera()</a>
   - <a href="#onevent-callback">on()</a>
     - <a href="#event-load">Event `'load'`</a>
+  - <a href="#load">load()</a>
 - <a href="#engine-getters">Engine getters</a>
 - <a href="#object">Object</a>
   - <a href="#runstep">run()</a>
