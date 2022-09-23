@@ -341,6 +341,13 @@ elpy.on('load', () => {
 ```js
 elpy.width;
 ```
+---
+### load()
+> The method is called automatically when `document.readyState === 'complete'`. If the engine has not loaded and is in a black window state, you can call load manually after all operations with the engine (creating objects, adding objects, etc.).
+
+```js
+elpy.load();
+```
 | name | type | description |
 | :---: | :---: | :--- |
 | width | `<Number>` | Returns the width of the canvas. |
