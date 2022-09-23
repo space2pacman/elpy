@@ -336,17 +336,17 @@ elpy.on('load', () => {
   // Event handling.
 });
 ```
-## Engine getters
-<sub>_min example_</sub>
-```js
-elpy.width;
-```
 ---
 ### load()
 > The method is called automatically when `document.readyState === 'complete'`. If the engine has not loaded and is in a black window state, you can call load manually after all operations with the engine (creating objects, adding objects, etc.).
 
 ```js
 elpy.load();
+```
+## Engine getters
+<sub>_min example_</sub>
+```js
+elpy.width;
 ```
 | name | type | description |
 | :---: | :---: | :--- |
