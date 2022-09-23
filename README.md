@@ -61,11 +61,11 @@
 Latest builds are available in the project [releases page](https://github.com/space2pacman/elpy/releases/latest).
 #### CDN
 ```js
-https://
+https://unpkg.com/elpy/dist/elpy.min.js
 ```
 #### NPM
 ```js
-npm install
+npm install elpy
 ```
 ## Basic usage example
 ```html
