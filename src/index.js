@@ -146,6 +146,20 @@ class Engine {
         this._events[event].push(callback);
     }
 
+    async load() {
+        if (this._imagesIsLoading) {
+            await this._render();
+
+            requestAnimationFrame(this.load.bind(this));
+        } else {
+            this._preload = false;
+
+            await this._render();
+
+            this._dispatchEvent('load');
+        }
+    }
+
     get width() {
         return this._width;
     }
@@ -243,20 +257,6 @@ class Engine {
                 }
             });
         });
-    }
-
-    async _load() {
-        if (this._imagesIsLoading) {
-            await this._render();
-
-            requestAnimationFrame(this._load.bind(this));
-        } else {
-            this._preload = false;
-
-            await this._render();
-
-            this._dispatchEvent('load');
-        }
     }
 
     _loadImage(url, object, state) {
@@ -698,7 +698,7 @@ class Engine {
     _checkReadyStateChange() {
         document.addEventListener('readystatechange', () => {
             if (document.readyState === 'complete') {
-                this._load();
+                this.load();
             }
         });
     }
