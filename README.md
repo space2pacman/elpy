@@ -161,6 +161,17 @@ const player = elpy.create('player', 10, 10, 20, 20, {
   ]
 });
 ```
+| name | description |
+| :---: | :--- |
+| **`obstacle`** | To determine if an object is an obstacle if there is a collision with the object. If the object was not added to the collision then the object will pass through another object. If an object has been added to a collision, then by default the object will stop on collision. If it is necessary that the collision event occur and the object passes through the object, then the obstacle property can be switched to false. |
+| **`activity`** | All objects that are not in the field of view are "sleeping". When they enter the field of view, they begin to move / activity. If you need to make objects that are not in view move, then switch to true. |
+| **`pushing`** | Will the object move if it is pushed through the push method. |
+| **`disabledEvents`** | Disables all events for an object. |
+| **`type`** |  |
+| **`custom`** | An object where you can add your fields and use them via `object.options.custorm`. |
+| **`color`** | Set object color. |
+| **`image`** | Set image. Two data types can be used: String or Object. <br>`image: 'path/to/image/'` <br>or for repeat image <br>`image: { src: 'path/to/image/', repeat: true }` |
+| **`images`** | Can be used if the object has several images that can be changed through the state. For example, the image of the position when the player goes to the right or left. You can also make animation of switching frames through the animate property (<a href="#object-getters">Object getters</a>). The switching `time` is set in the time property. |
 ---
 ### add(object)
 | name | type |
