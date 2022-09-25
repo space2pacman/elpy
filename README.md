@@ -167,7 +167,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | **`activity`** | All objects that are not in the field of view are "sleeping". When they enter the field of view, they begin to move / activity. If you need to make objects that are not in view move, then switch to true. |
 | **`pushing`** | Will the object move if it is pushed through the push method. |
 | **`disabledEvents`** | Disables all events for an object. |
-| **`type`** |  |
+| **`type`** | A simple string that allows you to add your own data. It is convenient to use to set the type of an object in order to distinguish them from each other later. |
 | **`custom`** | An object where you can add your fields and use them via `object.options.custorm`. |
 | **`color`** | Set object color. |
 | **`image`** | Set image. Two data types can be used: String or Object. <br>`image: 'path/to/image/'` <br>or for repeat image <br>`image: { src: 'path/to/image/', repeat: true }` |
