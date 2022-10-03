@@ -265,8 +265,6 @@
 
         function placeEnemies(i, j) {
             const enemy = elpy.create(`enemy-${i}-${j}`, unit * j, unit * i, 15, 13, JSON.parse(JSON.stringify(options.enemy)));
-
-            enemy.animate = true;
             
             elpy.add(enemy);
             obstacles.push(enemy);
