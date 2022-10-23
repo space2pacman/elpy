@@ -118,7 +118,7 @@ class Engine {
 
         if (object.options.fixedCamera.y) {
             object.offset.y = (this._offset.y - ((this._height / 2) - (object.height / 2)));
-            this._offset.y = ((this._height / 2)- (object.height / 2));
+            this._offset.y = ((this._height / 2) - (object.height / 2));
         }
     }
 
