@@ -97,10 +97,10 @@ class Engine {
     }
 
     checkObjectInViewport(object) {
-        if (this._checkObjectNotActivity(object) && (this._checkObjectInViewportX(object) || this._checkObjectInViewportY(object))) {
-            return false;
-        } else {
+        if (object.options.activity && (this._checkObjectInViewportX(object) && this._checkObjectInViewportY(object))) {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -319,17 +319,15 @@ class Engine {
     }
 
     _checkObjectInViewportX(object) {
-        return object.x > this._offset.object.x + this._width
-        || object.x < this._offset.object.x - this._width;
+        return this._offset.object &&
+        (object.x < this._offset.object.x + this._width
+        && object.x > this._offset.object.x - this._width);
     }
 
     _checkObjectInViewportY(object) {
-        return object.y > this._offset.object.y + this._height
-        || object.y < this._offset.object.y - this._height;
-    }
-
-    _checkObjectNotActivity(object) {
-        return !object.options.activity && this._offset.object;
+        return this._offset.object &&
+        (object.y < this._offset.object.y + this._height
+        && object.y > this._offset.object.y - this._height);
     }
 
     async _render() {

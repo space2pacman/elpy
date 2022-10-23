@@ -285,6 +285,7 @@
             botsConfig.forEach((botConfig, index) => {
                 const bot = elpy.create(`bot-${index}`, botConfig.x, botConfig.y, 71, 131, {
                     image: `images/car_${botConfig.color}.png`,
+                    activity: true,
                     custom: {
                         speed: 8
                     }
@@ -293,15 +294,15 @@
                 obstacles.push(bot);
                 elpy.add(bot);
                 elpy.tick(() => {
-                    if (!elpy.checkObjectInViewport(bot)) {
+                    if (elpy.checkObjectInViewport(bot)) {
+                        bot.run(-bot.options.custom.speed);
+                        
                         return;
                     }
 
                     if (bot.options.custom.speed === 0) {
                         return false;
                     }
-
-                    bot.run(-bot.options.custom.speed);
                 });
             });
         }
