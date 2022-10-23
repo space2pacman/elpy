@@ -101,10 +101,10 @@ class EngineObject {
                 && this.isExist
                 && object.isExist
                 && !object.ghost
-                && x + this._width > object.x
-                && x < object.x + object.width
-                && y + this._height > object.y
-                && y < object.y + object.height) {
+                && (x + this._width) > object.x
+                && x < (object.x + object.width)
+                && (y + this._height) > object.y
+                && y < (object.y + object.height)) {
 
                 const side = this._getCollisionSide(x, y, object);
 
@@ -460,9 +460,9 @@ class EngineObject {
     _getCollisionSide(x, y, object) {
         let side = null;
 
-        if (x + this._width > object.x
-            && x < object.x + object.width
-            && (this._y + this._height <= object.y || this._y >= object.y + object.height)) {
+        if ((x + this._width) > object.x
+            && x < (object.x + object.width)
+            && ((this._y + this._height) <= object.y || this._y >= (object.y + object.height))) {
             const top = object.y - (y + this._height);
             const bottom = y - (object.y + object.height);
 
@@ -473,9 +473,9 @@ class EngineObject {
             }
         }
 
-        if (y + this._height > object.y
-            && y < object.y + object.height
-            && (this._x + this._width <= object.x || this._x >= object.x + object.width)) {
+        if ((y + this._height) > object.y
+            && y < (object.y + object.height)
+            && ((this._x + this._width) <= object.x || this._x >= (object.x + object.width))) {
             const left = object.x - (x + this._width);
             const right = x - (object.x + object.width);
 

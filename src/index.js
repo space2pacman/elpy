@@ -319,15 +319,15 @@ class Engine {
     }
 
     _checkObjectInViewportX(object) {
-        return this._offset.object &&
-        (object.x < this._offset.object.x + this._width
-        && object.x > this._offset.object.x - this._width);
+        return this._offset.object
+        && object.x < (this._offset.object.x + this._width)
+        && object.x > (this._offset.object.x - this._width);
     }
 
     _checkObjectInViewportY(object) {
-        return this._offset.object &&
-        (object.y < this._offset.object.y + this._height
-        && object.y > this._offset.object.y - this._height);
+        return this._offset.object
+        && object.y < (this._offset.object.y + this._height)
+        && object.y > (this._offset.object.y - this._height);
     }
 
     async _render() {
@@ -400,8 +400,8 @@ class Engine {
         const y = (object.y - offset.y) + object.height / 2;
         const angle = object.degrees * Math.PI / 180;
 
-        if ((object.x > offset.x + this._width || object.x + object.width < offset.x)
-        || (object.y > offset.y + this._height || object.y + object.height < offset.y)) {
+        if ((object.x > (offset.x + this._width) || (object.x + object.width) < offset.x)
+        || (object.y > (offset.y + this._height) || (object.y + object.height) < offset.y)) {
             return;
         }
 
@@ -561,10 +561,10 @@ class Engine {
     }
 
     _calculateRenderTime(cached) {
-        if (performance.now() > cached.lastRenderTime + cached.time) {
+        if (performance.now() > (cached.lastRenderTime + cached.time)) {
             let index = cached.list.indexOf(cached.currentImage);
 
-            if (index + 1 > cached.list.length - 1 || index === -1) {
+            if ((index + 1) > (cached.list.length - 1) || index === -1) {
                 index = 0;
             } else {
                 index = index + 1;
