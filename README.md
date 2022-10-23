@@ -141,7 +141,6 @@ const player = elpy.create('player', 10, 10, 20, 20);
 ```js
 const player = elpy.create('player', 10, 10, 20, 20, {
   obstacle: true, // default - true
-  activity: false, // default - false
   pushing: false, // default - false
   disabledEvents: false, // default - false
   type: 'player object', // default - null
@@ -165,7 +164,6 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | name | description |
 | :---: | :--- |
 | **`obstacle`** | To determine if an object is an obstacle if there is a collision with the object. If the object was not added to the collision then the object will pass through another object. If an object has been added to a collision, then by default the object will stop on collision. If it is necessary that the collision event occur and the object passes through the object, then the obstacle property can be switched to false. |
-| **`activity`** | All objects that are not in the field of view are "sleeping". When they enter the field of view, they begin to move / activity. If you need to make objects that are not in view move, then switch to true. |
 | **`pushing`** | Will the object move if it is pushed through the push method. |
 | **`disabledEvents`** | Disables all events for an object. |
 | **`type`** | A simple string that allows you to add your own data. It is convenient to use to set the type of an object in order to distinguish them from each other later. |
