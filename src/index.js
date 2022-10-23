@@ -97,7 +97,7 @@ class Engine {
     }
 
     checkObjectInViewport(object) {
-        if (object.options.activity && (this._checkObjectInViewportX(object) && this._checkObjectInViewportY(object))) {
+        if (this._checkObjectInViewportX(object) && this._checkObjectInViewportY(object)) {
             return true;
         } else {
             return false;

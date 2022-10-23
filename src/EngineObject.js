@@ -44,7 +44,6 @@ class EngineObject {
         this._degrees = 0;
         this._options = {
             obstacle: typeof options.obstacle === 'boolean' ? options.obstacle : true,
-            activity: typeof options.activity === 'boolean' ? options.activity : false,
             pushing: typeof options.pushing === 'boolean' ? options.pushing : false,
             disabledEvents: typeof options.disabledEvents === 'boolean' ? options.disabledEvents : false,
             type: options.type || null,

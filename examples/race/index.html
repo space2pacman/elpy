@@ -285,7 +285,6 @@
             botsConfig.forEach((botConfig, index) => {
                 const bot = elpy.create(`bot-${index}`, botConfig.x, botConfig.y, 71, 131, {
                     image: `images/car_${botConfig.color}.png`,
-                    activity: true,
                     custom: {
                         speed: 8
                     }
