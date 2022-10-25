@@ -703,7 +703,7 @@ class Engine {
             this._setFavIcon();
         }
 
-        this.on('load', this._frameRender);
+        this.on('load', this._frameRender.bind(this));
         this._setDefaultStyle();
         this._setFieldStyle();
         this._checkReadyStateChange();
