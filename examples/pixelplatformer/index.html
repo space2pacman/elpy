@@ -11,8 +11,69 @@
         #field {
             margin: auto;
             border: 1px solid #dcdcdc;
+            
+        }
+
+        .controls {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .controls__arrows {
+            display: flex;
+            justify-content: space-between;
+            width: 250px;
+            margin-left: 50px;
+            margin-bottom: 50px;
+        }
+
+        .controls__arrow  {
+            background: #0f0;
+            width: 100px;
+            height: 100px;
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        .controls__buttons {
+            margin-right: 50px;
+        }
+
+        .controls__button {
+            background: #f0f;
+            width: 100px;
+            height: 100px;
+            opacity: 0.3;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden;
+            }
+
+            #field {
+                border: none;
+                height: 100vh;
+            }
+
+            .controls {
+                display: flex;
+            }
         }
     </style>
+    <div class="controls">
+        <div class="controls__arrows">
+            <div class="controls__arrow controls-arrow--left js-controls-arrow-left"></div>
+            <div class="controls__arrow controls-arrow--right js-controls-arrow-right"></div>
+        </div>
+        <div class="controls__buttons">
+            <div class="controls__button controls__button--jump js-controls-button-jump"></div>
+        </div>
+    </div>
     <canvas id="field"></canvas>
 
     <script src="../../dist/elpy.min.js"></script>
@@ -163,7 +224,7 @@
         const COIN_JUMP_HEIGHT = 30;
         const MAX_FLAG_LOWERING_HEIGHT = 270;
         const MAX_MAP_LENGTH = (map[0].length - 1) * unit;
-        const elpy = new Elpy('#field', 500, unit * 15);
+        const elpy = new Elpy('#field', window.outerWidth, unit * 15);
         const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
         const flag = createFlag();
         const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
@@ -193,6 +254,44 @@
 
         placeObjects();
         setObstaclesParams();
+
+        //
+        const controlsArrowLeft = document.querySelector('.js-controls-arrow-left');
+        const controlsArrowRight = document.querySelector('.js-controls-arrow-right');
+        const controlsButtonJump = document.querySelector('.js-controls-button-jump');
+        let localStep = 0;
+
+        elpy.tick(() => {
+            character.move(character.x + localStep, character.y);
+        });
+        
+        controlsArrowLeft.addEventListener('touchstart', () => {
+            localStep = -step;
+        });
+
+        controlsArrowLeft.addEventListener('touchend', () => {
+            localStep = 0;
+        });
+
+        controlsArrowRight.addEventListener('touchstart', () => {
+            localStep = step;
+        });
+
+        controlsArrowRight.addEventListener('touchend', () => {
+            localStep = 0;
+        });
+
+        controlsButtonJump.addEventListener('click', () => {
+            character.jump(CHARACTER_JUMP_HEIGHT, CHARACTER_JUMP_MULTIPLIER);
+        });
+
+        if (window.outerWidth <= 768) {
+            elpy._ctx.canvas.width = Math.floor(window.outerWidth / (elpy._ctx.canvas.clientWidth / window.outerWidth));
+
+            elpy.offset.object.offset.x += Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
+            elpy.offset.x -= Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
+        }
+        //
 
         character.collision(obstacles);
         character.collision(grounds);
