@@ -25,9 +25,9 @@
         .controls__arrows {
             display: flex;
             justify-content: space-between;
-            width: 250px;
-            margin-left: 50px;
-            margin-bottom: 50px;
+            width: 230px;
+            margin-left: 30px;
+            margin-bottom: 30px;
         }
 
         .controls__arrow  {
@@ -39,7 +39,7 @@
         }
 
         .controls__buttons {
-            margin-right: 50px;
+            margin-right: 30px;
         }
 
         .controls__button {
@@ -285,17 +285,19 @@
             character.jump(CHARACTER_JUMP_HEIGHT, CHARACTER_JUMP_MULTIPLIER);
         });
 
-        if (window.outerWidth <= 768) {
-            elpy._ctx.canvas.width = Math.floor(window.outerWidth / (elpy._ctx.canvas.clientWidth / window.outerWidth));
-
-            elpy.offset.object.offset.x += Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
-            elpy.offset.x -= Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
-        }
+        
 
         if('orientation' in screen){
             window.screen.orientation.onchange = function() {
                 if (this.type.startsWith('landscape') && document.querySelector('body').webkitRequestFullScreen) {
                     document.querySelector('body').webkitRequestFullscreen();
+
+                    if (window.outerWidth <= 768) {
+                        elpy._ctx.canvas.width = Math.floor(window.outerWidth / (elpy._ctx.canvas.clientWidth / window.outerWidth));
+
+                        elpy.offset.object.offset.x += Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
+                        elpy.offset.x -= Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
+                    }
                 } else {
                     if(document.webkitCancelFullScreen){
                         document.webkitExitFullscreen();
