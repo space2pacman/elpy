@@ -281,7 +281,7 @@
             localStep = 0;
         });
 
-        controlsButtonJump.addEventListener('click', () => {
+        controlsButtonJump.addEventListener('touchstart', () => {
             character.jump(CHARACTER_JUMP_HEIGHT, CHARACTER_JUMP_MULTIPLIER);
         });
 
@@ -290,6 +290,18 @@
 
             elpy.offset.object.offset.x += Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
             elpy.offset.x -= Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
+        }
+
+        if('orientation' in screen){
+            window.screen.orientation.onchange = function() {
+                if (this.type.startsWith('landscape') && document.querySelector('body').webkitRequestFullScreen) {
+                    document.querySelector('body').webkitRequestFullscreen();
+                } else {
+                    if(document.webkitCancelFullScreen){
+                        document.webkitExitFullscreen();
+                    }
+                }
+            }
         }
         //
 
