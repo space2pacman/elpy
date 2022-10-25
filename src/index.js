@@ -28,9 +28,6 @@ class Engine {
         this._objects[name] = new EngineObject(name, x, y, width, height, options);
 
         if (!this._objects[name].options.disabledEvents) {
-            this._objects[name].on('move', this._onMoveObject.bind(this));
-            this._objects[name].on('state', this._onChangeState.bind(this));
-            this._objects[name].on('rotate', this._onRotateObject.bind(this));
             this._objects[name].on('destroy', this._onDestroyObject.bind(this, name));
         }
 
@@ -587,22 +584,8 @@ class Engine {
         requestAnimationFrame(this._streamKeys.bind(this, callback));
     }
 
-    _onMoveObject() {
-        this._render();
-    }
-
-    _onChangeState() {
-        this._render();
-    }
-
-    _onRotateObject() {
-        this._render();
-    }
-
     _onDestroyObject(name) {
         delete this._objects[name];
-
-        this._render();
     }
 
     _drawRepeatImage(object, offset) {
@@ -709,11 +692,18 @@ class Engine {
         }
     }
 
+    _frameRender() {
+        this.tick(() => {
+            this._render();
+        });
+    }
+
     _init() {
         if (this._favicon) {
             this._setFavIcon();
         }
-        
+
+        this.on('load', this._frameRender);
         this._setDefaultStyle();
         this._setFieldStyle();
         this._checkReadyStateChange();

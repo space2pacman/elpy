@@ -11,9 +11,19 @@ module.exports = {
         library: 'Elpy'
     },
     devServer: {
-        static: {
-            directory: path.join(__dirname, './public')
-        },
+        static: [
+            {
+                directory: path.join(__dirname, './public')
+            },
+            {
+                directory: path.join(__dirname, './dist'),
+                publicPath: '/dist'
+            },
+            {
+                directory: path.join(__dirname, './examples'),
+                publicPath: '/examples'
+            }
+        ],
         port: 8080,
     }
 }
