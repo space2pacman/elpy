@@ -588,17 +588,6 @@ player.on('fly', event => {
   // event - event object.
 });
 ```
----
-### removeCollision(object)
-| name | type |
-| :---: | :---: |
-| **`object`** | `<Object>` |
-
-> Remove collision object from collision list.
-
-```js
-player.removeCollision(object);
-```
 #### Event object
 > The object that is returned in the event callback: `jump`, `fall`, `fly`.
 
@@ -618,6 +607,17 @@ player.on('jump', event => {
   event.pause();
   event.resume();
 });
+```
+---
+### removeCollision(object)
+| name | type |
+| :---: | :---: |
+| **`object`** | `<Object>` |
+
+> Remove collision object from collision list.
+
+```js
+player.removeCollision(object);
 ```
 ## Object getters
 <sub>_min example_</sub>
