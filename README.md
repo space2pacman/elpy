@@ -51,6 +51,7 @@
     - <a href="#event-fall">Event `'fall'`</a>
     - <a href="#event-fly">Event `'fly'`</a>
     - <a href="#event-object">Event object</a>
+  - <a href="#">removeCollision()</a>
 - <a href="#object-getters">Object getters</a>
 - <a href="#object-setters">Object setters</a>
 - <a href="#development">Development</a>
@@ -492,7 +493,7 @@ player.destroy();
 ### collision(object)
 | name | type |
 | :---: | :---: |
-| **`object`** | `<Object>` |
+| **`object`** | `<Object>`, `<Array>` |
 
 > Add collision object.
 
@@ -586,6 +587,17 @@ player.on('fall', event => {
 player.on('fly', event => {
   // event - event object.
 });
+```
+---
+### removeCollision(object)
+| name | type |
+| :---: | :---: |
+| **`object`** | `<Object>` |
+
+> Remove collision object from collision list.
+
+```js
+player.removeCollision(object);
 ```
 #### Event object
 > The object that is returned in the event callback: `jump`, `fall`, `fly`.
