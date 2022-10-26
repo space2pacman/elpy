@@ -51,7 +51,7 @@
     - <a href="#event-fall">Event `'fall'`</a>
     - <a href="#event-fly">Event `'fly'`</a>
     - <a href="#event-object">Event object</a>
-  - <a href="#">removeCollision()</a>
+  - <a href="#removecollisionobject">removeCollision()</a>
 - <a href="#object-getters">Object getters</a>
 - <a href="#object-setters">Object setters</a>
 - <a href="#development">Development</a>
