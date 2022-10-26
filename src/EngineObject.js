@@ -289,6 +289,10 @@ class EngineObject {
     setOffsetObject(object) {
         this._offset.object = object;
     }
+
+    removeCollision(object) {
+        delete this._collision[object.name];
+    }
     
     get name() {
         return this._name;

@@ -117,6 +117,10 @@
                         time: 100
                     }
                 ],
+                custom: {
+                    slidingDelta: 0,
+                    isMoving: true
+                }
             },
             enemy: {
                 images: [
@@ -157,7 +161,8 @@
                 type: 'pipe-hole'
             },
             pipe: {
-                image: 'images/tiles/pipe.png'
+                image: 'images/tiles/pipe.png',
+                type: 'pipe'
             },
             treasure: {
                 images: [
@@ -233,8 +238,8 @@
         const obstacles = [];
         const CHARACTER_JUMP_HEIGHT = 100;
         const CHARACTER_JUMP_REBOUND = 10;
-        const CHARACTER_JUMP_MULTIPLIER = 0.3;
-        const FALL_MULTIPLIER = 0.3;
+        const CHARACTER_JUMP_MULTIPLIER = 0.5;
+        const FALL_MULTIPLIER = 0.5;
         const TREASURE_JUMP_HEIGHT = 10;
         const TREASURE_JUMP_MULTIPLIER = 1;
         const TREASURE_FALL_MULTIPLIER = 0.3;
@@ -244,21 +249,18 @@
         const DESTROY_TIME_DELAY = 500;
         const COIN_JUMP_HEIGHT = 30;
         const MAX_FLAG_LOWERING_HEIGHT = 270;
+        const SLIDING_DELTA_MAX_VALUE = 5;
+        const SLIDING_DELTA_DEFAULT_VALUE = 1;
+        const SLIDING_DELTA_STEP = 0.1;
         const MAX_MAP_LENGTH = (map[0].length - 1) * unit;
         const elpy = new Elpy('#field', 500, unit * 15); // 500
         const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
         const flag = createFlag();
-        const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
         let isAnimate = false;
         let isFlagLowered = false;
         let coinCounter = 0;
-         
+
         elpy.add(background);
-        elpy.add(character);
-        character.move(60, character.y);
-        elpy.fixingCamera(character, {
-            x: true
-        });
 
         loadHiddenObjectTextures();
 
@@ -274,6 +276,15 @@
         elpy.add(grounds);
 
         placeObjects();
+        
+        const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
+
+        elpy.add(character);
+        character.move(4700, character.y);
+        elpy.fixingCamera(character, {
+            x: true
+        });
+
         setObstaclesParams();
 
         //
@@ -336,19 +347,57 @@
         character.on('move', characterOnMove);
         character.on('collision', characterOnCollision);
 
+        elpy.tick(() => {
+            if (character.options.custom.slidingDelta > 0) {
+                character.options.custom.slidingDelta -= SLIDING_DELTA_STEP;
+
+                if (Math.floor(character.options.custom.slidingDelta) < 0) {
+                    character.options.custom.slidingDelta = 0;
+                }
+            }
+
+            if (character.options.custom.slidingDelta < 0) {
+                character.options.custom.slidingDelta += SLIDING_DELTA_STEP;
+
+                if (Math.floor(character.options.custom.slidingDelta) > 0) {
+                    character.options.custom.slidingDelta = 0;
+                }
+            }
+
+            character.move(character.x + Math.floor(character.options.custom.slidingDelta), character.y);
+        });
+
         elpy.key(key => {
+            if (!character.options.custom.isMoving) {
+                character.options.custom.slidingDelta = 0;
+
+                return;
+            }
+
             switch(key) {
                 case 'ArrowUp':
                     character.jump(CHARACTER_JUMP_HEIGHT, CHARACTER_JUMP_MULTIPLIER);
                     
                     break;
                 case 'ArrowLeft':
-                    character.move(character.x - step, character.y);
+                    if (character.options.custom.slidingDelta > -SLIDING_DELTA_MAX_VALUE) {
+                        if (character.options.custom.slidingDelta === 0) {
+                            character.options.custom.slidingDelta = -SLIDING_DELTA_DEFAULT_VALUE;
+                        }
+
+                        character.options.custom.slidingDelta -= SLIDING_DELTA_STEP * 2;
+                    }
 
                     break;
                 case 'ArrowRight':
-                    character.move(character.x + step, character.y);
+                    if (character.options.custom.slidingDelta < SLIDING_DELTA_MAX_VALUE) {
+                        if (character.options.custom.slidingDelta === 0) {
+                            character.options.custom.slidingDelta = SLIDING_DELTA_DEFAULT_VALUE;
+                        }
 
+                        character.options.custom.slidingDelta += SLIDING_DELTA_STEP * 2;
+                    }
+                    
                     break;
             }
         });
@@ -359,7 +408,7 @@
                 case 'ArrowRight':
                     character.state = 'idle';
                     character.animate = false;
-                    
+
                     isAnimate = false;
 
                     break;
@@ -475,6 +524,11 @@
         function characterOnCollision(object, side) {
             character.state = 'idle';
 
+            if (['enemy', 'treasure', 'box', 'pipe', 'pipe-hole'].includes(object.options.type)
+            && (side === 'left' || side === 'right')) {
+                character.options.custom.slidingDelta = 0;
+            }
+
             if (object.options.type === 'enemy') {
                 checkEnemyCollision(object, side);
             }
@@ -487,7 +541,12 @@
                 if (!isFlagLowered) {
                     isFlagLowered = true;
 
+                    character.stop();
+
+                    character.options.custom.isMoving = false;
+
                     lowerFlag();
+                    lowerCharacter();
                 }
             }
         }
@@ -595,7 +654,7 @@
             object.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER);
 
             object.state = 'empty';
-                
+            
             dropCoin(object);
         }
 
@@ -683,6 +742,67 @@
 
                 y += 2;
             })
+        }
+
+        async function lowerCharacter() {
+            removeCollisionWithCharacter();
+
+            await moveCharacterDown();
+            await moveCharacterRight();
+            await moveCharacterToCastle();
+        }
+
+        function removeCollisionWithCharacter() {
+            character.obstacles.forEach(obstacle => {
+                if (obstacle.name.includes('box')) {
+                    character.removeCollision(obstacle);
+                }
+            });
+        }
+
+        function moveCharacterDown() {
+            return new Promise(resolve => {
+                elpy.tick(() => {
+                    if (character.y >= 264) {
+                        resolve();
+
+                        return false;
+                    }
+
+                    character.move(character.x, character.y + 2);
+                });
+            });
+        }
+
+        function moveCharacterRight() {
+            return new Promise(resolve => {
+                elpy.tick(() => {
+                    if (character.x >= 4766) {
+                        resolve();
+
+                        return false;
+                    }
+
+                    character.move(character.x + 1, character.y);
+                })
+            });
+        }
+
+        function moveCharacterToCastle() {
+            return new Promise(resolve => {
+                character.fall();
+                character.jump(10, 0.1, true);
+
+                elpy.tick(() => {
+                    if (character.x >= 4898) {
+                        resolve();
+                        
+                        return false;
+                    }
+
+                    character.move(character.x + 1, character.y);
+                });
+            });
         }
     </script>
 </body>
