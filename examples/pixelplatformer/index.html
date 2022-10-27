@@ -157,8 +157,6 @@
         }
 
         const unit = 24;
-        const grounds = [];
-        const obstacles = [];
         const CHARACTER_JUMP_HEIGHT = 100;
         const CHARACTER_JUMP_REBOUND = 10;
         const CHARACTER_JUMP_MULTIPLIER = 0.5;
@@ -177,6 +175,8 @@
         const SLIDING_DELTA_STEP = 0.1;
 
         function init() {
+            const grounds = [];
+            const obstacles = [];
             const MAX_MAP_LENGTH = (map[0].length - 1) * unit;
             const elpy = new Elpy('#field', 500, unit * 15); // 500
             const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
