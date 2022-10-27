@@ -156,7 +156,7 @@
             treasure: 5
         }
 
-        const unit = 24;
+        const UNIT = 24;
         const CHARACTER_JUMP_HEIGHT = 100;
         const CHARACTER_JUMP_REBOUND = 10;
         const CHARACTER_JUMP_MULTIPLIER = 0.5;
@@ -177,13 +177,13 @@
         function init() {
             const grounds = [];
             const obstacles = [];
-            const MAX_MAP_LENGTH = (map[0].length - 1) * unit;
-            const elpy = new Elpy('#field', 500, unit * 15); // 500
+            const MAX_MAP_LENGTH = (map[0].length - 1) * UNIT;
+            const elpy = new Elpy('#field', 500, UNIT * 15); // 500
             const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);
-            const ground01 = elpy.create('ground01', 0, unit * 13, unit * 69, unit * 2, options.ground);
-            const ground02 = elpy.create('ground02', unit * 71, unit * 13, unit * 15, unit * 2, options.ground);
-            const ground03 = elpy.create('ground03', unit * 89, unit * 13, unit * 64, unit * 2, options.ground);
-            const ground04 = elpy.create('ground04', unit * 155, unit * 13, unit * 69, unit * 2, options.ground);
+            const ground01 = elpy.create('ground01', 0, UNIT * 13, UNIT * 69, UNIT * 2, options.ground);
+            const ground02 = elpy.create('ground02', UNIT * 71, UNIT * 13, UNIT * 15, UNIT * 2, options.ground);
+            const ground03 = elpy.create('ground03', UNIT * 89, UNIT * 13, UNIT * 64, UNIT * 2, options.ground);
+            const ground04 = elpy.create('ground04', UNIT * 155, UNIT * 13, UNIT * 69, UNIT * 2, options.ground);
             const flag = createFlag();
             let isFlagLowered = false;
             let coinCounter = 0;
@@ -198,7 +198,7 @@
             loadHiddenObjectTextures();
             placeObjects();
             
-            const character = elpy.create('character', (Math.floor(elpy.width / unit) / 2) * unit, unit * 10, 20, unit, options.character);
+            const character = elpy.create('character', (Math.floor(elpy.width / UNIT) / 2) * UNIT, UNIT * 10, 20, UNIT, options.character);
 
             elpy.add(character);
             character.move(60, character.y);
@@ -309,14 +309,14 @@
             }
 
             function placeBoxes(i, j) {
-                const box = elpy.create(`box-${i}-${j}`, unit * j, unit * i, unit, unit, options.box);
+                const box = elpy.create(`box-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.box);
                             
                 elpy.add(box);
                 obstacles.push(box);
             }
 
             function placeEnemies(i, j) {
-                const enemy = elpy.create(`enemy-${i}-${j}`, unit * j, unit * i, 15, 13, JSON.parse(JSON.stringify(options.enemy)));
+                const enemy = elpy.create(`enemy-${i}-${j}`, UNIT * j, UNIT * i, 15, 13, JSON.parse(JSON.stringify(options.enemy)));
                 
                 elpy.add(enemy);
                 obstacles.push(enemy);
@@ -326,21 +326,21 @@
             }
 
             function placePipeHoles(i, j) {
-                const pipeHole = elpy.create(`pipe-hole-${i}-${j}`, unit * j, unit * i, unit, unit, options.pipeHole);
+                const pipeHole = elpy.create(`pipe-hole-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.pipeHole);
                             
                 elpy.add(pipeHole);
                 obstacles.push(pipeHole);
             }
 
             function placePipe(i, j) {
-                const pipe = elpy.create(`pipe-${i}-${j}`, unit * j, unit * i, unit, unit, options.pipe);
+                const pipe = elpy.create(`pipe-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.pipe);
                             
                 elpy.add(pipe);
                 obstacles.push(pipe);
             }
 
             function placeTreasures(i, j) {
-                const treasure = elpy.create(`treasure-${i}-${j}`, unit * j, unit * i, unit, unit, options.treasure);
+                const treasure = elpy.create(`treasure-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.treasure);
                             
                 elpy.add(treasure);
                 obstacles.push(treasure);
@@ -574,9 +574,9 @@
             }
 
             function createFlag() {
-                const flagpoleTip = elpy.create('flagpole-tip', (unit * 198) + 9, (unit * 3), 6, 4, options.flagpoleTip);
-                const flagpole = elpy.create('flagpole', (unit * 198) + 9, (unit * 3) + 4, 6, (unit * 9) - 4, options.flagpole);
-                const flag = elpy.create('flag', (unit * 198) + 9, (unit * 3) + 4, 18, 18, options.flag);
+                const flagpoleTip = elpy.create('flagpole-tip', (UNIT * 198) + 9, (UNIT * 3), 6, 4, options.flagpoleTip);
+                const flagpole = elpy.create('flagpole', (UNIT * 198) + 9, (UNIT * 3) + 4, 6, (UNIT * 9) - 4, options.flagpole);
+                const flag = elpy.create('flag', (UNIT * 198) + 9, (UNIT * 3) + 4, 18, 18, options.flag);
 
                 flag.animate = true;
                 
