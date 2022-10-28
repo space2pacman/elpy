@@ -100,7 +100,10 @@
                             state: 'empty'
                         }
                     ],
-                    type: 'treasure'
+                    type: 'treasure',
+                    custom: {
+                        hasCoin: true
+                    }
                 },
                 coin: {
                     obstacle: false,
@@ -130,6 +133,14 @@
                             time: 100
                         }
                     ]
+                },
+                mushroom: {
+                    image: 'images/tiles/mushroom.png',
+                    type: 'mushroom',
+                    custom: {
+                        moving: false,
+                        delta: 1
+                    }
                 }
             }
 
@@ -157,6 +168,7 @@
                 treasure: 5
             }
 
+            const DEBUG = false;
             const UNIT = 24;
             const CHARACTER_JUMP_HEIGHT = 100;
             const CHARACTER_JUMP_REBOUND = 10;
@@ -174,7 +186,7 @@
             const SLIDING_DELTA_MAX_VALUE = 5;
             const SLIDING_DELTA_DEFAULT_VALUE = 1;
             const SLIDING_DELTA_STEP = 0.1;
-
+            const TREASURE_WITH_MUSHROOM = ['treasure-9-21'];
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map[0].length - 1) * UNIT;
@@ -308,6 +320,26 @@
                 }
             }
 
+            if (DEBUG) {
+                elpy.click((x, y) => {
+                    const offset = {
+                        x: x + elpy.offset.object.offset.x,
+                        y: y + elpy.offset.object.offset.y
+                    }
+
+                    for(const name in elpy.objects) {
+                        const object = elpy.objects[name];
+
+                        if (offset.x > object.x
+                        && offset.x < (object.x + object.width)
+                        && offset.y > object.y
+                        && offset.y < (object.y + object.height)) {
+                            console.log(object)
+                        }
+                    }
+                });
+            }
+
             function placeBoxes(i, j) {
                 const box = elpy.create(`box-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.box);
                             
@@ -340,13 +372,15 @@
             }
 
             function placeTreasures(i, j) {
-                const treasure = elpy.create(`treasure-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.treasure);
+                const treasure = elpy.create(`treasure-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, JSON.parse(JSON.stringify(options.treasure)));
                             
                 elpy.add(treasure);
                 obstacles.push(treasure);
                 treasure.collision(getObstaclesEnemies());
                 treasure.on('collision', object => {
-                    treasureOnCollision(treasure, object);
+                    if (object.options.type === 'enemy') {
+                        treasureOnCollisionEnemy(treasure, object);
+                    }
                 });
 
                 rebound(treasure, TREASURE_FALL_MULTIPLIER);
@@ -396,6 +430,67 @@
                     checkEnemyCollision(object, side);
                 }
 
+                if (object.options.type === 'mushroom') {
+                    object.destroy();
+                    characterGrowth();
+                }
+
+                //
+                if (object.name === 'treasure-9-21' && side === 'bottom' && object.state === 'full') {
+                    const MAX_DISTANCE = UNIT / 2;
+                    let traveledDistance  = 0;
+
+                    object.options.custom.hasCoin = false;
+
+                    checkTreasureCollision(object);
+
+                    const mushroom = elpy.create(`mushroom-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.mushroom)));
+
+                    mushroom.collision(character);
+                    mushroom.collision(obstacles);
+                    mushroom.collision(grounds);
+                    character.collision(mushroom);
+                    elpy.add(mushroom);
+                    
+                    elpy.tick(() => {
+                        if (traveledDistance >= MAX_DISTANCE) {
+                            mushroom.fall(FALL_MULTIPLIER);
+
+                            moveObstacle(mushroom);
+
+                            return false;
+                        }
+
+                        traveledDistance++;
+                        mushroom.y -= 1;
+                    });
+                    
+                    mushroom.on('collision', (object, side) => {
+                        if (object === character) {
+                            mushroom.destroy();
+
+                            characterGrowth();
+                        }
+
+                        if (side === 'left') {
+                            mushroom.options.custom.delta = -1;
+                            mushroom.state = 'move:left';
+                        }
+
+                        if (side === 'right' || mushroom.x >= MAX_MAP_LENGTH) {
+                            mushroom.options.custom.delta = 1;
+                            mushroom.state = 'move:right';
+                        }
+                    });
+
+                    mushroom.on('move', () => {
+                        if (mushroom.y >= elpy.height) {
+                            mushroom.destroy();
+                        }
+                    });
+                }
+                //
+
                 if (object.options.type === 'treasure' && side === 'bottom' && object.state === 'full') {
                     checkTreasureCollision(object);
                 }
@@ -414,6 +509,11 @@
                 }
             }
 
+            function characterGrowth() {
+                character.y = character.y - character.height;
+                character.height = character.height * 2;
+            }
+
             function enemyOnFall(enemy, event) {
                 if (elpy.checkObjectInViewport(enemy)) {
                     event.resume();
@@ -426,7 +526,7 @@
                 }
             }
 
-            function treasureOnCollision(treasure, object) {
+            function treasureOnCollisionEnemy(treasure, object) {
                 object.ghost = true;
                 
                 object.jump(ENEMY_JUMP_HEIGHT, ENEMY_JUMP_MULTIPLIER);
@@ -518,7 +618,9 @@
 
                 object.state = 'empty';
                 
-                dropCoin(object);
+                if (object.options.custom.hasCoin) {
+                    dropCoin(object);
+                }
             }
 
             function rebound(object, fallMultiplier = 0.1) {
