@@ -208,7 +208,7 @@
             elpy.add(grounds);
 
             loadHiddenObjectTextures();
-            placeObjects();
+            spawnObjects();
             
             const character = elpy.create('character', (Math.floor(elpy.width / UNIT) / 2) * UNIT, UNIT * 10, 20, UNIT, options.character);
 
@@ -294,27 +294,27 @@
 
             elpy.load();
 
-            function placeObjects() {
+            function spawnObjects() {
                 for(let i = 0; i < map.length; i++) {
                     for(let j = 0; j < map[i].length; j++) {
                         if (map[i][j] === enums.box) {
-                            placeBoxes(i, j);
+                            spawnBoxes(i, j);
                         }
 
                         if (map[i][j] === enums.enemy) {
-                            placeEnemies(i, j);
+                            spawnEnemies(i, j);
                         }
 
                         if (map[i][j] === enums.pipeHole) {
-                            placePipeHoles(i, j);
+                            spawnPipeHoles(i, j);
                         }
 
                         if (map[i][j] === enums.pipe) {
-                            placePipe(i, j);
+                            spawnPipe(i, j);
                         }
 
                         if (map[i][j] === enums.treasure) {
-                            placeTreasures(i, j);
+                            spawnTreasures(i, j);
                         }
                     }
                 }
@@ -340,14 +340,14 @@
                 });
             }
 
-            function placeBoxes(i, j) {
+            function spawnBoxes(i, j) {
                 const box = elpy.create(`box-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.box);
                             
                 elpy.add(box);
                 obstacles.push(box);
             }
 
-            function placeEnemies(i, j) {
+            function spawnEnemies(i, j) {
                 const enemy = elpy.create(`enemy-${i}-${j}`, UNIT * j, UNIT * i, 15, 13, JSON.parse(JSON.stringify(options.enemy)));
                 
                 elpy.add(enemy);
@@ -357,21 +357,21 @@
                 });
             }
 
-            function placePipeHoles(i, j) {
+            function spawnPipeHoles(i, j) {
                 const pipeHole = elpy.create(`pipe-hole-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.pipeHole);
                             
                 elpy.add(pipeHole);
                 obstacles.push(pipeHole);
             }
 
-            function placePipe(i, j) {
+            function spawnPipe(i, j) {
                 const pipe = elpy.create(`pipe-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, options.pipe);
                             
                 elpy.add(pipe);
                 obstacles.push(pipe);
             }
 
-            function placeTreasures(i, j) {
+            function spawnTreasures(i, j) {
                 const treasure = elpy.create(`treasure-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, JSON.parse(JSON.stringify(options.treasure)));
                             
                 elpy.add(treasure);
