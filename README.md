@@ -647,7 +647,7 @@ player.name;
 ## Object setters
 <sub>_min example_</sub>
 ```js
-player.x;
+player.width = 10;
 ```
 | name | type | description |
 | :---: | :---: | :--- |
