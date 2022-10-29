@@ -344,31 +344,17 @@
                             spawnTreasures(i, j);
                         }
 
-                        //
                         if (map.background[i][j] === enums.background.cloudLeft) {
-                            const cloudLeft = elpy.create(`cloud-left-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, {
-                                image: 'images/tiles/cloud-left.png'
-                            });
-                            
-                            elpy.add(cloudLeft);
+                            spawnCloud('left', i, j);
                         }
 
                         if (map.background[i][j] === enums.background.cloudCenter) {
-                            const cloudCenter = elpy.create(`cloud-center-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, {
-                                image: 'images/tiles/cloud-center.png'
-                            });
-                            
-                            elpy.add(cloudCenter);
+                            spawnCloud('center', i, j);
                         }
 
                         if (map.background[i][j] === enums.background.cloudRight) {
-                            const cloudRight = elpy.create(`cloud-right-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, {
-                                image: 'images/tiles/cloud-right.png'
-                            });
-                            
-                            elpy.add(cloudRight);
+                            spawnCloud('right', i, j);
                         }
-                        //
                     }
                 }
             }
@@ -443,6 +429,14 @@
                 });
 
                 rebound(treasure, TREASURE_FALL_MULTIPLIER);
+            }
+
+            function spawnCloud(part, i, j) {
+                const cloud = elpy.create(`cloud-${part}-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, {
+                    image: `images/tiles/cloud-${part}.png`
+                });
+                
+                elpy.add(cloud);
             }
 
             function characterOnMove() {
