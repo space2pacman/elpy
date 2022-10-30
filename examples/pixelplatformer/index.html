@@ -218,7 +218,6 @@
                 }
             }
 
-            const DEBUG = false;
             const UNIT = 24;
             const CHARACTER_JUMP_HEIGHT = 100;
             const CHARACTER_JUMP_REBOUND = 10;
@@ -335,26 +334,6 @@
                         break;
                 }
             });
-
-            if (DEBUG) {
-                elpy.click((x, y) => {
-                    const offset = {
-                        x: x + elpy.offset.object.offset.x,
-                        y: y + elpy.offset.object.offset.y
-                    }
-
-                    for(const name in elpy.objects) {
-                        const object = elpy.objects[name];
-
-                        if (offset.x > object.x
-                        && offset.x < (object.x + object.width)
-                        && offset.y > object.y
-                        && offset.y < (object.y + object.height)) {
-                            console.log(object)
-                        }
-                    }
-                });
-            }
 
             elpy.load();
 
@@ -890,6 +869,29 @@
 
                         character.move(character.x + 1, character.y);
                     });
+                });
+            }
+
+            function debug() {
+                window._elpy = elpy;
+                window._character = character;
+
+                elpy.click((x, y) => {
+                    const offset = {
+                        x: x + elpy.offset.object.offset.x,
+                        y: y + elpy.offset.object.offset.y
+                    }
+
+                    for(const name in elpy.objects) {
+                        const object = elpy.objects[name];
+
+                        if (offset.x > object.x
+                        && offset.x < (object.x + object.width)
+                        && offset.y > object.y
+                        && offset.y < (object.y + object.height)) {
+                            console.log(object)
+                        }
+                    }
                 });
             }
         }
