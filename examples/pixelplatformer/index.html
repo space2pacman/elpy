@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
-    <title>Elpy.js</title>
+    <link rel="shortcut icon" href="images/web/favicon.ico" >
+    <title>Pixelplatrofmer</title>
 </head>
 <body>
     <div class="play js-play">
@@ -25,6 +26,9 @@
     <script>
         function init() {
             const options = {
+                engine: {
+                    favicon: false
+                },
                 character: {
                     images: [
                         {
@@ -238,7 +242,7 @@
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
-            const elpy = new Elpy('#field', 500, UNIT * 15); // 500
+            const elpy = new Elpy('#field', 500, UNIT * 15, options.engine); // 500
             const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);            
             const flag = createFlag();
             let isFlagLowered = false;
