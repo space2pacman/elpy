@@ -570,6 +570,7 @@
                             obstacle.collision(bonus);
                         }
                     });
+                    obstacles.push(bonus);
                     character.collision(bonus);
                     elpy.add(bonus);
                     
@@ -709,7 +710,7 @@
 
             function checkObstaclesInViewport() {
                 obstacles.forEach(obstacle => {
-                    if (obstacle.options.type === 'enemy') {
+                    if (['enemy', 'bonus'].includes(obstacle.options.type)) {
                         if (elpy.checkObjectInViewport(obstacle)) {
                             moveObstacle(obstacle);
                         } else {
