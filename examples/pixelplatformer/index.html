@@ -40,6 +40,14 @@
                             paths: ['images/characters/character_left_0000.png', 'images/characters/character_left_0001.png'],
                             state: 'move:left',
                             time: 100
+                        },
+                        {
+                            paths: ['images/characters/character_right_0001.png'],
+                            state: 'jump:right'
+                        },
+                        {
+                            paths: ['images/characters/character_left_0001.png'],
+                            state: 'jump:left'
                         }
                     ],
                     custom: {
@@ -481,6 +489,10 @@
                     }
 
                     character.state = 'move:right';
+                    
+                    if (character.isJumping) {
+                        character.state = 'jump:right';
+                    }
                 }
 
                 if (character.x < character.track.x) {
@@ -489,6 +501,10 @@
                     }
 
                     character.state = 'move:left';
+
+                    if (character.isJumping) {
+                        character.state = 'jump:left';
+                    }
                 }
 
                 if (character.x <= 0) {
