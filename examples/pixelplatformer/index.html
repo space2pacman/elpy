@@ -142,9 +142,14 @@
                         }
                     ]
                 },
-                mushroom: {
-                    image: 'images/tiles/mushroom.png',
-                    type: 'mushroom',
+                bonus: {
+                    images: [
+                        {
+                            paths: ['images/tiles/mushroom.png'],
+                            state: 'mushroom'
+                        }
+                    ],
+                    type: 'bonus',
                     custom: {
                         moving: false,
                         spawned: false,
@@ -229,7 +234,7 @@
             const SLIDING_DELTA_MAX_VALUE = 5;
             const SLIDING_DELTA_DEFAULT_VALUE = 1;
             const SLIDING_DELTA_STEP = 0.1;
-            const TREASURE_WITH_MUSHROOM = ['treasure-9-21'];
+            const TREASURE_WITH_BONUS = ['treasure-9-21'];
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
@@ -437,7 +442,7 @@
                         treasureOnCollisionEnemy(treasure, object);
                     }
 
-                    if (object.options.type === 'mushroom' && object.options.custom.spawned) {
+                    if (object.options.type === 'bonus' && object.state === 'mushroom' && object.options.custom.spawned) {
                         object.options.custom.delta = -object.options.custom.delta;
                         object.jump(MUSHROOM_JUMP_HEIGHT, MUSHROOM_JUMP_MULTIPLIER);
                         treasure.jump(TREASURE_JUMP_HEIGHT, TREASURE_JUMP_MULTIPLIER, true);
@@ -534,9 +539,12 @@
                     checkEnemyCollision(object, side);
                 }
 
-                if (object.options.type === 'mushroom') {
-                    object.destroy();
-                    characterGrowth();
+                if (object.options.type === 'bonus') {
+                    if (object.state === 'mushroom') {
+                        object.destroy();
+                        
+                        characterGrowth();
+                    }
                 }
 
                 //
@@ -548,55 +556,54 @@
 
                     checkTreasureCollision(object);
 
-                    const mushroom = elpy.create(`mushroom-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.mushroom)));
+                    const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
                     
-                    mushroom.collision(character);
-                    mushroom.collision(obstacles);
-                    mushroom.collision(grounds);
+                    bonus.collision(character);
+                    bonus.collision(obstacles);
+                    bonus.collision(grounds);
                     obstacles.forEach(obstacle => {
                         if (obstacle !== object) {
-                            obstacle.collision(mushroom);
+                            obstacle.collision(bonus);
                         }
                     });
-                    character.collision(mushroom);
-                    elpy.add(mushroom);
+                    character.collision(bonus);
+                    elpy.add(bonus);
                     
                     elpy.tick(() => {
                         if (traveledDistance >= MAX_DISTANCE) {
-                            mushroom.fall(FALL_MULTIPLIER);
+                            bonus.fall(FALL_MULTIPLIER);
 
-                            mushroom.options.custom.spawned = true;
+                            bonus.options.custom.spawned = true;
 
-                            moveObstacle(mushroom);
+                            moveObstacle(bonus);
 
                             return false;
                         }
 
                         traveledDistance++;
-                        mushroom.y -= 1;
+                        
+                        bonus.y -= 1;
                     });
                     
-                    mushroom.on('collision', (object, side) => {
+                    bonus.on('collision', (object, side) => {
                         if (object === character) {
-                            mushroom.destroy();
+                            bonus.destroy();
 
                             characterGrowth();
                         }
 
                         if (side === 'left') {
-                            mushroom.options.custom.delta = -1;
-                            mushroom.state = 'move:left';
+                            bonus.options.custom.delta = -1;
                         }
 
-                        if (side === 'right' || mushroom.x >= MAX_MAP_LENGTH) {
-                            mushroom.options.custom.delta = 1;
-                            mushroom.state = 'move:right';
+                        if (side === 'right' || bonus.x >= MAX_MAP_LENGTH) {
+                            bonus.options.custom.delta = 1;
                         }
                     });
 
-                    mushroom.on('move', () => {
-                        if (mushroom.y >= elpy.height) {
-                            mushroom.destroy();
+                    bonus.on('move', () => {
+                        if (bonus.y >= elpy.height) {
+                            bonus.destroy();
                         }
                     });
                 }
