@@ -32,30 +32,75 @@
                 character: {
                     images: [
                         {
-                            paths: ['images/characters/character_idle_0000.png'],
-                            state: 'idle'
+                            paths: ['images/characters/0/character_idle_0000.png'],
+                            state: '0:idle'
                         },
                         {
-                            paths: ['images/characters/character_right_0000.png', 'images/characters/character_right_0001.png'],
-                            state: 'move:right',
+                            paths: ['images/characters/0/character_right_0000.png', 'images/characters/0/character_right_0001.png'],
+                            state: '0:move:right',
                             time: 100
                         },
                         {
-                            paths: ['images/characters/character_left_0000.png', 'images/characters/character_left_0001.png'],
-                            state: 'move:left',
+                            paths: ['images/characters/0/character_left_0000.png', 'images/characters/0/character_left_0001.png'],
+                            state: '0:move:left',
                             time: 100
                         },
                         {
-                            paths: ['images/characters/character_right_0001.png'],
-                            state: 'jump:right'
+                            paths: ['images/characters/0/character_right_0001.png'],
+                            state: '0:jump:right'
                         },
                         {
-                            paths: ['images/characters/character_left_0001.png'],
-                            state: 'jump:left'
+                            paths: ['images/characters/0/character_left_0001.png'],
+                            state: '0:jump:left'
+                        },
+                        {
+                            paths: ['images/characters/1/character_idle_0000.png'],
+                            state: '1:idle'
+                        },
+                        {
+                            paths: ['images/characters/1/character_right_0000.png', 'images/characters/1/character_right_0001.png'],
+                            state: '1:move:right',
+                            time: 100
+                        },
+                        {
+                            paths: ['images/characters/1/character_left_0000.png', 'images/characters/1/character_left_0001.png'],
+                            state: '1:move:left',
+                            time: 100
+                        },
+                        {
+                            paths: ['images/characters/1/character_right_0001.png'],
+                            state: '1:jump:right'
+                        },
+                        {
+                            paths: ['images/characters/1/character_left_0001.png'],
+                            state: '1:jump:left'
+                        },
+                        {
+                            paths: ['images/characters/2/character_idle_0000.png'],
+                            state: '2:idle'
+                        },
+                        {
+                            paths: ['images/characters/2/character_right_0000.png', 'images/characters/2/character_right_0001.png'],
+                            state: '2:move:right',
+                            time: 100
+                        },
+                        {
+                            paths: ['images/characters/2/character_left_0000.png', 'images/characters/2/character_left_0001.png'],
+                            state: '2:move:left',
+                            time: 100
+                        },
+                        {
+                            paths: ['images/characters/2/character_right_0001.png'],
+                            state: '2:jump:right'
+                        },
+                        {
+                            paths: ['images/characters/2/character_left_0001.png'],
+                            state: '2:jump:left'
                         }
                     ],
                     custom: {
                         slidingDelta: 0,
+                        evolution: 0,
                         isMoving: true
                     }
                 },
@@ -151,6 +196,10 @@
                         {
                             paths: ['images/tiles/mushroom.png'],
                             state: 'mushroom'
+                        },
+                        {
+                            paths: ['images/tiles/flower.png'],
+                            state: 'flower'
                         }
                     ],
                     type: 'bonus',
@@ -328,7 +377,7 @@
                 switch(key) {
                     case 'ArrowLeft':
                     case 'ArrowRight':
-                        character.state = 'idle';
+                        character.state = `${character.options.custom.evolution}:idle`;
                         character.animate = false;
 
                         break;
@@ -476,10 +525,10 @@
                         character.animate = true;
                     }
 
-                    character.state = 'move:right';
+                    character.state = `${character.options.custom.evolution}:move:right`;
                     
                     if (character.isJumping) {
-                        character.state = 'jump:right';
+                        character.state = `${character.options.custom.evolution}:jump:right`;
                     }
                 }
 
@@ -488,30 +537,30 @@
                         character.animate = true;
                     }
 
-                    character.state = 'move:left';
+                    character.state = `${character.options.custom.evolution}:move:left`;
 
                     if (character.isJumping) {
-                        character.state = 'jump:left';
+                        character.state = `${character.options.custom.evolution}:jump:left`;
                     }
                 }
 
                 if (character.x <= 0) {
                     character.move(character.x + 1, character.y);
                     
-                    character.state = 'idle';
+                    character.state = `${character.options.custom.evolution}:idle`;
                 }
 
                 if (character.x >= MAX_MAP_LENGTH) {
                     character.move(character.x - 1, character.y);
                     
-                    character.state = 'idle';
+                    character.state = `${character.options.custom.evolution}:idle`;
                 }
 
                 checkObstaclesInViewport();
             }
 
             function characterOnCollision(object, side) {
-                character.state = 'idle';
+                character.state = `${character.options.custom.evolution}:idle`;
 
                 if (['enemy', 'treasure', 'box', 'pipe', 'pipe-hole'].includes(object.options.type)
                 && (side === 'left' || side === 'right')) {
@@ -528,18 +577,33 @@
                         
                         characterGrowth();
                     }
+
+                    if (object.state === 'flower') {
+                        object.destroy();
+
+                        character.options.custom.evolution = 2;
+                    }
                 }
 
                 //
-                if (object.name === 'treasure-9-21' && side === 'bottom' && object.state === 'full') {
+                if ((object.name === 'treasure-9-21' || object.name === 'treasure-9-23')&& side === 'bottom' && object.state === 'full') {
+                    if (character.options.custom.evolution === 0) {
+                        mushroom();
+                    }
+
+                    if (character.options.custom.evolution === 1) {
+                        flower();
+                    }
+                }
+
+                function mushroom() {
                     const MAX_DISTANCE = UNIT / 2;
                     let traveledDistance  = 0;
+                    const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
 
                     object.options.custom.hasCoin = false;
 
                     checkTreasureCollision(object);
-
-                    const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
                     
                     bonus.collision(character);
                     bonus.collision(obstacles);
@@ -580,7 +644,7 @@
                             bonus.options.custom.delta = -1;
                         }
 
-                        if (side === 'right' || bonus.x >= MAX_MAP_LENGTH) {
+                        if (side === 'right') {
                             bonus.options.custom.delta = 1;
                         }
                     });
@@ -589,6 +653,31 @@
                         if (bonus.y >= elpy.height) {
                             bonus.destroy();
                         }
+                    });
+                }
+
+                function flower() {
+                    const MAX_DISTANCE = UNIT / 2;
+                    let traveledDistance  = 0;
+                    const bonus = elpy.create(`bonus-${object.name}`, object.x + ((UNIT / 2) / 2), object.y, UNIT / 2, UNIT / 2, JSON.parse(JSON.stringify(options.bonus)));
+
+                    object.options.custom.hasCoin = false;
+                    
+                    bonus.state = 'flower';
+                    
+                    character.collision(bonus);
+                    elpy.add(bonus);
+
+                    elpy.tick(() => {
+                        if (traveledDistance >= MAX_DISTANCE) {
+                            bonus.options.custom.spawned = true;
+
+                            return false;
+                        }
+
+                        traveledDistance++;
+                        
+                        bonus.y -= 1;
                     });
                 }
                 //
@@ -614,6 +703,8 @@
             function characterGrowth() {
                 character.y = character.y - character.height;
                 character.height = character.height * 2;
+                character.width = character.width * 2;
+                character.options.custom.evolution = 1;
             }
 
             function enemyOnFall(enemy, event) {
@@ -872,7 +963,7 @@
                 });
             }
 
-            function debug() {
+            window._debug = function() {
                 window._elpy = elpy;
                 window._character = character;
 
