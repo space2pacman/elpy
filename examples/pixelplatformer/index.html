@@ -149,11 +149,11 @@
                 treasure: {
                     images: [
                         {
-                            paths: ['images/tiles/treasure.png'],
+                            paths: ['images/treasure/treasure.png'],
                             state: 'full'
                         },
                         {
-                            paths: ['images/tiles/treasure_empty.png'],
+                            paths: ['images/treasure/treasure_empty.png'],
                             state: 'empty'
                         }
                     ],
@@ -166,7 +166,7 @@
                     obstacle: false,
                     images: [
                         {
-                            paths: ['images/tiles/coin-0.png', 'images/tiles/coin-1.png'],
+                            paths: ['images/tiles/coin_0.png', 'images/tiles/coin_1.png'],
                             state: 'rotate',
                             time: 100
                         }
@@ -216,7 +216,7 @@
                             state: 'default'
                         },
                         {
-                            paths: ['images/effects/explosion0.png', 'images/effects/explosion1.png', 'images/effects/explosion2.png'],
+                            paths: ['images/effects/explosion_0.png', 'images/effects/explosion_1.png', 'images/effects/explosion_2.png'],
                             state: 'destroy',
                             time: 100
                         }
@@ -489,7 +489,7 @@
 
             function spawnTreasures(i, j) {
                 const treasure = elpy.create(`treasure-${i}-${j}`, UNIT * j, UNIT * i, UNIT, UNIT, JSON.parse(JSON.stringify(options.treasure)));
-                            
+
                 elpy.add(treasure);
                 obstacles.push(treasure);
                 treasure.collision(getObstaclesEnemies());
@@ -948,7 +948,7 @@
                             delayedDestroy(fireball, 300);
 
                             object.ghost = true;
-                            
+
                             object.jump(5, ENEMY_JUMP_MULTIPLIER);
                             object.rotate(ENEMY_ROTATE);
 
