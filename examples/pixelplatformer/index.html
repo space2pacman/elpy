@@ -209,6 +209,19 @@
                         delta: 1
                     }
                 },
+                fireball: {
+                    images: [
+                        {
+                            paths: ['images/tiles/fireball.png'],
+                            state: 'default'
+                        },
+                        {
+                            paths: ['images/effects/explosion0.png', 'images/effects/explosion1.png', 'images/effects/explosion2.png'],
+                            state: 'destroy',
+                            time: 100
+                        }
+                    ]
+                },
                 bigGreenMountain: {
                     image: 'images/tiles/big-green-mountain.png'
                 },
@@ -372,6 +385,17 @@
                         break;
                 }
             });
+
+            elpy.keydown(key => {
+                switch(key) {
+                    case 'ControlLeft':
+                        if (character.options.custom.evolution === 2) {
+                            fireball();
+                        }
+
+                        break;
+                }
+            })
 
             elpy.keyup(key => {
                 switch(key) {
@@ -900,6 +924,61 @@
 
                     y += 2;
                 })
+            }
+            
+            function fireball() {
+                const width = 16;
+                const height = 16;
+                const fireball = elpy.create('fireball', character.x + (character.width / 2), (character.y + (character.height / 2)) - (height / 2), width, height, options.fireball);
+
+                fireball.collision(obstacles);
+                fireball.collision(grounds);
+                fireball.fall(0.5);
+                elpy.add(fireball);
+
+                fireball.on('collision', (object) => {
+                    elpy.nextTick(() => {
+                        if (object.options.type === 'enemy') {
+                            //
+                            fireball.stop();
+                            
+                            fireball.animate = true;
+                            fireball.state = 'destroy';
+
+                            delayedDestroy(fireball, 300);
+
+                            object.ghost = true;
+                            
+                            object.jump(5, ENEMY_JUMP_MULTIPLIER);
+                            object.rotate(ENEMY_ROTATE);
+
+                            delayedDestroy(object, DESTROY_TIME_DELAY);
+                            //
+                        }
+
+                        if (object.options.type === 'ground') {
+                            fireball.jump(5, 0.5);
+                        } else {
+                            fireball.stop();
+
+                            fireball.animate = true;
+                            fireball.state = 'destroy';
+
+                            delayedDestroy(fireball, 300);
+                        }
+                    });
+                });
+
+                elpy.tick(() => {
+                    if (fireball.state === 'destroy') {
+                        return false;
+                    }
+
+                    if (fireball.state === 'default') {
+                        fireball.rotate(fireball.degrees + 5);
+                        fireball.move(fireball.x + 5, fireball.y);
+                    }
+                });
             }
 
             async function lowerCharacter() {
