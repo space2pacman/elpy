@@ -94,11 +94,7 @@ class Engine {
     }
 
     checkObjectInViewport(object) {
-        if (this._checkObjectInViewportX(object) && this._checkObjectInViewportY(object)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this._checkObjectInViewportX(object) && this._checkObjectInViewportY(object);
     }
 
     fixingCamera(object, fixedCamera = {}) {
