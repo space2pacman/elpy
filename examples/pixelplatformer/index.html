@@ -648,7 +648,7 @@
                     if (object.state === 'mushroom') {
                         object.destroy();
                         
-                        characterGrowth();
+                        characterGrowth(character.width * 2);
                     }
 
                     if (object.state === 'flower') {
@@ -710,7 +710,7 @@
                         if (object === character) {
                             bonus.destroy();
 
-                            characterGrowth();
+                            characterGrowth(character.width * 2);
                         }
 
                         if (side === 'left') {
@@ -773,11 +773,17 @@
                 }
             }
 
-            function characterGrowth() {
+            function characterGrowth(value) {
+                const offset = (value / 2) - (character.width / 2);
+                
+                elpy.offset.object.offset.x += offset;
+                elpy.offset.x -= offset;
                 character.y = character.y - character.height;
                 character.height = character.height * 2;
-                character.width = character.width * 2;
+                character.width = value;
                 character.options.custom.evolution = 1;
+
+                character.move(character.x - offset, character.y)
             }
 
             function enemyOnFall(enemy, event) {
