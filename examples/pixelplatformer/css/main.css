@@ -5,7 +5,10 @@
 
 .play {
     display: none;
-    background: black;
+    background-image: url('../images/background/main.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -13,13 +16,64 @@
     top: 0;
 }
 
-.play__button {
-    color: #fff;
-    font-size: 56px;
-    font-family: Arial;
-    background: orange;
+.play__game-title {
+    background: #b88463;
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 55%;
     margin: auto;
-    padding: 30px 50px;
+    border: 2px solid #633f44;
+    color: #fff;
+    font-family: Arial;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play__button {
+    width: 300px;
+    height: 100px;
+    color: #fff;
+    font-family: Arial;
+    text-align: center;
+    line-height: 100px;
+    font-size: 70px;
+    font-weight: bold;
+    border-radius: 4px;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 30%;
+    margin: auto;
+    box-shadow: 0px 4px rgba(0, 0, 0, 0.4), 0px 4px #fff;
+    transition: all, .075s;
+    transform: translate3d(0,0,0);
+    background: #ffd948;
+        box-shadow: 0px 4px rgba(0, 0, 0, 0.4), 0px 4px #ffd948;
+}
+
+.play__button:active {
+    filter: brightness(105%);
+    transform: translateY(4px);
+    box-shadow: 0px 0px;
+}
+
+.play__button:before {
+    content: "";
+    display: block;
+    width: calc(100% - 6px);
+    height: 42%;
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
 }
 
 .controls {
@@ -55,7 +109,11 @@
 }
 
 .controls__buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 230px;
     margin-right: 30px;
+    margin-bottom: 15px;
 }
 
 .controls__button {
@@ -66,8 +124,12 @@
     background-size: cover;
 }
 
+.controls__button--fire {
+    background-image: url('./../images/controls/a.png');
+}
+
 .controls__button--jump {
-    background-image: url('./../images/controls/arrow-up.png');
+    background-image: url('./../images/controls/b.png');
 }
 
 @media (max-width: 768px) {
@@ -77,6 +139,7 @@
 
     #field {
         border: none;
+        display: none;
         height: 100vh;
     }
 

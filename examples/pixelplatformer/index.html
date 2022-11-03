@@ -10,6 +10,9 @@
 </head>
 <body>
     <div class="play js-play">
+        <div class="play__game-title">
+            <div>Pixel<br>platformer</div>
+        </div>
         <div class="play__button js-play-button">Play</div>
     </div>
     <div class="controls js-controls">
@@ -18,13 +21,14 @@
             <div class="controls__arrow controls-arrow--right js-controls-arrow-right"></div>
         </div>
         <div class="controls__buttons">
+            <div class="controls__button controls__button--fire js-controls-button-fire"></div>
             <div class="controls__button controls__button--jump js-controls-button-jump"></div>
         </div>
     </div>
     <canvas id="field"></canvas>
     <script src="../../dist/elpy.min.js"></script>
     <script>
-        function init() {
+        function loadGame() {
             const options = {
                 engine: {
                     favicon: false
@@ -315,7 +319,7 @@
             const grounds = [];
             const obstacles = [];
             const MAX_MAP_LENGTH = (map.objects[0].length - 1) * UNIT;
-            const elpy = new Elpy('#field', 500, UNIT * 15, options.engine); // 500
+            const elpy = new Elpy('#field', window.outerWidth, UNIT * 15, options.engine); // 500
             const background = elpy.create('background', -10000, -10000, 20000, 20000, options.background);            
             const flag = createFlag();
             let isFlagLowered = false;
@@ -1123,13 +1127,26 @@
 
         init();
 
-        mobileControls();
+        function init() {
+            if (window.outerWidth <= 768) {
+                if (window.outerWidth > window.outerHeight) {
+                    location.reload(true);
 
-        function mobileControls() {
+                    return;
+                }
+
+                loadMobileGame();
+            } else {
+                loadGame();
+            }
+        }
+
+        function loadMobileGame() {
             const field = document.querySelector('#field');
             const controls = document.querySelector('.js-controls');
             const controlsArrowLeft = document.querySelector('.js-controls-arrow-left');
             const controlsArrowRight = document.querySelector('.js-controls-arrow-right');
+            const controlsButtonFire = document.querySelector('.js-controls-button-fire');
             const controlsButtonJump = document.querySelector('.js-controls-button-jump');
             const play = document.querySelector('.js-play');
             const playButton = document.querySelector('.js-play-button');
@@ -1150,6 +1167,10 @@
                 document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowRight'}));
             });
 
+            controlsButtonFire.addEventListener('touchstart', () => {
+                document.dispatchEvent(new KeyboardEvent('keydown',{'code':'ControlLeft'}));
+            });
+
             controlsButtonJump.addEventListener('touchstart', () => {
                 document.dispatchEvent(new KeyboardEvent('keydown',{'code':'ArrowUp'}));
             });
@@ -1158,28 +1179,29 @@
                 document.dispatchEvent(new KeyboardEvent('keyup',{'code':'ArrowUp'}));
             });
 
-            if (window.outerWidth <= 768) {
-                field.style.display = 'none';
-            }
+            window.addEventListener('load', () => {
+                const desiredWidth = Math.max(window.screen.availWidth, window.screen.availHeight);
 
-            playButton.addEventListener('click', () => {
-                if (window.outerWidth <= 768) {
+                playButton.addEventListener('click', () => {
+                    play.style.display = 'none';
+                    
                     document.body.requestFullscreen();
                     window.addEventListener('fullscreenchange', () => {
                         screen.orientation.lock("landscape-primary");
-                        
-                        window.addEventListener('orientationchange', () => {
-                            play.style.display = 'none';
-                            controls.style.display = 'flex';
-                            field.style.display = 'block';
-                            init();
-                            // elpy._ctx.canvas.width = Math.floor(window.outerWidth / (elpy._ctx.canvas.clientWidth / window.outerWidth));
-                            // elpy.offset.object.offset.x += Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
-                            // elpy.offset.x -= Math.floor((elpy._ctx.canvas.clientWidth - elpy._ctx.canvas.width) / 2);
+
+                        const id = setInterval(() => {
+                            if (window.outerWidth === desiredWidth) {
+                                play.style.display = 'none';
+                                controls.style.display = 'flex';
+                                field.style.display = 'block';
+                            
+                                clearInterval(id);
+                                loadGame();
+                            }
                         });
-                    }); 
-                }
-            });
+                    });
+                });
+            })
         }
     </script>
 </body>
