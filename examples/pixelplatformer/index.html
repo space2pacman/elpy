@@ -1185,7 +1185,7 @@
                 playButton.addEventListener('click', () => {
                     play.style.display = 'none';
                     
-                    requestFullscreen(document.body)
+                    document.body.requestFullscreen();
                     window.addEventListener('fullscreenchange', () => {
                         screen.orientation.lock("landscape-primary");
 
@@ -1202,16 +1202,6 @@
                     });
                 });
             });
-
-            function requestFullscreen(element) {
-                if (element.requestFullscreen) {
-                    element.requestFullscreen();
-                } else if (element.mozRequestFullScreen) {
-                    element.mozRequestFullScreen();
-                } else if (element.webkitRequestFullscreen) {
-                    element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-                }
-            }
         }
     </script>
 </body>
