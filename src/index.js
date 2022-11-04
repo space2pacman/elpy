@@ -351,7 +351,10 @@ class Engine {
         }
 
         if (this._preload) {
-            this._showLoadingScreen();
+            const images = this._storage.images.length;
+            const imagesLoaded = this._storage.images.filter(item => item.loaded).length;
+            
+            this._showLoadingScreen(images, imagesLoaded);
         }
     }
 
@@ -620,13 +623,11 @@ class Engine {
         return delta;
     }
 
-    _showLoadingScreen() {
+    _showLoadingScreen(current, max) {
         const x = (this._width / 2) - ((this._width / 2) / 2);
         const y = (this._height / 2) - (((this._height / 100) * 10) / 2);
         const width = this._width / 2;
         const height = (this._height / 100) * 10;
-        const images = this._storage.images.length;
-        const imagesLoaded = this._storage.images.filter(item => item.loaded).length;
 
         this._ctx.fillStyle = 'black';
         this._ctx.fillRect(0, 0, this._width, this._height);
@@ -635,7 +636,7 @@ class Engine {
         this._ctx.fillStyle = 'black';
         this._ctx.fillRect(x + 5, y + 6, width - 10, height - 12);
         this._ctx.fillStyle = 'white';
-        this._ctx.fillRect(x + 4, y + 5, ((width - 8) / images) * imagesLoaded, height - 10);
+        this._ctx.fillRect(x + 4, y + 5, ((width - 8) / current) * max, height - 10);
     }
 
     _isEmpty(object) {

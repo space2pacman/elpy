@@ -346,6 +346,7 @@
             character.collision(grounds);
             character.fall(FALL_MULTIPLIER);
             character.on('move', characterOnMove);
+            character.on('fall', characterOnFall);
             character.on('collision', characterOnCollision);
 
             elpy.tick(() => {
@@ -634,6 +635,14 @@
                 }
 
                 checkObstaclesInViewport();
+            }
+
+            function characterOnFall() {
+                if (character.y - character.height > elpy.height) {
+                    character.stop();
+                    
+                    loadGame();
+                }
             }
 
             function characterOnCollision(object, side) {
