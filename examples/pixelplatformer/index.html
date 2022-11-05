@@ -105,7 +105,8 @@
                     custom: {
                         slidingDelta: 0,
                         evolution: 0,
-                        isMoving: true
+                        isMoving: true,
+                        isLive: true
                     }
                 },
                 enemy: {
@@ -830,7 +831,7 @@
                     if (obstacle.options.type === 'enemy') {
                         obstacle.on('collision', (object, side) => {
                             if (['left', 'right', 'top'].includes(side) && object === character) {
-                                loadGame();
+                                characterDead();
                             }
 
                             if (side === 'left') {
@@ -902,6 +903,14 @@
                 }
 
                 if (side === 'left' || side === 'right') {
+                    characterDead();
+                }
+            }
+
+            function characterDead() {
+                if (character.options.custom.isLive) {
+                    character.options.custom.isLive = false;
+
                     loadGame();
                 }
             }
