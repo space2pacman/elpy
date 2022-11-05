@@ -105,8 +105,7 @@
                     custom: {
                         slidingDelta: 0,
                         evolution: 0,
-                        isMoving: true,
-                        isLive: true
+                        isMoving: true
                     }
                 },
                 enemy: {
@@ -830,10 +829,6 @@
                 obstacles.forEach(obstacle => {
                     if (obstacle.options.type === 'enemy') {
                         obstacle.on('collision', (object, side) => {
-                            if (['left', 'right', 'top'].includes(side) && object === character) {
-                                characterDead();
-                            }
-
                             if (side === 'left') {
                                 obstacle.options.custom.delta = -1;
                                 obstacle.state = 'move:left';
@@ -900,18 +895,6 @@
                     object.ghost = true;
 
                     delayedDestroy(object, DESTROY_TIME_DELAY);
-                }
-
-                if (side === 'left' || side === 'right') {
-                    characterDead();
-                }
-            }
-
-            function characterDead() {
-                if (character.options.custom.isLive) {
-                    character.options.custom.isLive = false;
-
-                    loadGame();
                 }
             }
 
