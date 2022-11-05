@@ -829,6 +829,10 @@
                 obstacles.forEach(obstacle => {
                     if (obstacle.options.type === 'enemy') {
                         obstacle.on('collision', (object, side) => {
+                            if (['left', 'right', 'top'].includes(side) && object === character) {
+                                loadGame();
+                            }
+
                             if (side === 'left') {
                                 obstacle.options.custom.delta = -1;
                                 obstacle.state = 'move:left';
@@ -895,6 +899,10 @@
                     object.ghost = true;
 
                     delayedDestroy(object, DESTROY_TIME_DELAY);
+                }
+
+                if (side === 'left' || side === 'right') {
+                    loadGame();
                 }
             }
 
