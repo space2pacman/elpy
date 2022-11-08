@@ -6,6 +6,7 @@
 [![Javascript](https://img.shields.io/badge/Language-Javascript-brightgreen.svg)](https://en.wikipedia.org/wiki/JavaScript)
 ![](https://img.badgesize.io/space2pacman/elpy/master/dist/elpy.min.js?label=Size)
 [![npm version](https://badge.fury.io/js/elpy.svg)](https://badge.fury.io/js/elpy)
+[![downloads](https://img.shields.io/npm/dt/elpy.svg)](https://img.shields.io/npm/dt/elpy.svg)
 
 | [Demo](https://space2pacman.github.io/elpy/docs/) | [Game examples](https://space2pacman.github.io/elpy/docs/examples.html) |
 | :---: | :---: |
