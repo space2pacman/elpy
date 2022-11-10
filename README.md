@@ -6,7 +6,7 @@
 [![JavaScript](https://img.shields.io/badge/Language-JavaScript-brightgreen.svg)](https://en.wikipedia.org/wiki/JavaScript)
 [![Size](https://img.shields.io/bundlephobia/min/elpy?color=brightgreen&label=Size)](https://img.shields.io/bundlephobia/min/elpy?color=brightgreen&label=Size)
 [![Downloads](https://img.shields.io/npm/dt/elpy?label=Downloads)](https://img.shields.io/npm/dt/elpy?label=Downloads)
-[![npm](https://img.shields.io/npm/v/elpy?color=brightgreen)](https://img.shields.io/npm/v/elpy?color=brightgreen)
+[![npm](https://img.shields.io/npm/v/elpy?color=brightgreen)](https://www.npmjs.com/package/elpy)
 
 | [Demo](https://space2pacman.github.io/elpy/docs/) | [Game examples](https://space2pacman.github.io/elpy/docs/examples.html) |
 | :---: | :---: |
