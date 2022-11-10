@@ -82,7 +82,6 @@ body {
     align-items: center;
     justify-items: center;
     justify-content: center;
-    margin-top: 100px;
 }
 
 .game-link {
@@ -130,7 +129,7 @@ body {
     margin: 120px auto 0px auto;
 }
 
-.all-games__game-link{
+.all-games__game-link {
     display: block;
     position: relative;
     overflow: hidden;
@@ -156,4 +155,55 @@ body {
     text-align: center;
     margin-top: 40px;
     margin-bottom: 40px;
+}
+
+.all-games__game-caption {
+    position: relative;
+    background: rgb(245 245 245 / 70%);
+    margin: 0px 30px;
+    padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+    .all-games-list {
+        width: 80%;
+        margin: 50px auto 0px auto;
+    }
+    
+    .game-list {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        row-gap: 50px;
+        margin-top: 100px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main {
+        display: block;
+        height: 100%;
+        margin-top: 50px;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .demo {
+        display: block;
+    }
+
+    #field {
+        width: 100%;
+    }
+
+    #editor {
+        width: 100%;
+    }
+
+    .examples-links {
+        width: 100%;
+        margin: 30px auto 30px auto;
+    }
 }

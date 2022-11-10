@@ -1,6 +1,6 @@
 const editor = ace.edit("editor");
 const examplesLinks = document.querySelector('.js-examples-links');
-const elpy = new Elpy('#field', 480, 300, { preload: false });
+const elpy = new Elpy('#field', screen.width <= 992 ? screen.width : 480, 300, { preload: false });
 
 editor.setOption('useWorker', false);
 editor.session.setMode("ace/mode/javascript");
