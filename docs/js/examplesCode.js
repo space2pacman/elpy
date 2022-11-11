@@ -47,23 +47,23 @@ elpy.add(obj);`,
 const car = elpy.create('car', 0, 0, 30, 55, options);
 let degrees = 0;
 let switchDirection = false;
-    
+
 car.move(
     elpy.width / 2 - car.width / 2,
     elpy.height / 2 - car.height / 2
 );
-    
+
 setInterval(() => {
     if (degrees > 360) {
         degrees = 0;
         switchDirection = !switchDirection;
     }
-    
+
     car.rotate(switchDirection ? -degrees : degrees);
     car.run(-1);
     degrees++;
-})
-    
+});
+
 elpy.add(car);`,
     'paint':`let i = 0;
 
@@ -71,16 +71,16 @@ elpy.mousemove((x, y) => {
     const obj = elpy.create('object' + i, x, y - 10, 1, 1, {
         image: 'images/elpy.png'
     });
-    
+
     i++;
-    
+
     elpy.tick(() => {
         if (obj.width >= 40) {
             obj.destroy();
 
             return false;
         }
-        
+
         obj.height = obj.height + 2;
         obj.width = obj.width + 2;
         obj.move(obj.x - 1, obj.y - 1);

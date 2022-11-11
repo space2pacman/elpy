@@ -10,13 +10,17 @@ editor.on('change', run);
 init();
 
 function run() {
+    const elpy = new Elpy('#field', screen.width <= 992 ? screen.width : 480, 300, { preload: false });
+
     setTimeout(() => {
         clearIntervals();            
-        destroyObjects();
+        destroyObjects(elpy);
 
         const func = new Function('elpy', editor.getValue());
 
         func(elpy);
+
+        elpy.load();
     });
 }
 
@@ -26,9 +30,9 @@ function clearIntervals() {
     }
 }
 
-function destroyObjects() {
-    for(const name in elpy.objects) {
-        elpy.objects[name].destroy();
+function destroyObjects(engine) {
+    for(const name in engine.objects) {
+        engine.objects[name].destroy();
     }
 }
 
