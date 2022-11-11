@@ -14,7 +14,7 @@ function run() {
 
     setTimeout(() => {
         clearIntervals();            
-        destroyObjects(elpy);
+        destroyObjects(elpy.objects);
 
         const func = new Function('elpy', editor.getValue());
 
@@ -30,9 +30,9 @@ function clearIntervals() {
     }
 }
 
-function destroyObjects(engine) {
-    for(const name in engine.objects) {
-        engine.objects[name].destroy();
+function destroyObjects(objects) {
+    for(const name in objects) {
+        objects[name].destroy();
     }
 }
 
