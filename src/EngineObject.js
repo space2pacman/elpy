@@ -278,12 +278,12 @@ class EngineObject {
         }
     }
 
-    on(event, callback) {
-        if (!this._events[event]) {
-            this._events[event] = [];
+    on(name, callback) {
+        if (!this._events[name]) {
+            this._events[name] = [];
         }
 
-        this._events[event].push(callback);
+        this._events[name].push(callback);
     }
 
     setOffsetObject(object) {
