@@ -9,6 +9,7 @@ class Engine {
         this._favicon = typeof options.favicon === 'boolean' ? options.favicon : true;
         this._field = null;
         this._ctx = null;
+        this._exist = true;
         this._keys = [];
         this._events = {};
         this._storage = {
@@ -129,6 +130,10 @@ class Engine {
         this._offset.object.y = this._offset.object.y - this._offset.object.offset.y;
         this._offset.x = 0;
         this._offset.y = 0;
+    }
+
+    destroy() {
+        this._exist = false;
     }
 
     on(event, callback) {
@@ -691,6 +696,10 @@ class Engine {
 
     _frameRender() {
         this.tick(() => {
+            if (!this._exist) {
+                return false;
+            }
+            
             this._render();
         });
     }
