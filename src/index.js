@@ -133,7 +133,13 @@ class Engine {
     }
 
     destroy() {
-        this._exist = false;
+        Object.values(this._objects).forEach(object => {
+            object.destroy();
+        });
+
+        this.nextTick(() => {
+            this._exist = false;
+        });
     }
 
     on(event, callback) {
