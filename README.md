@@ -27,6 +27,7 @@
   - <a href="#checkobjectinviewportobject">checkObjectInViewport()</a>
   - <a href="#fixingcameraobject-fixedcamera">fixingCamera()</a>
   - <a href="#unfixingcamera">unfixingCamera()</a>
+  - <a href="#destroy">destroy()</a>
   - <a href="#onevent-callback">on()</a>
     - <a href="#event-load">Event `'load'`</a>
   - <a href="#load">load()</a>
@@ -40,7 +41,7 @@
   - <a href="#pushobject">push()</a>
   - <a href="#rotatedegrees-x-y">rotate()</a>
   - <a href="#stop">stop()</a>
-  - <a href="#destroy">destroy()</a>
+  - <a href="#destroy-1">destroy()</a>
   - <a href="#collisionobject">collision()</a>
   - <a href="#onevent-callback-1">on()</a>
     - <a href="#event-collision">Event `'collision'`</a>
@@ -328,6 +329,13 @@ elpy.fixingCamera(player, {
 
 ```js
 elpy.unfixingCamera();
+```
+---
+### destroy()
+> Destroying all objects and stopping rendering.
+
+```js
+elpy.destroy();
 ```
 ---
 ### on(event, callback)
