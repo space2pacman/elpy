@@ -415,7 +415,7 @@ class EngineObject {
         return this._added = value;
     }
 
-    get _isAccelerationStopped() {
+    get _isAccelerationMovementStopped() {
         return this._params.movement.acceleration <= 0;
     }
 
@@ -564,7 +564,7 @@ class EngineObject {
             return false;
         }
 
-        if (this._isAccelerationStopped) {
+        if (this._isAccelerationMovementStopped) {
             this._isFalling = true;
 
             return false;
