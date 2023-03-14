@@ -506,7 +506,7 @@ class EngineObject {
     }
 
     _onCollisionSide(object, side) {
-        if (side === 'bottom') {
+        if (object.options.obstacle && side === 'bottom') {
             this._params.movement.acceleration = 0;
         }
     }
