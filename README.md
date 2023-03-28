@@ -361,7 +361,7 @@ elpy.on('load', () => {
 #### Event: `'animation'`
 ```js
 elpy.on('animation', (object, image, images) => {
-  // object - Object to be animated.
+  // object - object to be animated.
   // image - current image(path as a string).
   // images - a list of all images that were passed to paths when the object was created.
 });
