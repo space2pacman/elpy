@@ -435,6 +435,7 @@ class Engine {
 
         if (object.animate) {
             this._calculateRenderTime(cached);
+            this._notifyAboutRenderedImage(object, cached);
         } else {
             cached.currentImage = cached.list[0];
         }
@@ -584,6 +585,13 @@ class Engine {
         if (!cached.currentImage) {
             cached.currentImage = cached.list[0];
         }
+    }
+
+    _notifyAboutRenderedImage(object, cached) {
+        const image = cached.currentImage.getAttribute('src');
+        const images = object.options.images.list.find(i => i.state === object.state).paths;
+
+        this._dispatchEvent('animation', object, image, images);
     }
 
     _streamKeys(callback) {
