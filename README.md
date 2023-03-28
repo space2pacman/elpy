@@ -30,6 +30,7 @@
   - <a href="#destroy">destroy()</a>
   - <a href="#onevent-callback">on()</a>
     - <a href="#event-load">Event `'load'`</a>
+    - <a href="#event-animation">Event `'animation'`</a>
   - <a href="#load">load()</a>
 - <a href="#engine-getters">Engine getters</a>
 - <a href="#object">Object</a>
@@ -355,6 +356,14 @@ elpy.on('eventName', () => {
 ```js
 elpy.on('load', () => {
   // Event handling.
+});
+```
+#### Event: `'animation'`
+```js
+elpy.on('animation', (object, image, images) => {
+  // object - Object to be animated.
+  // image - current image(path as a string).
+  // images - a list of all images that were passed to paths when the object was created.
 });
 ```
 ---
