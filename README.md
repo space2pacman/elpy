@@ -362,7 +362,7 @@ elpy.on('load', () => {
 ```js
 elpy.on('animation', (object, image, images) => {
   // object - object to be animated.
-  // image - current image(path as a string). Examlpe: 'images/player_left.png'
+  // image - current image. Examlpe: 'images/player_left.png'
   // images - a list of all images that were passed to paths when the object was created. Example: ['images/player_left.png', 'images/player_right.png']
 });
 ```
