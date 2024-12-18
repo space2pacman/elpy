@@ -114,13 +114,13 @@ npm install elpy
 ### Create engine instance
 ```js
 const elpy = new Elpy(
-  "#element", // id element canvas or HTML object element get by document.querySelector()
-  500, // width
-  500, // height
-  // options
+  "#element", // id element canvas or HTML object element get by document.querySelector().
+  500, // width.
+  500, // height.
+  // options.
   {
-    preload, // default - true, enable / disable preloader
-    favicon // default - true, enable / disable favicon
+    preload, // default - true, enable / disable preloader.
+    favicon // default - true, enable / disable favicon.
   }
 )
 ```
@@ -144,18 +144,18 @@ const player = elpy.create('player', 10, 10, 20, 20);
 <sub>_max example_</sub>
 ```js
 const player = elpy.create('player', 10, 10, 20, 20, {
-  obstacle: true, // default - true
-  pushing: false, // default - false
-  disabledEvents: false, // default - false
-  type: 'player object', // default - null
-  custom: {}, // default - null
-  color, // default - 'black'
-  // image: '' or image: { path: '', repeat: false }
+  obstacle: true, // default - true.
+  pushing: false, // default - false.
+  disabledEvents: false, // default - false.
+  type: 'player object', // default - null.
+  custom: {}, // default - null.
+  color, // default - 'black'.
+  // image: '' or image: { path: '', repeat: false }.
   image: { 
-    path: '', // default - null
-    repeat: false // default - false
+    path: '', // default - null.
+    repeat: false // default - false.
   },
-  // default - null
+  // default - null.
   images: [
     {
       paths: ['images/player_left.png', 'images/player_right.png'], // path to image.
@@ -267,10 +267,10 @@ elpy.click((x, y) => {
 
 ```js
 let delta = 0;
-// tick will be called 100 times
+// tick will be called 100 times.
 elpy.tick(() => {
   if (delta === 100) {
-    return false; // stop tick
+    return false; // stop tick.
   }
 
   delta++;
@@ -300,7 +300,7 @@ elpy.nextTick(() => {
 > Checking if the object is in the visible area.
 
 ```js
-elpy.checkObjectInViewport(player); // returns true or false
+elpy.checkObjectInViewport(player); // returns true or false.
 ```
 ---
 ### fixingCamera(object, fixedCamera)
@@ -619,8 +619,8 @@ player.on('fly', event => {
 
 ```js
 player.on('jump', event => {
-  event.stopped; // returns true or false
-  event.paused; // returns true or false
+  event.stopped; // returns true or false.
+  event.paused; // returns true or false.
   event.stop();
   event.pause();
   event.resume();
