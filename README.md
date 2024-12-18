@@ -362,8 +362,8 @@ elpy.on('load', () => {
 ```js
 elpy.on('animation', (object, image, images) => {
   // object - object to be animated.
-  // image - current image. Examlpe: 'images/player_left.png'
-  // images - a list of all images that were passed to paths when the object was created. Example: ['images/player_left.png', 'images/player_right.png']
+  // image - current image. Examlpe: 'images/player_left.png'.
+  // images - a list of all images that were passed to paths when the object was created. Example: ['images/player_left.png', 'images/player_right.png'].
 });
 ```
 ---
@@ -653,14 +653,14 @@ player.name;
 | isJumping | `<Boolean>` | Is the object in a jump. |
 | isFlying | `<Boolean>` | Is the object in fly. |
 | isExist | `<Boolean>` | Does the object exist. |
-| x | `<Number>` |  |
-| y | `<Number>` |  |
-| width | `<Number>` |  |
-| height | `<Number>` |  |
+| x | `<Number>` | Position of the object along the x-axis. |
+| y | `<Number>` | Position of the object along the y-axis. |
+| width | `<Number>` | Object width in pixels. |
+| height | `<Number>` | Object height in pixels. |
 | state | `<String>` | Returns the current state of the object. |
 | animate | `<Boolean>` | Is the object animated. |
 | ghost | `<Boolean>` | Whether collision is canceled with other objects that go to it. |
-| degrees | `<Number>` |  |
+| degrees | `<Number>` | The degrees the object is rotated. |
 | added | `<Boolean>` | Is the object added. |
 ## Object setters
 <sub>_min example_</sub>
@@ -669,10 +669,10 @@ player.width = 10;
 ```
 | name | type | description |
 | :---: | :---: | :--- |
-| x | `<Number>` |  |
-| y | `<Number>` |  |
-| width | `<Number>` |  |
-| height | `<Number>` |  |
+| x | `<Number>` | Position of the object along the x-axis. |
+| y | `<Number>` | Position of the object along the y-axis. |
+| width | `<Number>` | Object width in pixels. |
+| height | `<Number>` | Object height in pixels. |
 | state | `<String>` | Used to switch textures. |
 | animate | `<Boolean>` | Whether to animate the object. |
 | ghost | `<Boolean>` | Cancels collision with other objects that go to it. |
