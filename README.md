@@ -374,16 +374,16 @@ elpy.on('animation', (object, image, images) => {
 elpy.load();
 ```
 ## Engine getters
-<sub>_min example_</sub>
-```js
-elpy.width;
-```
 | name | type | description |
 | :---: | :---: | :--- |
 | width | `<Number>` | Returns the width of the canvas. |
 | height | `<Number>` | Returns the height of the canvas. |
 | offset | `<Object>` | Returns information on object and field offset. |
 | objects | `<Object>` | Returns all added objects. |
+<sub>_min example_</sub>
+```js
+elpy.width;
+```
 ## Object
 ### run(step)
 | name | type | default |
