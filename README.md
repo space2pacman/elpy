@@ -8,7 +8,7 @@
 [![Downloads](https://img.shields.io/npm/dt/elpy?label=Downloads)](https://img.shields.io/npm/dt/elpy?label=Downloads)
 [![npm](https://img.shields.io/npm/v/elpy?color=brightgreen)](https://www.npmjs.com/package/elpy)
 
-| [Demo](https://space2pacman.github.io/elpy/docs/) | [Game examples](https://space2pacman.github.io/elpy/docs/examples.html) |
+| [Demo](https://space2pacman-misc.github.io/elpy-examples/docs/) | [Game examples](https://space2pacman-misc.github.io/elpy-examples/docs/examples.html) |
 | :---: | :---: |
 
 ## Docs
