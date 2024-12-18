@@ -50,7 +50,7 @@ class EngineObject {
             custom: options.custom || null,
             color: options.color || 'black',
             image: {
-                src: (typeof options.image === 'object' && options.image !== null ? options.image.path : options.image) || null,
+                path: (typeof options.image === 'object' && options.image !== null ? options.image.path : options.image) || null,
                 repeat: (typeof options.image === 'object' && options.image !== null ? options.image.repeat : false) || false,
                 rendering: false,
                 cached: null

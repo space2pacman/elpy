@@ -267,7 +267,7 @@ class Engine {
         return new Promise(resolve => {
             const image = new Image();
 
-            image.path = url;
+            image.src = url;
             
             image.addEventListener('load', () => {
                 if (state) {
