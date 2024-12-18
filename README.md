@@ -434,7 +434,7 @@ player.fly(0, 100, 10);
 ### jump(height, multiplier, forced)
 | name | type | default |
 | :---: | :---: | :---: |
-| **`height`** | `<Number>` |
+| **`height`** | `<Number>` | `0` |
 | **`multiplier`** | `<Number>` | `0.1` |
 | **`forced`** | `<Boolean>` | `false` |
 
