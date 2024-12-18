@@ -542,12 +542,12 @@ player.on('eventName', () => {
 });
 ```
 #### Event: `'collision'`
-> Callback arguments.
-
 | name | type |
 | :---: | :---: |
 | **`object`** | `<Object>` |
 | **`side`** | `<String>` |
+
+> Called in the collision of the object.
 
 ```js
 player.on('collision', (object, side) => {
@@ -556,35 +556,47 @@ player.on('collision', (object, side) => {
 });
 ```
 #### Event: `'move'`
+
+> Called when moving the object.
+
 ```js
 player.on('move', () => {
   // event handling.
 });
 ```
 #### Event: `'rotate'`
+
+> Called when rotating the object.
+
 ```js
 player.on('rotate', () => {
   // event handling.
 });
 ```
 #### Event: `'destroy'`
+
+> Called when the object is destroyed.
+
 ```js
 player.on('destroy', () => {
   // event handling.
 });
 ```
 #### Event: `'state'`
+
+> Called when changing the condition of the object.
+
 ```js
 player.on('state', () => {
   // event handling.
 });
 ```
 #### Event: `'jump'`
-> Callback arguments.
-
 | name | type | description |
 | :---: | :---: | :--: |
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
+
+> Called when jumping an object.
 
 ```js
 player.on('jump', event => {
@@ -592,11 +604,11 @@ player.on('jump', event => {
 });
 ```
 #### Event: `'fall'`
-> Callback arguments.
-
 | name | type | description |
 | :---: | :---: | :--: |
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
+
+> Called when the object falls.
 
 ```js
 player.on('fall', event => {
@@ -604,11 +616,11 @@ player.on('fall', event => {
 });
 ```
 #### Event: `'fly'`
-> Callback arguments.
-
 | name | type | description |
 | :---: | :---: | :--: |
 | **`event`** | `<Object>` | <a href="#event-object">link</a> |
+
+> Called when the object flies.
 
 ```js
 player.on('fly', event => {
@@ -616,8 +628,6 @@ player.on('fly', event => {
 });
 ```
 #### Event object
-> The object that is returned in the event callback: `jump`, `fall`, `fly`.
-
 | name | type | description |
 | :---: | :---: | :--- |
 | `stopped` | `<Boolean>` | The property will be `true` if the object has been stopped. |
@@ -625,6 +635,8 @@ player.on('fly', event => {
 | `stop()` | `<Function>` | Stop object. If he was in a state: `jump`, `fall`, `fly`. |
 | `pause()` | `<Function>` | Pause object. If he was in a state: `jump`, `fall`, `fly`. |
 | `resume()` | `<Function>` | Resume object. If it was paused. |
+
+> The object that is returned in the event callback: `jump`, `fall`, `fly`.
 
 ```js
 player.on('jump', event => {
