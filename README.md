@@ -613,9 +613,9 @@ player.on('fly', event => {
 | :---: | :---: | :--- |
 | `stopped` | `<Boolean>` | The property will be `true` if the object has been stopped. |
 | `paused` | `<Boolean>` | The property will be `true` if the object has been paused. |
-| `stop()` | | Stop object. If he was in a state: `jump`, `fall`, `fly`. |
-| `pause()` | | Pause object. If he was in a state: `jump`, `fall`, `fly`. |
-| `resume()` | | Resume object. If it was paused. |
+| `stop()` | `<Function>` | Stop object. If he was in a state: `jump`, `fall`, `fly`. |
+| `pause()` | `<Function>` | Pause object. If he was in a state: `jump`, `fall`, `fly`. |
+| `resume()` | `<Function>` | Resume object. If it was paused. |
 
 ```js
 player.on('jump', event => {
