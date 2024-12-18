@@ -232,7 +232,7 @@ class Engine {
 
     _addObjectImages(object) {
         const images = object.options.images.list;
-        const image = object.options.image.src;
+        const image = object.options.image.path;
 
         if (image) {
             this._addObjectImageToStorage(object);
@@ -244,7 +244,7 @@ class Engine {
     }
 
     _addObjectImageToStorage(object) {
-        const id = `${object.name}:${object.options.image.src}`;
+        const id = `${object.name}:${object.options.image.path}`;
 
         if (!this._storage.images.find(image => image.id === id)) {
             this._storage.images.push({ id, loaded: false });
@@ -267,7 +267,7 @@ class Engine {
         return new Promise(resolve => {
             const image = new Image();
 
-            image.src = url;
+            image.path = url;
             
             image.addEventListener('load', () => {
                 if (state) {
@@ -342,7 +342,7 @@ class Engine {
         for(const name in this._objects) {
             const object = this._objects[name];
             const images = object.options.images.list;
-            const image = object.options.image.src;
+            const image = object.options.image.path;
 
             if (!object.added) {
                 return;
@@ -513,7 +513,7 @@ class Engine {
         object.options.image.rendering = true;
 
         if (!object.options.image.cached) {
-            object.options.image.cached = await this._loadImage(object.options.image.src, object);
+            object.options.image.cached = await this._loadImage(object.options.image.path, object);
         }
 
         object.options.image.rendering = false;

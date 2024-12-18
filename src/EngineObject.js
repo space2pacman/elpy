@@ -50,7 +50,7 @@ class EngineObject {
             custom: options.custom || null,
             color: options.color || 'black',
             image: {
-                src: (typeof options.image === 'object' && options.image !== null ? options.image.src : options.image) || null,
+                src: (typeof options.image === 'object' && options.image !== null ? options.image.path : options.image) || null,
                 repeat: (typeof options.image === 'object' && options.image !== null ? options.image.repeat : false) || false,
                 rendering: false,
                 cached: null
@@ -138,7 +138,7 @@ class EngineObject {
         this._dispatchEvent('move');
     }
     
-    fly(degrees, distance = 0, step = 1) {
+    fly(degrees = 0, distance = 0, step = 1) {
         const event = this._getEventObject();
 
         this._positions.start.x = this._x;
@@ -151,7 +151,7 @@ class EngineObject {
         });
     }
 
-    jump(height, multiplier = 0.1, forced = false) {
+    jump(height = 0, multiplier = 0.1, forced = false) {
         const event = this._getEventObject();
 
         if (forced) {
@@ -245,7 +245,7 @@ class EngineObject {
         }
     }
 
-    rotate(degrees, x = 0, y = 0) {
+    rotate(degrees = 0, x = 0, y = 0) {
         this._offset.rotate.x = x;
         this._offset.rotate.y = y;
         this._degrees = degrees;
