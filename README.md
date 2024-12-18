@@ -349,13 +349,13 @@ elpy.destroy();
 
 ```js
 elpy.on('eventName', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'load'`
 ```js
 elpy.on('load', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'animation'`
@@ -529,7 +529,7 @@ player.collision(object);
 
 ```js
 player.on('eventName', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'collision'`
@@ -549,25 +549,25 @@ player.on('collision', (object, side) => {
 #### Event: `'move'`
 ```js
 player.on('move', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'rotate'`
 ```js
 player.on('rotate', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'destroy'`
 ```js
 player.on('destroy', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'state'`
 ```js
 player.on('state', () => {
-  // Event handling.
+  // event handling.
 });
 ```
 #### Event: `'jump'`
