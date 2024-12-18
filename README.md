@@ -362,14 +362,13 @@ elpy.on('load', () => {
 });
 ```
 #### Event: `'animation'`
-
-> Called when an object images are switched.
-
 | name | type |
 | :---: | :---: |
 | object | `<Object>` |
 | image | `<String>` |
 | images | `<Array>` |
+
+> Called when an object images are switched.
 
 ```js
 elpy.on('animation', (object, image, images) => {
