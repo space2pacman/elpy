@@ -416,7 +416,7 @@ player.move(10, 10);
 ### fly(degrees, distance, step)
 | name | type | default |
 | :---: | :---: | :---: |
-| **`degrees`** | `<Number>` |
+| **`degrees`** | `<Number>` | `0` |
 | **`distance`** | `<Number>` | `0` |
 | **`step`** | `<Number>` | `1` |
 
@@ -477,7 +477,7 @@ player.push(object);
 ### rotate(degrees, x, y)
 | name | type | default |
 | :---: | :---: | :---: |
-| **`degrees`** | `<Number>` |
+| **`degrees`** | `<Number>` | `0` |
 | **`x`** | `<Number>` | `0` |
 | **`y`** | `<Number>` | `0` |
 
