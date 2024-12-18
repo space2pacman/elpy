@@ -353,12 +353,18 @@ elpy.on('eventName', () => {
 });
 ```
 #### Event: `'load'`
+
+> Called when the application has loaded all resources and is ready.
+
 ```js
 elpy.on('load', () => {
   // event handling.
 });
 ```
 #### Event: `'animation'`
+
+> Called when an object images are switched.
+
 | name | type |
 | :---: | :---: |
 | object | `<Object>` |
