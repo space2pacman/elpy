@@ -638,10 +638,6 @@ player.on('jump', event => {
 player.removeCollision(object);
 ```
 ## Object getters
-<sub>_min example_</sub>
-```js
-player.name;
-```
 | name | type | description |
 | :---: | :---: | :--- |
 | name | `<String>` | Returns the name of the object. |
@@ -662,11 +658,11 @@ player.name;
 | ghost | `<Boolean>` | Whether collision is canceled with other objects that go to it. |
 | degrees | `<Number>` | The degrees the object is rotated. |
 | added | `<Boolean>` | Is the object added. |
-## Object setters
 <sub>_min example_</sub>
 ```js
-player.width = 10;
+player.name;
 ```
+## Object setters
 | name | type | description |
 | :---: | :---: | :--- |
 | x | `<Number>` | Position of the object along the x-axis. |
@@ -677,6 +673,10 @@ player.width = 10;
 | animate | `<Boolean>` | Whether to animate the object. |
 | ghost | `<Boolean>` | Cancels collision with other objects that go to it. |
 | added | `<Boolean>` | Is the object added. |
+<sub>_min example_</sub>
+```js
+player.width = 10;
+```
 ## Development
 ```
 npm run serve
