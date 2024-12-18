@@ -438,6 +438,8 @@ player.fly(0, 100, 10);
 | **`multiplier`** | `<Number>` | `0.1` |
 | **`forced`** | `<Boolean>` | `false` |
 
+> Object jumps with further fall.
+
 <sub>_min example_</sub>
 ```js
 player.jump(10);
@@ -494,7 +496,7 @@ player.rotote(90, 10, 20);
 ---
 ### stop()
 
-> Stop: jump, fall, fly.
+> Stop actions: jump, fall, fly.
 
 ```js
 player.stop();
