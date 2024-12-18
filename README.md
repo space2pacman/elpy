@@ -60,7 +60,7 @@
 - <a href="#development">Development</a>
 - <a href="#license">License</a>
 
-![games](/docs/images/games-background.png)
+![games](games-background.png)
 
 ## Install
 #### Download
