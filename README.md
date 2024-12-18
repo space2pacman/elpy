@@ -126,14 +126,14 @@ const elpy = new Elpy(
 ```
 ---
 ### create(name, x, y, width, height, options)
-| name | type |
-| :---: | :---: |
-| **`name`** | `<String>` |
-| **`x`** | `<Number>` |
-| **`y`** | `<Number>` |
-| **`width`** | `<Number>` |
-| **`height`** | `<Number>` |
-| **`options`** | `<Object>` |
+| name | type | description |
+| :---: | :---: | :--- |
+| **`name`** | `<String>` | The object name must be unique. |
+| **`x`** | `<Number>` | Position of the object along the x-axis. |
+| **`y`** | `<Number>` | Position of the object along the y-axis. |
+| **`width`** | `<Number>` | Object width in pixels. |
+| **`height`** | `<Number>` | Object height in pixels. |
+| **`options`** | `<Object>` | Additional object parameters. |
 
 > Creates and returns an engine object.
 
@@ -150,9 +150,9 @@ const player = elpy.create('player', 10, 10, 20, 20, {
   type: 'player object', // default - null
   custom: {}, // default - null
   color, // default - 'black'
-  // image: '' or image: { src: '', repeat: false }
+  // image: '' or image: { path: '', repeat: false }
   image: { 
-    src: '', // default - null
+    path: '', // default - null
     repeat: false // default - false
   },
   // default - null
@@ -165,16 +165,16 @@ const player = elpy.create('player', 10, 10, 20, 20, {
   ]
 });
 ```
-| name | description |
-| :---: | :--- |
-| **`obstacle`** | To determine if an object is an obstacle if there is a collision with the object. If the object was not added to the collision then the object will pass through another object. If an object has been added to a collision, then by default the object will stop on collision. If it is necessary that the collision event occur and the object passes through the object, then the obstacle property can be switched to false. |
-| **`pushing`** | Will the object move if it is pushed through the push method. |
-| **`disabledEvents`** | Disables all events for an object. |
-| **`type`** | A simple string that allows you to add your own data. It is convenient to use to set the type of an object in order to distinguish them from each other later. |
-| **`custom`** | An object where you can add your fields and use them via `object.options.custorm`. |
-| **`color`** | Set object color. |
-| **`image`** | Set image. Two data types can be used: String or Object. <br>`image: 'path/to/image/'` <br>or for repeat image <br>`image: { src: 'path/to/image/', repeat: true }` |
-| **`images`** | Can be used if the object has several images that can be changed through the state. For example, the image of the position when the player goes to the right or left. You can also make animation of switching frames through the animate property (<a href="#object-getters">Object getters</a>). The switching `time` is set in the time property. |
+| name | type | description |
+| :---: | :---: | :--- |
+| **`obstacle`** | `<Boolean>` | To determine if an object is an obstacle if there is a collision with the object. If the object was not added to the collision then the object will pass through another object. If an object has been added to a collision, then by default the object will stop on collision. If it is necessary that the collision event occur and the object passes through the object, then the obstacle property can be switched to false. |
+| **`pushing`** | `<Boolean>` | Will the object move if it is pushed through the push method. |
+| **`disabledEvents`** | `<Boolean>` | Disables all events for an object. |
+| **`type`** | `<Null>`, `<String>` | A simple string that allows you to add your own data. It is convenient to use to set the type of an object in order to distinguish them from each other later. |
+| **`custom`** | `<Null>`, `<Object>` | An object where you can add your fields and use them via `object.options.custorm`. |
+| **`color`** | `<String>` | Set object color. |
+| **`image`** | `<String>`, `<Object>` | Set image. Two data types can be used: String or Object. <br>`image: 'path/to/image/'` <br>or for repeat image <br>`image: { path: 'path/to/image/', repeat: true }` |
+| **`images`** | `<Array>` | Can be used if the object has several images that can be changed through the state. For example, the image of the position when the player goes to the right or left. You can also make animation of switching frames through the animate property (<a href="#object-getters">Object getters</a>). The switching `time` is set in the time property. |
 ---
 ### add(object)
 | name | type |
