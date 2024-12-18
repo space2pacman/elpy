@@ -173,7 +173,7 @@ const player = elpy.create('player', 10, 10, 20, 20, {
 | **`type`** | `<Null>`, `<String>` | A simple string that allows you to add your own data. It is convenient to use to set the type of an object in order to distinguish them from each other later. |
 | **`custom`** | `<Null>`, `<Object>` | An object where you can add your fields and use them via `object.options.custorm`. |
 | **`color`** | `<String>` | Set object color. |
-| **`image`** | `<String>`, `<Object>` | Set image. Two data types can be used: String or Object. <br>`image: 'path/to/image/'` <br>or for repeat image <br>`image: { path: 'path/to/image/', repeat: true }` |
+| **`image`** | `<String>`, `<Object>` | Set image. Two data types can be used: String or Object. <br>`image: 'path/to/image/'` <br>or for repeat image <br>`image: { path: 'path/to/image/', repeat: true }`. |
 | **`images`** | `<Array>` | Can be used if the object has several images that can be changed through the state. For example, the image of the position when the player goes to the right or left. You can also make animation of switching frames through the animate property (<a href="#object-getters">Object getters</a>). The switching `time` is set in the time property. |
 ---
 ### add(object)
