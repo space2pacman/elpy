@@ -534,7 +534,7 @@ player.collision(object);
 | **`event`** | `<String>` |
 | **`callback`** | `<Function>` |
 
-> Add an event listener.
+> Listen to the object event.
 
 ```js
 player.on('eventName', () => {
