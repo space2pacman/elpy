@@ -359,6 +359,12 @@ elpy.on('load', () => {
 });
 ```
 #### Event: `'animation'`
+| name | type |
+| :---: | :---: |
+| object | `<Object>` |
+| image | `<String>` |
+| images | `<Array>` |
+
 ```js
 elpy.on('animation', (object, image, images) => {
   // object - object to be animated.
