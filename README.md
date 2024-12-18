@@ -1,6 +1,6 @@
 # Elpy.js - 2D JavaScript game engine.
 
-![logo](/docs/images/background.png)
+![logo](background.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/space2pacman/elpy/blob/master/LICENSE.md)
 [![JavaScript](https://img.shields.io/badge/Language-JavaScript-brightgreen.svg)](https://en.wikipedia.org/wiki/JavaScript)
