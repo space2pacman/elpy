@@ -392,7 +392,6 @@ elpy.load();
 | offset | `<Object>` | Returns information on object and field offset. |
 | objects | `<Object>` | Returns all added objects. |
 
-<sub>_min example_</sub>
 ```js
 elpy.width;
 ```
@@ -685,7 +684,6 @@ player.removeCollision(object);
 | degrees | `<Number>` | The degrees the object is rotated. |
 | added | `<Boolean>` | Is the object added. |
 
-<sub>_min example_</sub>
 ```js
 player.name;
 ```
@@ -701,7 +699,6 @@ player.name;
 | ghost | `<Boolean>` | Cancels collision with other objects that go to it. |
 | added | `<Boolean>` | Is the object added. |
 
-<sub>_min example_</sub>
 ```js
 player.width = 10;
 ```
